@@ -62,6 +62,22 @@ public class Matriks {
         }
         return isIdentity;
     }
+    /* Fungsi dan Prosedur*/
+    //* TODO: cek fungsi ini bila sudah ada fungsi untuk input
+    public static Matriks kali(Matriks m1,Matriks m2){
+        //fungsi yang melakukan perkalian matriks antara m1 dan m2
+        //prekondisi: m1.NBaris = m2.NKolom
+        Matriks mat = new Matriks(m1.Nbaris,m2.Nkolom);
+        for(int i=0;i<mat.Nbaris;i++){
+            for(int j=0;j<mat.Nkolom;j++){
+                double sum_ = 0;
+                for(int k=0;k<m1.Nkolom;k++)
+                    sum_+= (m1.matriks[i][k] * m2.matriks[k][j]);
+                mat.matriks[i][j] = sum_;
+            }
+        }
+        return mat;
+    }
 
     public double determinantReduction () {
         /* I.S. jumlah baris dan jumlah kolom harus sama */
