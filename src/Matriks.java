@@ -32,7 +32,7 @@ public class Matriks {
         for(int i=0;i<this.Nbaris;i++) {
             for (int j = 0; j < this.Nkolom; j++)
                 System.out.print(matriks[i][j] + " ");
-            System.out.println("");
+            System.out.println();
         }
     }
     /* Predikat */
@@ -61,8 +61,9 @@ public class Matriks {
             i++;
         }
         return isIdentity;
+    }
 
-    public double determinantReduction() {
+    public double determinantReduction () {
         /* I.S. jumlah baris dan jumlah kolom harus sama */
         /* F.S. diperoleh determinan */
         if (this.Nbaris == this.Nkolom) {
@@ -70,7 +71,7 @@ public class Matriks {
             // Start dari kolom pertama
             for (int col = 0; col < this.Nkolom; col++) {
                 // Loop baris
-                for (int row = col+1; row < this.Nbaris; row++) {
+                for (int row = col + 1; row < this.Nbaris; row++) {
                     multiplier = this.matriks[row][col] / this.matriks[col][col];
                     // Loop pengurangan dari kolom pertama sampai kolom terakhir
                     for (int i = 0; i < this.Nkolom; i++) {
@@ -92,20 +93,20 @@ public class Matriks {
     /*----------------------------------------------------------------
     * TODO: Complete this method with recursion
     ----------------------------------------------------------------*/
-    public double determinantCofactor(int row) {
+    public double determinantCofactor ( int row){
         /* I.S. jumlah baris dan jumlah kolom harus sama */
         /* F.S. diperoleh determinan */
         if (this.Nbaris == this.Nkolom) {
             // algoritma ekspansi kofaktor dengan cara rekursif
-            // basis 
+            // basis
             if (row == 2) {
                 return (this.matriks[0][0] * this.matriks[1][1] - this.matriks[1][0] * this.matriks[0][1]);
-            } else {
+            } //else {
                 // rekurens, pakai yang banyak nol-nya
                 // NOTE: BELUM SELESAI REKURSINYA
-            }           
-        } else {
-            return Double.NaN;
+
+            //}
         }
+        return Double.NaN;
     }
 }
