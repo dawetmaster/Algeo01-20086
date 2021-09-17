@@ -11,7 +11,7 @@ public class main {
             System.out.println("Mantappu");
         }
         System.out.println("Halo!");
-        MatrixFront mat = new MatrixFront();
+        MainForm mat = new MainForm();
         mat.run();
     }
 }
