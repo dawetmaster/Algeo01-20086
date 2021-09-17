@@ -35,7 +35,6 @@ public class Matriks {
             System.out.println("");
         }
     }
-<<<<<<< HEAD
     /* Predikat */
     public boolean isIdentity(){
         //menghasilkan true jika Matriks ini adalah matriks identitas,yakni elemen di diagonal utama semuanya bernilai true
@@ -62,7 +61,6 @@ public class Matriks {
             i++;
         }
         return isIdentity;
-=======
 
     public double determinantReduction() {
         /* I.S. jumlah baris dan jumlah kolom harus sama */
@@ -109,6 +107,5 @@ public class Matriks {
         } else {
             return Double.NaN;
         }
->>>>>>> 1570bf989d730879079fe93ad2387059ebc6977e
     }
 }
