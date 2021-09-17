@@ -35,6 +35,7 @@ public class Matriks {
             System.out.println("");
         }
     }
+<<<<<<< HEAD
     /* Predikat */
     public boolean isIdentity(){
         //menghasilkan true jika Matriks ini adalah matriks identitas,yakni elemen di diagonal utama semuanya bernilai true
@@ -61,5 +62,53 @@ public class Matriks {
             i++;
         }
         return isIdentity;
+=======
+
+    public double determinantReduction() {
+        /* I.S. jumlah baris dan jumlah kolom harus sama */
+        /* F.S. diperoleh determinan */
+        if (this.Nbaris == this.Nkolom) {
+            double multiplier;
+            // Start dari kolom pertama
+            for (int col = 0; col < this.Nkolom; col++) {
+                // Loop baris
+                for (int row = col+1; row < this.Nbaris; row++) {
+                    multiplier = this.matriks[row][col] / this.matriks[col][col];
+                    // Loop pengurangan dari kolom pertama sampai kolom terakhir
+                    for (int i = 0; i < this.Nkolom; i++) {
+                        this.matriks[row][i] = this.matriks[row][i] - multiplier * this.matriks[col][i];
+                    }
+                }
+            }
+            // hitung hasil
+            double result = 1;
+            for (int i = 0; i < this.Nbaris; i++) {
+                result *= this.matriks[i][i];
+            }
+            return result;
+        } else {
+            return Double.NaN;
+        }
+    }
+
+    /*----------------------------------------------------------------
+    * TODO: Complete this method with recursion
+    ----------------------------------------------------------------*/
+    public double determinantCofactor(int row) {
+        /* I.S. jumlah baris dan jumlah kolom harus sama */
+        /* F.S. diperoleh determinan */
+        if (this.Nbaris == this.Nkolom) {
+            // algoritma ekspansi kofaktor dengan cara rekursif
+            // basis 
+            if (row == 2) {
+                return (this.matriks[0][0] * this.matriks[1][1] - this.matriks[1][0] * this.matriks[0][1]);
+            } else {
+                // rekurens, pakai yang banyak nol-nya
+                // NOTE: BELUM SELESAI REKURSINYA
+            }           
+        } else {
+            return Double.NaN;
+        }
+>>>>>>> 1570bf989d730879079fe93ad2387059ebc6977e
     }
 }
