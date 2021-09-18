@@ -160,6 +160,7 @@ public class Matriks {
             for (int i = 0; i < m.Nbaris; i++) {
                 result *= m.matriks[i][i];
             }
+            result *= Math.pow(-1, swaps);
             return result;
         } else {
             return Double.NaN;

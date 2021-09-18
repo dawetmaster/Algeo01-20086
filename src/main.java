@@ -4,7 +4,7 @@ public class main {
         Matriks m = new Matriks(3,3);
        // m.readMatriks();
         for(int i=0;i<m.Nbaris;i++){
-            m.matriks[i][i] = 2.0;
+            m.matriks[i][i] = 1.0;
         }
         m.writeMatriks();
         long startTime = System.nanoTime();
