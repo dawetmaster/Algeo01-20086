@@ -122,14 +122,36 @@ public class Matriks {
         /* mulai prosedur */
         if (m.Nbaris == m.Nkolom) {
             double multiplier;
+            int swaps = 0;
             // Start dari kolom pertama
             for (int col = 0; col < m.Nkolom; col++) {
-                // Loop baris
-                for (int row = col + 1; row < m.Nbaris; row++) {
-                    multiplier = m.matriks[row][col] / m.matriks[col][col];
-                    // Loop pengurangan dari kolom pertama sampai kolom terakhir
-                    for (int i = 0; i < m.Nkolom; i++) {
-                        m.matriks[row][i] = m.matriks[row][i] - multiplier * m.matriks[col][i];
+                // cek apakah m.matriks[col][col] == 0
+                if (m.matriks[col][col] == 0) {
+                    // cek baris selanjutnya, lalu tukarkan
+                    int row_swap_target = -1; /* anggap swap target belum ketemu */
+                    for (int i = col + 1; i < m.Nbaris; i++) {
+                        if (m.matriks[i][col] != 0) {
+                            row_swap_target = i;
+                            break;
+                        }
+                    }
+                    if (row_swap_target != -1) {
+                        ++swaps;
+                        double[] temp = m.matriks[col];
+                        m.matriks[col] = m.matriks[row_swap_target];
+                        m.matriks[row_swap_target] = temp;
+                    } else {
+                        // satu kolom isinya nol semua, jadi determinannya nol
+                        return 0;
+                    }
+                } else {
+                    // Loop baris
+                    for (int row = col + 1; row < m.Nbaris; row++) {
+                        multiplier = m.matriks[row][col] / m.matriks[col][col];
+                        // Loop pengurangan dari kolom pertama sampai kolom terakhir
+                        for (int i = 0; i < m.Nkolom; i++) {
+                            m.matriks[row][i] = m.matriks[row][i] - multiplier * m.matriks[col][i];
+                        }
                     }
                 }
             }
@@ -162,7 +184,7 @@ public class Matriks {
     public double determinantCofactor() {
         /* I.S. jumlah baris dan jumlah kolom harus sama */
         /* F.S. diperoleh determinan */
-        /* Pakai default value, kolom 1 */
+        /* Pakai default value, kolom pertama (index = 0) */
         if (this.Nbaris == this.Nkolom) {
             // algoritma ekspansi kofaktor dengan cara rekursif
             // basis
@@ -172,7 +194,7 @@ public class Matriks {
                 // rekurens
                 double determinant = 0;
                 for (int i = 0; i < this.Nbaris; i++) {
-                    determinant += Math.pow(-1, i + 1) * this.minor(i, 1).determinantCofactor();
+                    determinant += Math.pow(-1, i) * this.matriks[i][0] * this.minor(i, 0).determinantCofactor();
                 }
                 return determinant;
             }
@@ -195,11 +217,11 @@ public class Matriks {
                 double determinant = 0;
                 if (row_mode) {
                     for (int i = 0; i < this.Nkolom; i++) {
-                        determinant += Math.pow(-1, i + 1) * this.minor(mat_index, i).determinantCofactor();
+                        determinant += Math.pow(-1, i) * this.matriks[mat_index][i] * this.minor(mat_index, i).determinantCofactor();
                     }
                 } else {
                     for (int i = 0; i < this.Nbaris; i++) {
-                        determinant += Math.pow(-1, i + 1) * this.minor(i, mat_index).determinantCofactor();
+                        determinant += Math.pow(-1, i) * this.matriks[i][mat_index] * this.minor(i, mat_index).determinantCofactor();
                     }
                 }
                 return determinant;
