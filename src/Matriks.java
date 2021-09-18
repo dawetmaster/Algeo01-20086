@@ -27,7 +27,19 @@ public class Matriks {
      * for (int i = 0; i < this.Nbaris; i++) for (int j = 0; j < this.Nkolom; j++)
      * //NOTE:isi dengan input matriks[i][j] = 0; }
      */
-
+    public static Matriks parseMatrix(String text,int NBaris,int NKolom) {
+        Matriks m = new Matriks(NBaris,NKolom);
+        String[] test_line = text.split("\n");
+        for(int i=0;i<NBaris;i++){
+            String[] line_text = test_line[i].split(" ");
+            for(int j=0;j<NKolom;j++){
+                System.out.println(line_text[j]);
+                m.matriks[i][j] = Double.parseDouble(line_text[j]);
+                System.out.println(m.matriks[i][j]);
+            }
+        }
+        return m;
+    }
     public void writeMatriks() {// Note: Belum dikonekin sama gui
         /* I.S. matriks terdefinisi */
         /* F.S. mencetak matriks ke layar */
