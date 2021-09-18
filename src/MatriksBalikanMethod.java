@@ -23,10 +23,24 @@ public class MatriksBalikanMethod {
                 int N = Integer.parseInt(nInput.getText());//ukuran matriks
                 Matriks matA = Matriks.parseMatrix(inputA.getText(),N,N);
                 Matriks matB = Matriks.parseMatrix(inputB.getText(),N,1);
+                Matriks result = InversMethod.solve(matA,matB);
+                String hasil = "<html>"+MatrikstoString(result)+"</html>";
+                resultField.setText(hasil);
             }
         });
     }
 
+    private String MatrikstoString(Matriks result) {
+        String hasil = "";
+        for(int i=0;i<result.Nbaris;i++){
+            for(int j=0;j<result.Nkolom;j++){
+                hasil += result.matriks[i][j];
+                hasil+= " ";
+            }
+            hasil +="<br/>";
+        }
+        return hasil;
+    }
 
 
     public void run(){
