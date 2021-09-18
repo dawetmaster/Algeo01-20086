@@ -1,10 +1,12 @@
 public class Matriks {
-    //Atribut
+    /* ATRIBUT */
     int Nbaris;
     int Nkolom;
     double[][] matriks;
-    //method
-    //konstruktor
+
+    /* METHOD */
+
+    // konstruktor
     public Matriks(int nbaris,int nkolom){
         /* Kontruktor matriks*/
         this.Nbaris = nbaris;
@@ -15,7 +17,7 @@ public class Matriks {
             for (int j = 0; j < this.Nkolom; j++)
                 matriks[i][j] = 0;
     }
-    //Input/Output
+    // Input/Output
     /*NOTE: Belum bikin input dari GUI nya
     public void readMatriks() {*/
         /* I.S. semua elemen matriks bernilai 0*/
@@ -26,15 +28,26 @@ public class Matriks {
                 matriks[i][j] = 0;
     }
     */
-    public void writeMatriks(){//Note: Belum dikonekin sama gui
+
+    public void writeMatriks() {//Note: Belum dikonekin sama gui
         /* I.S. matriks terdefinisi*/
         /* F.S. mencetak matriks ke layar*/
-        for(int i=0;i<this.Nbaris;i++) {
+        for (int i = 0; i < this.Nbaris; i++) {
             for (int j = 0; j < this.Nkolom; j++)
                 System.out.print(matriks[i][j] + " ");
             System.out.println();
         }
     }
+
+    /* Copy/Kloning matriks */
+    public Matriks cloneMatriks(){
+        Matriks m = new Matriks(this.Nbaris, this.Nkolom);
+        for (int i = 0; i < m.Nbaris; i++) {
+            m.matriks[i] = this.matriks[i].clone();
+        }
+        return m;
+    }
+
     /* Predikat */
     public boolean isIdentity(){
         //menghasilkan true jika Matriks ini adalah matriks identitas,yakni elemen di diagonal utama semuanya bernilai true
@@ -79,26 +92,29 @@ public class Matriks {
         return mat;
     }
 
-    public double determinantReduction () {
+    public double determinantReduction(){
         /* I.S. jumlah baris dan jumlah kolom harus sama */
         /* F.S. diperoleh determinan */
-        if (this.Nbaris == this.Nkolom) {
+        /* kloning matriks dulu */
+        Matriks m = this.cloneMatriks();
+        /* mulai prosedur */
+        if (m.Nbaris == m.Nkolom) {
             double multiplier;
             // Start dari kolom pertama
-            for (int col = 0; col < this.Nkolom; col++) {
+            for (int col = 0; col < m.Nkolom; col++) {
                 // Loop baris
-                for (int row = col + 1; row < this.Nbaris; row++) {
-                    multiplier = this.matriks[row][col] / this.matriks[col][col];
+                for (int row = col + 1; row < m.Nbaris; row++) {
+                    multiplier = m.matriks[row][col] / m.matriks[col][col];
                     // Loop pengurangan dari kolom pertama sampai kolom terakhir
-                    for (int i = 0; i < this.Nkolom; i++) {
-                        this.matriks[row][i] = this.matriks[row][i] - multiplier * this.matriks[col][i];
+                    for (int i = 0; i < m.Nkolom; i++) {
+                        m.matriks[row][i] = m.matriks[row][i] - multiplier * m.matriks[col][i];
                     }
                 }
             }
             // hitung hasil
             double result = 1;
-            for (int i = 0; i < this.Nbaris; i++) {
-                result *= this.matriks[i][i];
+            for (int i = 0; i < m.Nbaris; i++) {
+                result *= m.matriks[i][i];
             }
             return result;
         } else {
@@ -106,23 +122,68 @@ public class Matriks {
         }
     }
 
-    /*----------------------------------------------------------------
-    * TODO: Complete this method with recursion
-    ----------------------------------------------------------------*/
-    public double determinantCofactor ( int row){
+    public Matriks minor(int row, int col){
+        if (this.Nbaris == this.Nkolom) {
+            int dimension = this.Nbaris - 1;
+            Matriks minor = new Matriks(dimension, dimension);
+            for (int i = 0; i < dimension; i++) {
+                for (int j = 0; j < dimension; j++) {
+                    minor.matriks[i][j] = this.matriks[i >= row ? i+1 : i][j >= col ? j+1 : j];
+                }
+            }
+            return minor;
+        } else {
+            return null;
+        }
+    }
+
+    public double determinantCofactor(){
         /* I.S. jumlah baris dan jumlah kolom harus sama */
         /* F.S. diperoleh determinan */
+        /* Pakai default value, kolom 1 */
         if (this.Nbaris == this.Nkolom) {
             // algoritma ekspansi kofaktor dengan cara rekursif
             // basis
-            if (row == 2) {
+            if (this.Nbaris == 2) {
                 return (this.matriks[0][0] * this.matriks[1][1] - this.matriks[1][0] * this.matriks[0][1]);
-            } //else {
-                // rekurens, pakai yang banyak nol-nya
-                // NOTE: BELUM SELESAI REKURSINYA
-
-            //}
+            } else {
+                // rekurens
+                double determinant = 0;
+                for (int i = 0; i < this.Nbaris; i++) {
+                    determinant += Math.pow(-1, i+1) * this.minor(i, 1).determinantCofactor();
+                }
+                return determinant;
+            }
+        } else {
+            return Double.NaN;
         }
-        return Double.NaN;
+    }
+
+    public double determinantCofactor(int mat_index, boolean row_mode){
+        /* I.S. jumlah baris dan jumlah kolom harus sama */
+        /* F.S. diperoleh determinan */
+        /* Prekondisi: ada input mat_index dan row_mode */
+        if (this.Nbaris == this.Nkolom) {
+            // algoritma ekspansi kofaktor dengan cara rekursif
+            // basis
+            if (this.Nbaris == 2) {
+                return (this.matriks[0][0] * this.matriks[1][1] - this.matriks[1][0] * this.matriks[0][1]);
+            } else {
+                // rekurens
+                double determinant = 0;
+                if (row_mode) {
+                    for (int i = 0; i < this.Nkolom; i++) {
+                        determinant += Math.pow(-1, i+1) * this.minor(mat_index, i).determinantCofactor();
+                    }
+                } else {
+                    for (int i = 0; i < this.Nbaris; i++) {
+                        determinant += Math.pow(-1, i+1) * this.minor(i, mat_index).determinantCofactor();
+                    }
+                }
+                return determinant;
+            }
+        } else {
+            return Double.NaN;
+        }
     }
 }
