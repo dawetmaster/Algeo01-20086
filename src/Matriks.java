@@ -87,10 +87,11 @@ public class Matriks {
                     m.matriks[i][j] = m1.matriks[i][j] + m2.matriks[i][j];
                 }
             }
-        }
-        for (int i = 0; i < m1.Nbaris; i++) {
-            for (int j = 0; j < m1.Nkolom; j++) {
-                m.matriks[i][j] = m1.matriks[i][j] + m2.matriks[i][j];
+        } else {
+            for (int i = 0; i < m1.Nbaris; i++) {
+                for (int j = 0; j < m1.Nkolom; j++) {
+                    m.matriks[i][j] = m1.matriks[i][j] + m2.matriks[i][j];
+                }
             }
         }
         return m;
