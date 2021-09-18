@@ -12,6 +12,16 @@ public class SPL {
     private JPanel panelMethod;
     private JFrame frame = new JFrame("Kalkulator Matriks");
 
+    public SPL() {
+        matriksBalikanButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MatriksBalikanMethod inversMethod = new MatriksBalikanMethod();
+                inversMethod.run();
+            }
+        });
+    }
+
     public void run(){
         frame.setContentPane(new SPL().panelMethod);
         frame.setMinimumSize(new Dimension(400,400));
