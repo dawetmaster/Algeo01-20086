@@ -32,15 +32,32 @@ public class MatriksBalikanMethod {
 
     private String CetakHasilMetodeInvers(Matriks result) {
         String hasil = "";
-        for(int i=0;i<result.Nbaris;i++){
-            hasil = hasil + "x" + (i+1) +":";
-            hasil += result.matriks[i][0];
-            hasil +="<br/>";
+        if(isNaNExist(result)){
+            hasil = "Tidak ada solusi atau solusi tak berhingga karena determinan matriks A adalah 0";
+        }
+        else {
+            for (int i = 0; i < result.Nbaris; i++) {
+                hasil = hasil + "x" + (i + 1) + ":";
+                hasil += result.matriks[i][0];
+                hasil += "<br/>";
+            }
         }
         return hasil;
     }
 
-    private String MatrikstoString(Matriks result) {
+    private boolean isNaNExist(Matriks result) {
+        //menghasilkan true jika ada elemen matriks yang berupa NaN
+        for(int i=0;i<result.Nbaris;i++){
+            for(int j=0;j<result.Nkolom;j++){
+                if(Double.isNaN(result.matriks[i][j])){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static String MatrikstoString(Matriks result) {
         String hasil = "";
         for(int i=0;i<result.Nbaris;i++){
             for(int j=0;j<result.Nkolom;j++){
@@ -55,7 +72,7 @@ public class MatriksBalikanMethod {
 
     public void run(){
         inversMethodFrame.setContentPane(new MatriksBalikanMethod().inversMatriksMethodLabel);
-        inversMethodFrame.setMinimumSize(new Dimension(600,400));
+        inversMethodFrame.setMinimumSize(new Dimension(800,400));
         inversMethodFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         inversMethodFrame.setVisible(true);
     }
