@@ -24,10 +24,20 @@ public class MatriksBalikanMethod {
                 Matriks matA = Matriks.parseMatrix(inputA.getText(),N,N);
                 Matriks matB = Matriks.parseMatrix(inputB.getText(),N,1);
                 Matriks result = InversMethod.solve(matA,matB);
-                String hasil = "<html>"+MatrikstoString(result)+"</html>";
+                String hasil = "<html>"+CetakHasilMetodeInvers(result)+"</html>";
                 resultField.setText(hasil);
             }
         });
+    }
+
+    private String CetakHasilMetodeInvers(Matriks result) {
+        String hasil = "";
+        for(int i=0;i<result.Nbaris;i++){
+            hasil = hasil + "x" + (i+1) +":";
+            hasil += result.matriks[i][0];
+            hasil +="<br/>";
+        }
+        return hasil;
     }
 
     private String MatrikstoString(Matriks result) {
