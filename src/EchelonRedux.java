@@ -46,4 +46,25 @@ public class EchelonRedux {
             }
         }
     }
+
+    public static void selfReduce(Matriks m, boolean reduced_mode) {
+        selfReduce(m);
+        if (reduced_mode) {
+            int i = m.Nbaris - 1;
+            for (int j = m.Nkolom-1; j >= 0; j--) {
+                if (i >= 0) {
+                    if (m.matriks[i][j] == 0) {
+                        i--;
+                    }
+                    for (int row = 0; row < i; row++) {
+                        double multiplier = m.matriks[row][j] / m.matriks[i][j];
+                        for (int col = 0; col < m.Nkolom; col++) {
+                            m.matriks[row][col] -= multiplier * m.matriks[i][col];
+                        }
+                    }
+                    i--;
+                }
+            }
+        }
+    }
 }

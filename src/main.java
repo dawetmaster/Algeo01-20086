@@ -24,6 +24,8 @@ public class main {
         M.writeMatriks();
         EchelonRedux.selfReduce(M);
         M.writeMatriks();
+        EchelonRedux.selfReduce(M, true);
+        M.writeMatriks();
         if(m.isIdentity()){
             System.out.println("Mantappu");
         }
