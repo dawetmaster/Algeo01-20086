@@ -5,8 +5,8 @@ public class EchelonRedux {
     * WARNING: Not tested yet, baru sampai matriks eselon baris tidak tereduksi */
     private static void selfReduce(Matriks m) {
         int i = 0;
-        while (i < m.Nbaris) {
-            for (int j = 0; j < m.Nkolom; j++) {
+        for (int j = 0; j < m.Nkolom; j++) {
+            while (i < m.Nbaris) {
                 /* Cari pivot dari matriks */
                 if (m.matriks[i][j] == 0) {
                     /* cari indeks baris pertama dengan nilai paling kiri tidak nol */
