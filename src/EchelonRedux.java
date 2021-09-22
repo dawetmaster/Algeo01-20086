@@ -3,10 +3,10 @@
 public class EchelonRedux {
     /* Reduksi matriks sampai menjadi eselon baris, asumsi matriks terdefinisi
     * WARNING: Not tested yet, baru sampai matriks eselon baris tidak tereduksi */
-    private static void selfReduce(Matriks m) {
+    public static void selfReduce(Matriks m) {
         int i = 0;
         for (int j = 0; j < m.Nkolom; j++) {
-            while (i < m.Nbaris) {
+            if (i < m.Nbaris) {
                 /* Cari pivot dari matriks */
                 if (m.matriks[i][j] == 0) {
                     /* cari indeks baris pertama dengan nilai paling kiri tidak nol */
@@ -26,12 +26,12 @@ public class EchelonRedux {
                         m.matriks[i] = m.matriks[row_swap_target];
                         m.matriks[row_swap_target] = temp;
                     } else {
-                        continue;
+                        break;
                     }
                 }
                 /* Bagi baris dengan skalar agar elemen non-nol paling kiri = 1 */
                 double divider = m.matriks[i][j];
-                for (int k = 0; k < m.Nkolom; k++) {
+                for (int k = j; k < m.Nkolom; k++) {
                     m.matriks[i][k] /= divider;
                 }
                 /* Mulai reduksi baris */

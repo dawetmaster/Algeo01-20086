@@ -15,6 +15,15 @@ public class main {
         System.out.println(m.determinantReduction());
         stopTime = System.nanoTime();
         System.out.printf("Durasi komputasi determinan dengan reduksi: %d ns\n", stopTime - startTime);
+        Matriks M = new Matriks(3, 3);
+        for (int i = 0; i < M.Nbaris; i++) {
+            for (int j = 0; j < M.Nkolom; j++) {
+                M.matriks[i][j] = i + j + 1;
+            }
+        }
+        M.writeMatriks();
+        EchelonRedux.selfReduce(M);
+        M.writeMatriks();
         if(m.isIdentity()){
             System.out.println("Mantappu");
         }
