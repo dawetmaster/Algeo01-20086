@@ -33,7 +33,7 @@ public class KaidahCramerMethod {
     public void run(){
         kaiahCramerFrame.setContentPane(new KaidahCramerMethod().cramerMethodLabel);
         kaiahCramerFrame.setMinimumSize(new Dimension(800,400));
-        kaiahCramerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        kaiahCramerFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         kaiahCramerFrame.setVisible(true);
     }
 }

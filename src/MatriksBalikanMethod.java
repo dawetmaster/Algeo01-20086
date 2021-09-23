@@ -74,7 +74,7 @@ public class MatriksBalikanMethod {
     public void run(){
         inversMethodFrame.setContentPane(new MatriksBalikanMethod().inversMatriksMethodLabel);
         inversMethodFrame.setMinimumSize(new Dimension(800,400));
-        inversMethodFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        inversMethodFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         inversMethodFrame.setVisible(true);
     }
 }

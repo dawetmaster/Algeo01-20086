@@ -32,7 +32,7 @@ public class SPL {
     public void run(){
         frame.setContentPane(new SPL().panelMethod);
         frame.setMinimumSize(new Dimension(400,400));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
     }
 }
