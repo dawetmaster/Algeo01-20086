@@ -20,6 +20,13 @@ public class SPL {
                 inversMethod.run();
             }
         });
+        kaidahCramerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                KaidahCramerMethod  cramer = new KaidahCramerMethod();
+                cramer.run();
+            }
+        });
     }
 
     public void run(){
