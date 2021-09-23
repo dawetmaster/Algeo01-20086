@@ -24,19 +24,20 @@ public class MatriksBalikanMethod {
                 Matriks matA = Matriks.parseMatrix(inputA.getText(),N,N);
                 Matriks matB = Matriks.parseMatrix(inputB.getText(),N,1);
                 Matriks result = InversMethod.solve(matA,matB);
-                String hasil = "<html>"+CetakHasilMetodeInvers(result)+"</html>";
+                String hasil = "<html>"+CetakHasil(result)+"</html>";
                 resultField.setText(hasil);
             }
         });
     }
 
-    private String CetakHasilMetodeInvers(Matriks result) {
+    public static String CetakHasil(Matriks result) {
         String hasil = "";
         if(result==null){
             hasil = "Tidak ada solusi atau solusi tak berhingga karena determinan matriks A adalah 0";
         }
         else {
             for (int i = 0; i < result.Nbaris; i++) {
+               // System.out.println("Hasil:"+result.matriks[i][0]);
                 hasil = hasil + "x" + (i + 1) + ":";
                 hasil += result.matriks[i][0];
                 hasil += "<br/>";
