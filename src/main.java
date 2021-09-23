@@ -29,7 +29,7 @@ public class main {
         if(m.isIdentity()){
             System.out.println("Mantappu");
         }
-        System.out.println("Halo!");
+        System.out.println("Hallo!");
         MainForm mat = new MainForm();
         mat.run();
     }
