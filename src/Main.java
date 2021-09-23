@@ -1,4 +1,4 @@
-public class main {
+public class Main {
     //METHOD
     public static void main(String[] args){
         Matriks m = new Matriks(3,3);
