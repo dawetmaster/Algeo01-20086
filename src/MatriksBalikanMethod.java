@@ -32,7 +32,7 @@ public class MatriksBalikanMethod {
 
     private String CetakHasilMetodeInvers(Matriks result) {
         String hasil = "";
-        if(isNaNExist(result)){
+        if(result==null){
             hasil = "Tidak ada solusi atau solusi tak berhingga karena determinan matriks A adalah 0";
         }
         else {

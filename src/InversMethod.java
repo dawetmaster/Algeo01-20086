@@ -16,11 +16,13 @@ public class InversMethod {
         Matriks hasil = new Matriks(a.Nbaris, 1);
         Matriks invers = invers(a);
         //solusi : x = invers(A)*b
-        hasil = Matriks.kali(invers,b);
-        return hasil;
+        if(invers!=null) {
+            hasil = Matriks.kali(invers, b);
+            return hasil;
+        }
+        return null;
     }
-    /* TODO:Membuat fungsi inversnya menggunakan gauss jordan*/
-    /* TODO:Masih sangat buggy */
+    /* TODO:bugfixing and testing */
     private static Matriks invers(Matriks m){
         //menggunakan metode gauss jordan
         int i,j;
@@ -42,6 +44,9 @@ public class InversMethod {
                     System.out.println(MatriksBalikanMethod.MatrikstoString(invers));
                     System.out.println();
                 }
+                if(isAllZero(invers.matriks[j])){
+                    return null;
+                }
             }
         }
         System.out.println(MatriksBalikanMethod.MatrikstoString(invers));
@@ -55,6 +60,9 @@ public class InversMethod {
                     for(int k=0;k<invers.Nkolom;k++){//mengapplynya ke tiap baris
                         invers.matriks[j][k] -= (koef*invers.matriks[i][k]);
                         identity.matriks[j][k] -= (koef*identity.matriks[i][k]);
+                    }
+                    if(isAllZero(invers.matriks[j])){
+                        return null;
                     }
                 }
             }
