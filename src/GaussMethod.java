@@ -1,28 +1,30 @@
 public class GaussMethod {
-    public static Matriks gaussElim(Matriks m){
+    public static double[] gaussElim(Matriks m){
         /*
            mengembalikan hasil eliminasi Gauss dalam bentuk matriks berukuran Nbaris x 1
          */
         // caution: masih dibuat dengan asumsi matriks berukuran n,n+1
-        Matriks result = new Matriks(m.Nbaris, 1);
+        double[] result = new double[m.Nbaris];
 
         EchelonRedux.selfReduce(m); // buat m menjadi matriks eselon
         if (isUniqueSol(m)){
             // PENYULINGAN MUNDUR
             int i, j, pivot;
             // cari nilai awal
-            /*boolean check = false; j = 0;
-            while(!check && j < m.Nkolom-1){
-                if (m.matriks[m.Nbaris-1][j] == 0){
-                    j++;
-                } else {
-                    check = true;
+            /*
+                boolean check = false; j = 0;
+                while(!check && j < m.Nkolom-1){
+                    if (m.matriks[m.Nbaris-1][j] == 0){
+                        j++;
+                    } else {
+                        check = true;
+                    }
                 }
-            }
-            result.matriks[m.Nbaris-1][0] = m.matriks[m.Nbaris-1][m.Nkolom-1]/m.matriks[m.Nbaris-1][j];*/
+                result.matriks[m.Nbaris-1][0] = m.matriks[m.Nbaris-1][m.Nkolom-1]/m.matriks[m.Nbaris-1][j];
+            */
             // asumsi 1 utama pasti di m.matriks[m.Nbaris-1][m.Nkolom-2]
             // smg bisa untuk interpolasi
-            result.matriks[m.Nbaris-1][0] = m.matriks[m.Nbaris-1][m.Nkolom-1];
+            result[m.Nbaris-1] = m.matriks[m.Nbaris-1][m.Nkolom-1];
 
             double temp;
             for(i = m.Nbaris-2; i >= 0; i--){
@@ -35,9 +37,10 @@ public class GaussMethod {
                 // kurang2in temp sama m[][] * result[][] sampe kolom ke-pivot
                 j = m.Nkolom-2;
                 while (j > pivot){
-                    temp -= m.matriks[i][j] * result.matriks[j][0];
+                    temp -= m.matriks[i][j] * result[j];
+                    j--;
                 }
-                result.matriks[i][0] = temp;
+                result[i] = temp;
             }
 
         }
@@ -56,6 +59,7 @@ public class GaussMethod {
             if (m.matriks[m.Nbaris-1][j] != 0){
                 allZero = false;
             }
+            j++;
         }
         boolean noSol = allZero && (m.matriks[m.Nbaris-1][m.Nkolom-1] != 0);
         boolean manySol = allZero && (m.matriks[m.Nbaris-1][m.Nkolom-1] == 0);
