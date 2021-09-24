@@ -18,6 +18,19 @@ public class Matriks {
                 matriks[i][j] = 0;
     }
 
+    // SPECIAL CONSTRUCTOR
+    public static Matriks makeIdentity(int dimension){
+        //menghasilkan matriks identitas
+        //prekondisi: nbaris=nkolom
+        Matriks m = new Matriks(dimension, dimension);
+        for (int i=0; i<m.Nbaris; i++){
+            for (int j=0; j<m.Nkolom; j++){
+                m.matriks[i][j] = (i==j)? 1 : 0;
+            }
+        }
+        return m;
+    }
+
     // NORMALISASI MATRIKS
     public void normalize() {
         for (int i = 0; i < this.Nbaris; i++) {
@@ -190,6 +203,7 @@ public class Matriks {
         /* I.S. jumlah baris dan jumlah kolom harus sama */
         /* F.S. diperoleh determinan */
         /* kloning matriks dulu */
+        // TODO: ROMBAK SEGERA
         Matriks m = this.cloneMatriks();
         /* mulai prosedur */
         if (m.isSquare()) {
@@ -227,12 +241,13 @@ public class Matriks {
                     }
                 }
             }
+            m.normalize();
             // hitung hasil
             double result = 1;
             for (int i = 0; i < m.Nbaris; i++) {
                 result *= m.matriks[i][i];
             }
-            result *= Math.pow(-1, swaps);
+            result *= (swaps % 2 == 0 ? 1 : -1);
             return result;
         } else {
             return Double.NaN;
@@ -248,9 +263,25 @@ public class Matriks {
                     minor.matriks[i][j] = this.matriks[i >= row ? i + 1 : i][j >= col ? j + 1 : j];
                 }
             }
+            minor.normalize();
             return minor;
         } else {
             return null;
+        }
+    }
+
+    public Matriks cofactor() {
+        if (this.isSquare()) {
+            Matriks cofactor = new Matriks(this.Nbaris, this.Nkolom);
+            for (int i = 0; i < this.Nbaris; i++) {
+                for (int j = 0; j < this.Nkolom; j++) {
+                    cofactor.matriks[i][j] = this.minor(i, j).determinantReduction() * ((i+j) % 2 == 0 ? 1 : -1);
+                }
+            }
+            cofactor.normalize();
+            return cofactor;
+        } else {
+            throw new ArithmeticException("Matriks tidak persegi!");
         }
     }
 
@@ -269,6 +300,17 @@ public class Matriks {
         }
     }
 
+    // TRANSPOSE
+    public Matriks transpose() throws NullPointerException {
+        Matriks result = new Matriks(this.Nkolom, this.Nbaris);
+        for (int i = 0; i < result.Nbaris; i++) {
+            for (int j = 0; j < result.Nkolom; j++) {
+                result.matriks[i][j] = this.matriks[j][i];
+            }
+        }
+        return result;
+    }
+
     public double determinantCofactor() {
         /* I.S. jumlah baris dan jumlah kolom harus sama */
         /* F.S. diperoleh determinan */
@@ -282,7 +324,7 @@ public class Matriks {
                 // rekurens
                 double determinant = 0;
                 for (int i = 0; i < this.Nbaris; i++) {
-                    determinant += Math.pow(-1, i) * this.matriks[i][0] * this.minor(i, 0).determinantCofactor();
+                    determinant += (i % 2 == 0 ? 1 : -1) * this.matriks[i][0] * this.minor(i, 0).determinantCofactor();
                 }
                 return determinant;
             }
@@ -305,11 +347,11 @@ public class Matriks {
                 double determinant = 0;
                 if (row_mode) {
                     for (int i = 0; i < this.Nkolom; i++) {
-                        determinant += Math.pow(-1, i) * this.matriks[mat_index][i] * this.minor(mat_index, i).determinantCofactor();
+                        determinant += (i % 2 == 0 ? 1 : -1) * this.matriks[mat_index][i] * this.minor(mat_index, i).determinantCofactor();
                     }
                 } else {
                     for (int i = 0; i < this.Nbaris; i++) {
-                        determinant += Math.pow(-1, i) * this.matriks[i][mat_index] * this.minor(i, mat_index).determinantCofactor();
+                        determinant += (i % 2 == 0 ? 1 : -1) * this.matriks[i][mat_index] * this.minor(i, mat_index).determinantCofactor();
                     }
                 }
                 return determinant;
