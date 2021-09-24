@@ -22,6 +22,13 @@ public class MainForm {
                 spl.run();
             }
         });
+        buttonInterpolation.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PolynomialInterpolation polin = new PolynomialInterpolation();
+                polin.run();
+            }
+        });
     }
         public void run(){
             frame.setContentPane(new MainForm().panelSPL);
