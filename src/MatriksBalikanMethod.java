@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.nio.file.Path;
+import java.io.*;
 
 public class MatriksBalikanMethod {
     private JPanel inversMatriksMethodLabel;
@@ -14,6 +17,7 @@ public class MatriksBalikanMethod {
     private JLabel resultLabel;
     private JLabel resultField;
     private JButton hitungButton;
+    private JButton openFile;
     private JFrame inversMethodFrame = new JFrame("Kalkulator Matriks");
 
     public MatriksBalikanMethod() {
@@ -26,6 +30,49 @@ public class MatriksBalikanMethod {
                 Matriks result = InversMethod.solve(matA,matB);
                 String hasil = "<html>"+CetakHasil(result)+"</html>";
                 resultField.setText(hasil);
+            }
+        });
+        openFile.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser("./test");
+                int result = fileChooser.showOpenDialog(inversMethodFrame);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    System.out.println(selectedFile.getName());
+                    //parse input
+                    String isi_file = "";
+                    try {
+                        String line = null;
+                        BufferedReader reader;
+                        reader = new BufferedReader(new FileReader(selectedFile));
+                        while((line=reader.readLine())!=null){
+                            isi_file+=line;
+                            isi_file+="\n";
+                        }
+                        String[] augmented = isi_file.split("\n");
+                        if(augmented.length>0){
+                            String text_matA = "";
+                            String text_matB = "";
+                            nInput.setText(Integer.toString(augmented.length));
+                            for(int i=0;i<augmented.length;i++) {
+                                String[] augmented_baris = augmented[i].split(" ");
+                                for(int j=0;j<augmented_baris.length-1;j++){
+                                    inputA.append(augmented_baris[j]+" ");
+                                }
+                                inputA.append("\n");
+                                inputB.append(augmented_baris[augmented_baris.length-1]+"\n");
+                            }
+                        }
+                    }
+                    catch (FileNotFoundException fnfe){
+                        resultField.setText("File tidak ditemukan");
+                    }
+                    catch (IOException io){
+                        resultField.setText("File kosong!");
+                    }
+
+                }
             }
         });
     }

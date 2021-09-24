@@ -22,6 +22,13 @@ public class MainForm {
                 spl.run();
             }
         });
+        buttonDeterminan.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Determinan det = new Determinan();
+                det.run();
+            }
+        });
     }
         public void run(){
             frame.setContentPane(new MainForm().panelSPL);
