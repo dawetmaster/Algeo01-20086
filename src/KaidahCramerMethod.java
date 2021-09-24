@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 
 public class KaidahCramerMethod {
     private JLabel labelN;
@@ -14,7 +15,8 @@ public class KaidahCramerMethod {
     private JLabel resultLabel;
     private JLabel resultField;
     private JPanel cramerMethodLabel;
-    private JFrame kaiahCramerFrame = new JFrame("Kalkulator Matriks");
+    private JButton openFile;
+    private JFrame kaidahCramerFrame = new JFrame("Kalkulator Matriks");
 
     public KaidahCramerMethod() {
         hitungButton.addActionListener(new ActionListener() {
@@ -28,12 +30,55 @@ public class KaidahCramerMethod {
             resultField.setText(hasil);
             }
         });
+        openFile.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser("./test");
+                int result = fileChooser.showOpenDialog(kaidahCramerFrame);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    System.out.println(selectedFile.getName());
+                    //parse input
+                    String isi_file = "";
+                    try {
+                        String line = null;
+                        BufferedReader reader;
+                        reader = new BufferedReader(new FileReader(selectedFile));
+                        while((line=reader.readLine())!=null){
+                            isi_file+=line;
+                            isi_file+="\n";
+                        }
+                        String[] augmented = isi_file.split("\n");
+                        if(augmented.length>0){
+                            String text_matA = "";
+                            String text_matB = "";
+                            nInput.setText(Integer.toString(augmented.length));
+                            for(int i=0;i<augmented.length;i++) {
+                                String[] augmented_baris = augmented[i].split(" ");
+                                for(int j=0;j<augmented_baris.length-1;j++){
+                                    inputA.append(augmented_baris[j]+" ");
+                                }
+                                inputA.append("\n");
+                                inputB.append(augmented_baris[augmented_baris.length-1]+"\n");
+                            }
+                        }
+                    }
+                    catch (FileNotFoundException fnfe){
+                        resultField.setText("File tidak ditemukan");
+                    }
+                    catch (IOException io){
+                        resultField.setText("File kosong!");
+                    }
+
+                }
+            }
+        });
     }
 
     public void run(){
-        kaiahCramerFrame.setContentPane(new KaidahCramerMethod().cramerMethodLabel);
-        kaiahCramerFrame.setMinimumSize(new Dimension(800,400));
-        kaiahCramerFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        kaiahCramerFrame.setVisible(true);
+        kaidahCramerFrame.setContentPane(new KaidahCramerMethod().cramerMethodLabel);
+        kaidahCramerFrame.setMinimumSize(new Dimension(800,400));
+        kaidahCramerFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        kaidahCramerFrame.setVisible(true);
     }
 }
