@@ -18,6 +18,31 @@ public class PolynomialInterpolation {
     private JLabel calcYLabel;
     private JFrame polynomialInterpolationFrame = new JFrame("Interpolasi Polinom");
 
+    public Matriks createAug(Matriks coordMatrix){
+        Matriks m = new Matriks(coordMatrix.Nbaris, coordMatrix.Nbaris+1);
+        for(int i = 0; i < coordMatrix.Nbaris; i++){
+            for(int j = 0; j < coordMatrix.Nbaris; j++){
+                m.matriks[i][j] = Math.pow(coordMatrix.matriks[i][0], j);
+            }
+            m.matriks[i][coordMatrix.Nbaris] = coordMatrix.matriks[i][1];
+        }
+        return m;
+    }
+
+    public void writeMatrix(Matriks m, JLabel y){
+        // menulis matriks dalam bentuk tabel ke dalam satu JLabel
+        String augMatrix = "<html>Matriks Augmented:<br/><table>";
+        for(int i = 0; i < m.Nbaris; i++){
+            augMatrix += "<tr>";
+            for(int j = 0; j < m.Nkolom; j++){
+                augMatrix += "<td>%.4f</td>".formatted(m.matriks[i][j]);
+            }
+            augMatrix += "</tr>";
+        }
+        augMatrix += "</table></html>";
+        augMatrixLabel.setText(augMatrix);
+    }
+
     public PolynomialInterpolation() {
         createEqButton.addActionListener(new ActionListener() {
             @Override
@@ -29,26 +54,10 @@ public class PolynomialInterpolation {
                 Matriks coordMatrix = Matriks.parseMatrix(coordList.getText(), n, 2);
 
                 // inisialisasi matriks augmented untuk persiapan eliminasi Gauss
-                // berukuran n x n+1
-                Matriks m = new Matriks(n, n+1);
-                for(i = 0; i < n; i++){
-                    for(j = 0; j < n; j++){
-                        m.matriks[i][j] = Math.pow(coordMatrix.matriks[i][0], j);
-                    }
-                    m.matriks[i][n] = coordMatrix.matriks[i][1];
-                }
+                Matriks m = createAug(coordMatrix);
 
-                // mengeluarkan matriks augmented
-                String augMatrix = "<html>Matriks Augmented:<br/><table>";
-                for(i = 0; i < n; i++){
-                    augMatrix += "<tr>";
-                    for(j = 0; j < n+1; j++){
-                        augMatrix += "<td>%.4f</td>".formatted(m.matriks[i][j]);
-                    }
-                    augMatrix += "</tr>";
-                }
-                augMatrix += "</table></html>";
-                augMatrixLabel.setText(augMatrix);
+                // menuliskan matriks augmented ke layar
+                writeMatrix(m, augMatrixLabel);
 
                 // eliminasi gauss dari matriks augmented
                 double[] result = GaussMethod.gaussElim(m);
@@ -84,14 +93,15 @@ public class PolynomialInterpolation {
         calcYButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                double x = Double.parseDouble(calcYField.getText());
+                calcY.setText("p(%.4f) = tdk thu".formatted(x));
             }
         });
     }
     public void run(){
         polynomialInterpolationFrame.setContentPane(new PolynomialInterpolation().PolynomialInterpolationField);
         polynomialInterpolationFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        polynomialInterpolationFrame.setMinimumSize(new Dimension(500,500));
+        polynomialInterpolationFrame.setMinimumSize(new Dimension(700,500));
         polynomialInterpolationFrame.setVisible(true);
     }
 }
