@@ -94,7 +94,19 @@ public class PolynomialInterpolation {
             @Override
             public void actionPerformed(ActionEvent e) {
                 double x = Double.parseDouble(calcYField.getText());
-                calcY.setText("p(%.4f) = tdk thu".formatted(x));
+
+                int n = Integer.parseInt(nInput.getText()); // TODO: somehow keluarin ini biar ga kerja 2 kali, buat variabel result di global?
+                Matriks coordMatrix = Matriks.parseMatrix(coordList.getText(), n, 2);
+                Matriks m = createAug(coordMatrix);
+                writeMatrix(m, augMatrixLabel);
+                double[] result = GaussMethod.gaussElim(m);
+
+                double y = 0;
+                for(int i = 0; i < n; i++){
+                    y += result[i] * Math.pow(x, i);
+                }
+
+                calcY.setText("p(%.4f) = %.2f".formatted(x, y));
             }
         });
     }
