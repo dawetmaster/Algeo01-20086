@@ -106,7 +106,7 @@ public class PolynomialInterpolation {
                     y += result[i] * Math.pow(x, i);
                 }
 
-                calcY.setText("p(%.4f) = %.2f".formatted(x, y));
+                calcY.setText("p(%.4f) = %.4f".formatted(x, y));
             }
         });
     }
