@@ -59,6 +59,15 @@ public class DeterminanKofaktor {
                 }
             }
         });
+        hitungButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int N = Integer.parseInt(inputN.getText());
+                Matriks mat = Matriks.parseMatrix(inputMatrix.getText(),N,N);
+                double result = mat.determinantCofactor();
+                resultField.setText(Double.toString(result));
+            }
+        });
     }
 
     public void run(){
