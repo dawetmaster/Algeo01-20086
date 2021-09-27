@@ -18,6 +18,13 @@ public class DeterminanForm {
                 det.run();
             }
         });
+        ekspansiKofaktorButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DeterminanKofaktor det = new DeterminanKofaktor();
+                det.run();
+            }
+        });
     }
 
     public void run(){
