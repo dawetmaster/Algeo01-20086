@@ -15,7 +15,7 @@ public class Main {
         System.out.println(m.determinantReduction());
         stopTime = System.nanoTime();
         System.out.printf("Durasi komputasi determinan dengan reduksi: %d ns\n", stopTime - startTime);
-        Matriks M = new Matriks(3, 3);
+        Matriks M = new Matriks(2, 6);
         for (int i = 0; i < M.Nbaris; i++) {
             for (int j = 0; j < M.Nkolom; j++) {
                 M.matriks[i][j] = i + j + 1;
@@ -30,6 +30,12 @@ public class Main {
             System.out.println("Mantappu");
         }
         System.out.println("Hallo!");
+        for(int j=4;j<m.Nkolom-1;j++){
+            m.matriks[m.Nbaris-1][j] = 1;
+        }
+        if(!GaussMethod.isUniqueSol(m)){
+            System.out.println("Nyaho....");
+        }
         MainForm mat = new MainForm();
         mat.run();
     }

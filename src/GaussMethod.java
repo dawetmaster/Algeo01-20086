@@ -58,7 +58,7 @@ public class GaussMethod {
         */
         boolean allZero = true; // cek [0..NKolom-2] bernilai 0 semua
         int j = 0;
-        while(allZero && (j < m.Nbaris-1)){
+        while(allZero && (j < /*m.Nbaris-1*/m.Nkolom-1)){
             if (m.matriks[m.Nbaris-1][j] != 0){
                 allZero = false;
             }
