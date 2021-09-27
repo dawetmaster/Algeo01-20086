@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class DeterminanForm {
     private JLabel methodLabel;
@@ -7,6 +9,16 @@ public class DeterminanForm {
     private JPanel determinanPanel;
     private JButton ekspansiKofaktorButton;
     private JFrame determinanFrame = new JFrame("Kalkulator Matriks");
+
+    public DeterminanForm() {
+        reduksiBarisButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DeterminanERO det = new DeterminanERO();
+                det.run();
+            }
+        });
+    }
 
     public void run(){
         determinanFrame.setContentPane(new DeterminanForm().determinanPanel);
