@@ -59,6 +59,15 @@ public class DeterminanERO {
                 }
             }
         });
+        hitungButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int N = Integer.parseInt(inputN.getText());
+                Matriks mat = Matriks.parseMatrix(inputMatrix.getText(),N,N);
+                double result = mat.determinantReduction();
+                resultField.setText(Double.toString(result));
+            }
+        });
     }
 
     public void run(){

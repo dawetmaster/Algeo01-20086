@@ -1,7 +1,7 @@
 public class CramerMethod {
 
     public static Matriks solve(Matriks matA, Matriks matB) {
-        //menyelesaikan SPL menggunakan metode cramer dan mencari determinan menggunakan ekspansi kofaktor
+        //menyelesaikan SPL menggunakan metode cramer dan mencari determinan menggunakan reduksi baris
         Matriks hasil = new Matriks(matA.Nbaris,1);
         double detMat;
         detMat = matA.determinantReduction();
