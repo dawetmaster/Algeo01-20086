@@ -25,7 +25,7 @@ public class MainForm {
         buttonDeterminan.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Determinan det = new Determinan();
+                DeterminanForm det = new DeterminanForm();
                 det.run();
             }
         });
@@ -34,6 +34,13 @@ public class MainForm {
             public void actionPerformed(ActionEvent e) {
                 PolynomialInterpolation polin = new PolynomialInterpolation();
                 polin.run();
+            }
+        });
+        buttonInvers.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                InversForm inv = new InversForm();
+                inv.run();
             }
         });
     }
