@@ -17,37 +17,66 @@ public class Matriks {
             for (int j = 0; j < this.Nkolom; j++)
                 matriks[i][j] = 0;
     }
-    // Input/Output
-    /*
-     * NOTE: Belum bikin input dari GUI nya public void readMatriks() {
-     */
-    /* I.S. semua elemen matriks bernilai 0 */
-    /* F.S. Matriks terisi elemen */
-    /*
-     * for (int i = 0; i < this.Nbaris; i++) for (int j = 0; j < this.Nkolom; j++)
-     * //NOTE:isi dengan input matriks[i][j] = 0; }
-     */
-    public static Matriks parseMatrix(String text,int NBaris,int NKolom) {
-        Matriks m = new Matriks(NBaris,NKolom);
-        String[] test_line = text.split("\n");
-        for(int i=0;i<NBaris;i++){
-            String[] line_text = test_line[i].split(" ");
-            for(int j=0;j<NKolom;j++){
-                System.out.println(line_text[j]);
-                m.matriks[i][j] = Double.parseDouble(line_text[j]);
-                System.out.println(m.matriks[i][j]);
+
+    // SPECIAL CONSTRUCTOR
+    public static Matriks makeIdentity(int dimension){
+        //menghasilkan matriks identitas
+        //prekondisi: nbaris=nkolom
+        Matriks m = new Matriks(dimension, dimension);
+        for (int i=0; i<m.Nbaris; i++){
+            for (int j=0; j<m.Nkolom; j++){
+                m.matriks[i][j] = (i==j)? 1 : 0;
             }
         }
         return m;
     }
+
+    // NORMALISASI MATRIKS
+    public void normalize() {
+        for (int i = 0; i < this.Nbaris; i++) {
+            for (int j = 0; j < this.Nkolom; j++) {
+                if (Double.compare(this.matriks[i][j], -0.0) == 0) {
+                    this.matriks[i][j] = 0;
+                }
+            }
+        }
+    }
+
+    // REPRESENTASI STRING
+    public String repr() throws NullPointerException {
+        String result = "";
+        for (int i = 0; i < this.Nbaris; i++) {
+            for (int j = 0; j < this.Nkolom; j++) {
+                result = result.concat(Double.toString(this.matriks[i][j]));
+                if (j != this.Nkolom - 1) {
+                    result = result.concat(" ");
+                } else {
+                    result = result.concat("\n");
+                }
+            }
+        }
+        return result;
+    }
+    
+    // I/O
+    public static Matriks parseMatrix(String text, int NBaris, int NKolom) {
+        Matriks mat = new Matriks(NBaris,NKolom);
+        String[] test_line = text.split("\n");
+        for(int i=0; i<NBaris; i++){
+            String[] line_text = test_line[i].split(" ");
+            for(int j=0; j<NKolom; j++){
+                System.out.println(line_text[j]);
+                mat.matriks[i][j] = Double.parseDouble(line_text[j]);
+                System.out.println(mat.matriks[i][j]);
+            }
+        }
+        return mat;
+    }
+
     public void writeMatriks() {// Note: Belum dikonekin sama gui
         /* I.S. matriks terdefinisi */
         /* F.S. mencetak matriks ke layar */
-        for (int i = 0; i < this.Nbaris; i++) {
-            for (int j = 0; j < this.Nkolom; j++)
-                System.out.print(matriks[i][j] + " ");
-            System.out.println();
-        }
+        System.out.print(this.repr());
     }
 
     /* Copy/Kloning matriks */
@@ -60,57 +89,61 @@ public class Matriks {
     }
 
     /* Predikat */
+    public boolean isSquare() {
+        return (this.Nbaris == this.Nkolom);
+    }
+
     public boolean isIdentity() {
         // menghasilkan true jika Matriks ini adalah matriks identitas,yakni elemen di
         // diagonal utama semuanya bernilai true
         // kamus lokal
-        boolean isIdentity;// menghasilkan true jika Matriks ini matriks identitas
-        int i, j;// variabel looping
+        boolean isIdentity = this.isSquare();// menghasilkan true jika Matriks ini matriks identitas
+        int i = 0, j = 0;// variabel looping
         // Algoritma
-        isIdentity = true;
-        i = 0;
-        j = 0;
         while (i < this.Nbaris && isIdentity) {
             while (j < this.Nkolom && isIdentity) {
-                if (i == j) {// untuk elemen diagonal utama
-                    if (Double.compare(this.matriks[i][j], 1.0) != 0)// kalau nilai nya sama dengan 0 berarti nilai si
-                                                                     // elemen matriksnya 1. Ada di dokumentasi
-                                                                     // fungsinya
-                        isIdentity = false;
-                } else {
-                    if (this.matriks[i][j] != 0) {
-                        isIdentity = false;
-                    }
-                }
+                isIdentity = Boolean.logicalAnd(
+                        isIdentity,
+                        (i == j ? Double.compare(this.matriks[i][j], 1.0) == 0 : this.matriks[i][j] == 0)
+                );
                 j++;
             }
             i++;
         }
         return isIdentity;
     }
+    
+    public boolean isZero() {
+        /* Matriks tidak harus persegi */
+        boolean allzero = true;
+        int i = 0, j = 0;
+        while (i < this.Nbaris && allzero) {
+            while (j < this.Nkolom && allzero) {
+                allzero = Boolean.logicalAnd(
+                        allzero,
+                        Double.compare(Math.abs(this.matriks[i][j]), 0.0) == 0
+                );
+            }
+            j++;
+        }
+        i++;
+        return allzero;
+    }
 
     public Matriks plusMinusMatriks(Matriks m1, Matriks m2, boolean isPlus) {
         // m1.Nbaris == m2.Nbaris dan m1.Nkolom = m2.Nkolom
         // return m1 + m2 jika isPlus = true, dan m1 - m2 jika isPlus = false.
         Matriks m = new Matriks(m1.Nbaris, m1.Nkolom);
-        if (isPlus) {
-            for (int i = 0; i < m1.Nbaris; i++) {
-                for (int j = 0; j < m1.Nkolom; j++) {
-                    m.matriks[i][j] = m1.matriks[i][j] + m2.matriks[i][j];
-                }
-            }
-        } else { /* isPlus = false */
-            for (int i = 0; i < m1.Nbaris; i++) {
-                for (int j = 0; j < m1.Nkolom; j++) {
-                    m.matriks[i][j] = m1.matriks[i][j] - m2.matriks[i][j];
-                }
+        for (int i = 0; i < m1.Nbaris; i++) {
+            for (int j = 0; j < m1.Nkolom; j++) {
+                m.matriks[i][j] = m1.matriks[i][j] + (m2.matriks[i][j] * (isPlus ? 1 : -1));
             }
         }
         return m;
     }
 
     /* Fungsi dan Prosedur */
-    // * TODO: cek fungsi ini bila sudah ada fungsi untuk input
+    // * WARNING : OBSOLETE FUNCTION
     public static Matriks kali(Matriks m1, Matriks m2) {
         // fungsi yang melakukan perkalian matriks antara m1 dan m2
         // prekondisi: m1.NBaris = m2.NKolom
@@ -126,13 +159,54 @@ public class Matriks {
         return mat;
     }
 
+    public Matriks matMult(Matriks ext) {
+        if (this.Nkolom == ext.Nbaris) {
+            Matriks result = new Matriks(this.Nbaris, ext.Nkolom);
+            for (int i = 0; i < this.Nbaris; i++) {
+                for (int j = 0; j < ext.Nkolom; j++) {
+                    result.matriks[i][j] = 0;
+                    for (int k = 0; k < this.Nkolom; k++) {
+                        result.matriks[i][j] += this.matriks[i][k] * ext.matriks[k][j];
+                    }
+                }
+            }
+            return result;
+        } else {
+            throw new ArithmeticException("Ukuran matriks tidak sesuai");
+        }
+    }
+
+    // KALI SKALAR, DENGAN OVERLOADING
+    /* Versi Double */
+    public Matriks scalarMult(double x) {
+        Matriks result = this.cloneMatriks();
+        for (int i = 0; i < this.Nbaris; i++) {
+            for (int j = 0; j < this.Nkolom; j++) {
+                result.matriks[i][j] *= x;
+            }
+        }
+        return result;
+    }
+
+    /* Versi Integer */
+    public Matriks scalarMult(int x) {
+        Matriks result = this.cloneMatriks();
+        for (int i = 0; i < this.Nbaris; i++) {
+            for (int j = 0; j < this.Nkolom; j++) {
+                result.matriks[i][j] *= x;
+            }
+        }
+        return result;
+    }
+
     public double determinantReduction() {
         /* I.S. jumlah baris dan jumlah kolom harus sama */
         /* F.S. diperoleh determinan */
         /* kloning matriks dulu */
+        // TODO: ROMBAK SEGERA
         Matriks m = this.cloneMatriks();
         /* mulai prosedur */
-        if (m.Nbaris == m.Nkolom) {
+        if (m.isSquare()) {
             double multiplier;
             int swaps = 0;
             // Start dari kolom pertama
@@ -167,12 +241,13 @@ public class Matriks {
                     }
                 }
             }
+            m.normalize();
             // hitung hasil
             double result = 1;
             for (int i = 0; i < m.Nbaris; i++) {
                 result *= m.matriks[i][i];
             }
-            result *= Math.pow(-1, swaps);
+            result *= (swaps % 2 == 0 ? 1 : -1);
             return result;
         } else {
             return Double.NaN;
@@ -188,10 +263,52 @@ public class Matriks {
                     minor.matriks[i][j] = this.matriks[i >= row ? i + 1 : i][j >= col ? j + 1 : j];
                 }
             }
+            minor.normalize();
             return minor;
         } else {
             return null;
         }
+    }
+
+    public Matriks cofactor() {
+        if (this.isSquare()) {
+            Matriks cofactor = new Matriks(this.Nbaris, this.Nkolom);
+            for (int i = 0; i < this.Nbaris; i++) {
+                for (int j = 0; j < this.Nkolom; j++) {
+                    cofactor.matriks[i][j] = this.minor(i, j).determinantReduction() * ((i+j) % 2 == 0 ? 1 : -1);
+                }
+            }
+            cofactor.normalize();
+            return cofactor;
+        } else {
+            throw new ArithmeticException("Matriks tidak persegi!");
+        }
+    }
+
+    // KALI BARIS, DENGAN OVERLOADING
+    /* Versi Integer */
+    public void rowMult(int row, int x) {
+        for (int col = 0; col < this.Nkolom; col++) {
+            this.matriks[row][col] *= x;
+        }
+    }
+
+    /* Versi Double */
+    public void rowMult(int row, double x) {
+        for (int col = 0; col < this.Nkolom; col++) {
+            this.matriks[row][col] *= x;
+        }
+    }
+
+    // TRANSPOSE
+    public Matriks transpose() throws NullPointerException {
+        Matriks result = new Matriks(this.Nkolom, this.Nbaris);
+        for (int i = 0; i < result.Nbaris; i++) {
+            for (int j = 0; j < result.Nkolom; j++) {
+                result.matriks[i][j] = this.matriks[j][i];
+            }
+        }
+        return result;
     }
 
     public double determinantCofactor() {
@@ -207,7 +324,7 @@ public class Matriks {
                 // rekurens
                 double determinant = 0;
                 for (int i = 0; i < this.Nbaris; i++) {
-                    determinant += Math.pow(-1, i) * this.matriks[i][0] * this.minor(i, 0).determinantCofactor();
+                    determinant += (i % 2 == 0 ? 1 : -1) * this.matriks[i][0] * this.minor(i, 0).determinantCofactor();
                 }
                 return determinant;
             }
@@ -230,11 +347,11 @@ public class Matriks {
                 double determinant = 0;
                 if (row_mode) {
                     for (int i = 0; i < this.Nkolom; i++) {
-                        determinant += Math.pow(-1, i) * this.matriks[mat_index][i] * this.minor(mat_index, i).determinantCofactor();
+                        determinant += (i % 2 == 0 ? 1 : -1) * this.matriks[mat_index][i] * this.minor(mat_index, i).determinantCofactor();
                     }
                 } else {
                     for (int i = 0; i < this.Nbaris; i++) {
-                        determinant += Math.pow(-1, i) * this.matriks[i][mat_index] * this.minor(i, mat_index).determinantCofactor();
+                        determinant += (i % 2 == 0 ? 1 : -1) * this.matriks[i][mat_index] * this.minor(i, mat_index).determinantCofactor();
                     }
                 }
                 return determinant;

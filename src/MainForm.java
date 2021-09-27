@@ -27,6 +27,11 @@ public class MainForm {
             public void actionPerformed(ActionEvent e) {
                 Determinan det = new Determinan();
                 det.run();
+        buttonInterpolation.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PolynomialInterpolation polin = new PolynomialInterpolation();
+                polin.run();
             }
         });
     }
