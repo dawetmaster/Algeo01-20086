@@ -93,7 +93,21 @@ public class Matriks {
         /* F.S. mencetak matriks ke layar */
         System.out.print(this.repr());
     }
-
+    public String SimpanHasil() {
+        String hasil = "";
+        if(this.matriks==null){
+            hasil = "Tidak ada solusi atau solusi tak berhingga karena determinan matriks A adalah 0";
+        }
+        else {
+            for (int i = 0; i < this.Nbaris; i++) {
+                // System.out.println("Hasil:"+result.matriks[i][0]);
+                hasil = hasil + "x" + (i + 1) + ":";
+                hasil += this.matriks[i][0];
+                hasil += "\n";
+            }
+        }
+        return hasil;
+    }
     /* Copy/Kloning matriks */
     public Matriks cloneMatriks() {
         Matriks m = new Matriks(this.Nbaris, this.Nkolom);

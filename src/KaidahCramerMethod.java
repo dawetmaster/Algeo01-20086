@@ -16,7 +16,9 @@ public class KaidahCramerMethod {
     private JLabel resultField;
     private JPanel cramerMethodLabel;
     private JButton openFile;
+    private JButton simpanHasilButton;
     private JFrame kaidahCramerFrame = new JFrame("Kalkulator Matriks");
+    private Matriks resultMatrix;//matriks yang berisi hasil operasi
 
     public KaidahCramerMethod() {
         hitungButton.addActionListener(new ActionListener() {
@@ -25,8 +27,8 @@ public class KaidahCramerMethod {
             int N = Integer.parseInt(nInput.getText());
             Matriks matA = Matriks.parseMatrix(inputA.getText(),N,N);
             Matriks matB = Matriks.parseMatrix(inputB.getText(),N,1);
-            Matriks result = CramerMethod.solve(matA,matB);
-            String hasil = "<html>" + MatriksBalikanMethod.CetakHasil(result)+"</html>";
+            resultMatrix = CramerMethod.solve(matA,matB);
+            String hasil = "<html>" + MatriksBalikanMethod.CetakHasil(resultMatrix)+"</html>";
             resultField.setText(hasil);
             }
         });
@@ -62,6 +64,31 @@ public class KaidahCramerMethod {
                                 inputB.append(augmented_baris[augmented_baris.length-1]+"\n");
                             }
                         }
+                    }
+                    catch (FileNotFoundException fnfe){
+                        resultField.setText("File tidak ditemukan");
+                    }
+                    catch (IOException io){
+                        resultField.setText("File kosong!");
+                    }
+
+                }
+            }
+        });
+        simpanHasilButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser("./result");
+                int result = fileChooser.showSaveDialog(kaidahCramerFrame);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    System.out.println(selectedFile.getName());
+                    //menyimpan data
+                    String  resultString= resultMatrix.SimpanHasil();
+                    try {
+                        FileWriter fw = new FileWriter(selectedFile);
+                        fw.write(resultString);
+                        fw.close();
                     }
                     catch (FileNotFoundException fnfe){
                         resultField.setText("File tidak ditemukan");

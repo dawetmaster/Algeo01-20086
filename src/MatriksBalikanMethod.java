@@ -86,7 +86,7 @@ public class MatriksBalikanMethod {
                     File selectedFile = fileChooser.getSelectedFile();
                     System.out.println(selectedFile.getName());
                     //menyimpan data
-                    String  resultString= SimpanHasil(resultMatrix);
+                    String  resultString= resultMatrix.SimpanHasil();
                     try {
                         FileWriter fw = new FileWriter(selectedFile);
                         fw.write(resultString);
@@ -115,21 +115,6 @@ public class MatriksBalikanMethod {
                 hasil = hasil + "x" + (i + 1) + ":";
                 hasil += result.matriks[i][0];
                 hasil += "<br/>";
-            }
-        }
-        return hasil;
-    }
-    public static String SimpanHasil(Matriks result) {
-        String hasil = "";
-        if(result==null){
-            hasil = "Tidak ada solusi atau solusi tak berhingga karena determinan matriks A adalah 0";
-        }
-        else {
-            for (int i = 0; i < result.Nbaris; i++) {
-                // System.out.println("Hasil:"+result.matriks[i][0]);
-                hasil = hasil + "x" + (i + 1) + ":";
-                hasil += result.matriks[i][0];
-                hasil += "\n";
             }
         }
         return hasil;
