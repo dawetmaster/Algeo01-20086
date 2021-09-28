@@ -15,7 +15,9 @@ public class DeterminanERO {
     private JLabel resultLabel;
     private JLabel resultField;
     private JPanel eroDeterminan;
+    private JButton simpanHasilButton;
     private JFrame eroDeterminanFrame = new JFrame("Kalkulator Matriks");
+    private double final_determinan;//determinan matriks
 
     public DeterminanERO() {
         bukaFileButton.addActionListener(new ActionListener() {
@@ -64,8 +66,33 @@ public class DeterminanERO {
             public void actionPerformed(ActionEvent e) {
                 int N = Integer.parseInt(inputN.getText());
                 Matriks mat = Matriks.parseMatrix(inputMatrix.getText(),N,N);
-                double result = mat.determinantReduction();
-                resultField.setText(Double.toString(result));
+                final_determinan = mat.determinantReduction();
+                resultField.setText(Double.toString(final_determinan));
+            }
+        });
+        simpanHasilButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser("./result");
+                int result = fileChooser.showSaveDialog(eroDeterminanFrame);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    System.out.println(selectedFile.getName());
+                    //menyimpan data
+                    String  resultString= Double.toString(final_determinan);
+                    try {
+                        FileWriter fw = new FileWriter(selectedFile);
+                        fw.write(resultString);
+                        fw.close();
+                    }
+                    catch (FileNotFoundException fnfe){
+                        resultField.setText("File tidak ditemukan");
+                    }
+                    catch (IOException io){
+                        resultField.setText("File kosong!");
+                    }
+
+                }
             }
         });
     }
