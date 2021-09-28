@@ -347,7 +347,10 @@ public class Matriks {
         if (this.Nbaris == this.Nkolom) {
             // algoritma ekspansi kofaktor dengan cara rekursif
             // basis
-            if (this.Nbaris == 2) {
+            if(this.Nbaris==1){
+                return this.matriks[0][0];
+            }
+            else if (this.Nbaris == 2) {
                 return (this.matriks[0][0] * this.matriks[1][1] - this.matriks[1][0] * this.matriks[0][1]);
             } else {
                 // rekurens
