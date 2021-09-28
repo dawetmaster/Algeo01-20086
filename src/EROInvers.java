@@ -15,7 +15,9 @@ public class EROInvers {
     private JLabel resultLabel;
     private JLabel resultField;
     private JPanel eroInversPanel;
+    private JButton simpanHasilButton;
     private JFrame eroInversFrame = new JFrame("Kalkulator Matriks");
+    private Matriks resultMatrix;//matriks yang berisi hasil operasi
 
     public EROInvers() {
         bukaFileButton.addActionListener(new ActionListener() {
@@ -64,12 +66,37 @@ public class EROInvers {
             public void actionPerformed(ActionEvent e) {
                 int N = Integer.parseInt(nInputField.getText());
                 Matriks matriks = Matriks.parseMatrix(matInputField.getText(),N,N);
-                Matriks result = InversMethod.invers(matriks);
-                if(result!=null) {
-                    resultField.setText("<html>"+result.repr_forIO()+"</html>");
+                resultMatrix = InversMethod.invers(matriks);
+                if(resultMatrix!=null) {
+                    resultField.setText("<html>"+resultMatrix.repr_forIO()+"</html>");
                 }
                 else{
                     resultField.setText("Tidak mempunyai invers");
+                }
+            }
+        });
+        simpanHasilButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser("./result");
+                int result = fileChooser.showSaveDialog(eroInversFrame);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    System.out.println(selectedFile.getName());
+                    //menyimpan data
+                    String  resultString= resultMatrix.repr();
+                    try {
+                        FileWriter fw = new FileWriter(selectedFile);
+                        fw.write(resultString);
+                        fw.close();
+                    }
+                    catch (FileNotFoundException fnfe){
+                        resultField.setText("File tidak ditemukan");
+                    }
+                    catch (IOException io){
+                        resultField.setText("File kosong!");
+                    }
+
                 }
             }
         });
