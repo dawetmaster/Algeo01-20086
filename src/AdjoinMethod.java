@@ -16,6 +16,7 @@ public class AdjoinMethod {
     private JLabel resultField;
     private JPanel adjoinPanel;
     private JFrame adjInversFrame = new JFrame("Kalkulator Matriks");
+    private JScrollPane scrollbar = new JScrollPane(adjInversFrame,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
     public AdjoinMethod() {
         bukaFileButton.addActionListener(new ActionListener() {
@@ -85,6 +86,7 @@ public class AdjoinMethod {
 
     public void run() {
         adjInversFrame.setContentPane(new AdjoinMethod().adjoinPanel);
+        adjInversFrame.add(scrollbar);
         adjInversFrame.setMinimumSize(new Dimension(800, 400));
         adjInversFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         adjInversFrame.setVisible(true);

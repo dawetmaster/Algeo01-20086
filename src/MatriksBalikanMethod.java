@@ -18,7 +18,9 @@ public class MatriksBalikanMethod {
     private JLabel resultField;
     private JButton hitungButton;
     private JButton openFile;
+    private JButton simpanHasilButton;
     private JFrame inversMethodFrame = new JFrame("Kalkulator Matriks");
+    private Matriks resultMatrix;//matriks yang berisi hasil operasi
 
     public MatriksBalikanMethod() {
         hitungButton.addActionListener(new ActionListener() {
@@ -27,8 +29,8 @@ public class MatriksBalikanMethod {
                 int N = Integer.parseInt(nInput.getText());//ukuran matriks
                 Matriks matA = Matriks.parseMatrix(inputA.getText(),N,N);
                 Matriks matB = Matriks.parseMatrix(inputB.getText(),N,1);
-                Matriks result = InversMethod.solve(matA,matB);
-                String hasil = "<html>"+CetakHasil(result)+"</html>";
+                resultMatrix = InversMethod.solve(matA,matB);
+                String hasil = "<html>"+CetakHasil(resultMatrix)+"</html>";
                 resultField.setText(hasil);
             }
         });
@@ -75,6 +77,31 @@ public class MatriksBalikanMethod {
                 }
             }
         });
+        simpanHasilButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser("./result");
+                int result = fileChooser.showSaveDialog(inversMethodFrame);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    System.out.println(selectedFile.getName());
+                    //menyimpan data
+                    String  resultString= SimpanHasil(resultMatrix);
+                    try {
+                        FileWriter fw = new FileWriter(selectedFile);
+                        fw.write(resultString);
+                        fw.close();
+                    }
+                    catch (FileNotFoundException fnfe){
+                        resultField.setText("File tidak ditemukan");
+                    }
+                    catch (IOException io){
+                        resultField.setText("File kosong!");
+                    }
+
+                }
+            }
+        });
     }
 
     public static String CetakHasil(Matriks result) {
@@ -88,6 +115,21 @@ public class MatriksBalikanMethod {
                 hasil = hasil + "x" + (i + 1) + ":";
                 hasil += result.matriks[i][0];
                 hasil += "<br/>";
+            }
+        }
+        return hasil;
+    }
+    public static String SimpanHasil(Matriks result) {
+        String hasil = "";
+        if(result==null){
+            hasil = "Tidak ada solusi atau solusi tak berhingga karena determinan matriks A adalah 0";
+        }
+        else {
+            for (int i = 0; i < result.Nbaris; i++) {
+                // System.out.println("Hasil:"+result.matriks[i][0]);
+                hasil = hasil + "x" + (i + 1) + ":";
+                hasil += result.matriks[i][0];
+                hasil += "\n";
             }
         }
         return hasil;

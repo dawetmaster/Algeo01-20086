@@ -144,10 +144,10 @@ public class PolynomialInterpolation {
                         }
                     }
                     catch (FileNotFoundException fnf){
-                        equationLabel.setText("File tidak ditemukan");
+                        augMatrixLabel.setText("File tidak ditemukan");
                     }
                     catch (IOException io){
-                        equationLabel.setText("File kosong!");
+                        augMatrixLabel.setText("File kosong!");
                     }
 
                 }
