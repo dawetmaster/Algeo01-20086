@@ -57,6 +57,21 @@ public class Matriks {
         }
         return result;
     }
+    public String repr_forIO() {
+        //menkonversi matriks agar siap ditampilkan ke GUI
+        String result = "";
+        for (int i = 0; i < this.Nbaris; i++) {
+            for (int j = 0; j < this.Nkolom; j++) {
+                result = result.concat(Double.toString(this.matriks[i][j]));
+                if (j != this.Nkolom - 1) {
+                    result = result.concat(" ");
+                } else {
+                    result = result.concat("<br/>");
+                }
+            }
+        }
+        return result;
+    }
     
     // I/O
     public static Matriks parseMatrix(String text, int NBaris, int NKolom) {

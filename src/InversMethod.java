@@ -23,7 +23,7 @@ public class InversMethod {
         return null;
     }
     /* TODO:bugfixing and testing */
-    private static Matriks invers(Matriks m){
+    public static Matriks invers(Matriks m){
         //menggunakan metode gauss jordan
         int i,j;
         Matriks invers = m.cloneMatriks();//matriks awal
