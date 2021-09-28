@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 
 public class PolynomialInterpolation {
     Matriks m;
@@ -16,6 +17,8 @@ public class PolynomialInterpolation {
     private JLabel calcY;
     private JLabel augMatrixLabel;
     private JLabel calcYLabel;
+    private JButton bukaFileButton;
+    private JLabel warningLabel;
     private JFrame polynomialInterpolationFrame = new JFrame("Interpolasi Polinom");
 
     public Matriks createAug(Matriks coordMatrix){
@@ -109,11 +112,52 @@ public class PolynomialInterpolation {
                 calcY.setText("p(%.4f) = %.4f".formatted(x, y));
             }
         });
+        bukaFileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser("./test");
+                int result = fileChooser.showOpenDialog(polynomialInterpolationFrame);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    System.out.println(selectedFile.getName());
+                    //parse input
+                    String isi_file = "";
+                    try {
+                        String line = null;
+                        BufferedReader reader;
+                        reader = new BufferedReader(new FileReader(selectedFile));
+                        while((line=reader.readLine())!=null){
+                            isi_file+=line;
+                            isi_file+="\n";
+                        }
+                        String[] augmented = isi_file.split("\n");
+                        if(augmented.length>0){
+                            String text_mat = "";
+                            nInput.setText(Integer.toString(augmented.length));
+                            for(int i=0;i< augmented.length;i++) {
+                                String[] augmented_baris = augmented[i].split(" ");
+                                for(int j=0;j<augmented_baris.length;j++){
+                                    coordList.append(augmented_baris[j]+" ");
+                                }
+                                coordList.append("\n");
+                            }
+                        }
+                    }
+                    catch (FileNotFoundException fnf){
+                        equationLabel.setText("File tidak ditemukan");
+                    }
+                    catch (IOException io){
+                        equationLabel.setText("File kosong!");
+                    }
+
+                }
+            }
+        });
     }
     public void run(){
         polynomialInterpolationFrame.setContentPane(new PolynomialInterpolation().PolynomialInterpolationField);
         polynomialInterpolationFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        polynomialInterpolationFrame.setMinimumSize(new Dimension(700,500));
+        polynomialInterpolationFrame.setMinimumSize(new Dimension(800,500));
         polynomialInterpolationFrame.setVisible(true);
     }
 }
