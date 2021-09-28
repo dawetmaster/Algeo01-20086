@@ -18,6 +18,13 @@ public class InversForm {
                 inv.run();
             }
         });
+        adjoinButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AdjoinMethod adj = new AdjoinMethod();
+                adj.run();
+            }
+        });
     }
 
     public void run(){
