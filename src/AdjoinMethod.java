@@ -15,8 +15,10 @@ public class AdjoinMethod {
     private JLabel resultLabel;
     private JLabel resultField;
     private JPanel adjoinPanel;
+    private JButton simpanHasilButton;
     private JFrame adjInversFrame = new JFrame("Kalkulator Matriks");
-    private JScrollPane scrollbar = new JScrollPane(adjInversFrame,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+   // private JScrollPane scrollbar = new JScrollPane(adjInversFrame,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+    private Matriks resultMatrix;//matriks yang berisi hasil operasi
 
     public AdjoinMethod() {
         bukaFileButton.addActionListener(new ActionListener() {
@@ -64,21 +66,46 @@ public class AdjoinMethod {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int N = Integer.parseInt(nInputField.getText());
-                Matriks matriks = Matriks.parseMatrix(matField.getText(),N,N);
-                double determinan = matriks.determinantCofactor();
-                matriks = matriks.cofactor();
+                resultMatrix = Matriks.parseMatrix(matField.getText(),N,N);
+                double determinan = resultMatrix.determinantCofactor();
+                resultMatrix = resultMatrix.cofactor();
                 System.out.println("Yo da yo");
-                System.out.println(matriks.repr());
-                matriks = matriks.transpose();
-                System.out.println(matriks.repr());
+                System.out.println(resultMatrix.repr());
+                resultMatrix = resultMatrix.transpose();
+                System.out.println(resultMatrix.repr());
                 //System.out.println(determinan);
                 if(Double.compare(determinan,0.0)!=0) {
                     System.out.println(1.0/determinan);
-                    matriks = matriks.scalarMult(1.0/determinan);
-                    resultField.setText("<html>"+matriks.repr_forIO()+"</html>");
+                    resultMatrix = resultMatrix.scalarMult(1.0/determinan);
+                    resultField.setText("<html>"+resultMatrix.repr_forIO()+"</html>");
                 }
                 else{
                     resultField.setText("Tidak mempunyai invers");
+                }
+            }
+        });
+        simpanHasilButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser("./result");
+                int result = fileChooser.showSaveDialog(adjInversFrame);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    System.out.println(selectedFile.getName());
+                    //menyimpan data
+                    String  resultString= resultMatrix.repr();
+                    try {
+                        FileWriter fw = new FileWriter(selectedFile);
+                        fw.write(resultString);
+                        fw.close();
+                    }
+                    catch (FileNotFoundException fnfe){
+                        resultField.setText("File tidak ditemukan");
+                    }
+                    catch (IOException io){
+                        resultField.setText("File kosong!");
+                    }
+
                 }
             }
         });
@@ -86,7 +113,7 @@ public class AdjoinMethod {
 
     public void run() {
         adjInversFrame.setContentPane(new AdjoinMethod().adjoinPanel);
-        adjInversFrame.add(scrollbar);
+      //  adjInversFrame.add(scrollbar);
         adjInversFrame.setMinimumSize(new Dimension(800, 400));
         adjInversFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         adjInversFrame.setVisible(true);
