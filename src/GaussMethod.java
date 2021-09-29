@@ -50,7 +50,7 @@ public class GaussMethod {
     }
     public static Matriks augment(Matriks a, Matriks b){
         /* membuat matriks augmented dari matriks a berukuran i x j dan b berukuran i x 0 */
-        int i = 0, j = 0;
+        int i, j;
         Matriks m = new Matriks(a.Nbaris, a.Nbaris+1);
         for(i = 0; i < m.Nbaris; i++){
             for(j = 0;  j < m.Nkolom-1; j++){
@@ -78,11 +78,19 @@ public class GaussMethod {
     }
     public static boolean isUniqueSol (Matriks m){
         /*
+            mengecek apakah SPL dalam bentuk matriks augmented punya solusi unik.
+            SPL matriks punya solusi unik jika tidak memenuhi kriteria matriks banyak solusi dan
+            matriks tanpa solusi.
+            Prereq: matriks sudah berbentuk matriks eselon baris
+        */
+        return !isNoSol(m) && !isManySol(m);
+    }
+    public static boolean isNoSol(Matriks m) {
+        /*
             mengecek apakah SPL dalam bentuk matriks augmented tidak punya penyelesaian
             SPL matriks tidak punya penyelesaian jika setelah direduksi baris terakhir terdapat
-            nilai selain 0 pada kolom  [0..Nkolom-2] dan nilai 0 untuk kolom ke-[Nkolom-1]
-            Prereq: matriks sudah tereduksi
-            TODO: resolve bug
+            nilai selain 0 pada kolom  [0..Nkolom-2] dan nilai 0 untuk kolom ke-[Nkolom-1].
+            Prereq: matriks sudah berbentuk matriks eselon baris
         */
         boolean allZero = true; // cek [0..NKolom-2] bernilai 0 semua
         int j = 0;
@@ -92,8 +100,23 @@ public class GaussMethod {
             }
             j++;
         }
-        boolean noSol = allZero && (m.matriks[m.Nbaris-1][m.Nkolom-1] != 0);
-        boolean manySol = allZero && (m.matriks[m.Nbaris-1][m.Nkolom-1] == 0);
-        return !noSol && !manySol;
+        return allZero && (m.matriks[m.Nbaris-1][m.Nkolom-1] != 0);
+    }
+    public static boolean isManySol(Matriks m) {
+        /*
+            mengecek apakah SPL dalam bentuk matriks augmented punya banyak penyelesaian
+            SPL matriks punya banyak penyelesaian jika setelah direduksi, semua elemen
+            pada baris terakhir adalah nol.
+            Prereq: matriks sudah berbentuk matriks eselon baris
+        */
+        boolean allZero = true; // cek [0..NKolom-2] bernilai 0 semua
+        int j = 0;
+        while(allZero && (j < /*m.Nbaris-1*/m.Nkolom-1)){
+            if (m.matriks[m.Nbaris-1][j] != 0){
+                allZero = false;
+            }
+            j++;
+        }
+        return allZero && (m.matriks[m.Nbaris-1][m.Nkolom-1] == 0);
     }
 }
