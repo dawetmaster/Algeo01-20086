@@ -35,10 +35,27 @@ public class Matriks {
     public void normalize() {
         for (int i = 0; i < this.Nbaris; i++) {
             for (int j = 0; j < this.Nkolom; j++) {
-                if (Double.compare(this.matriks[i][j], -0.0) == 0) {
+                if (Double.compare(this.matriks[i][j], -0.0) == 0 && Double.compare(this.matriks[i][j], 0.0) == 0) {
                     this.matriks[i][j] = 0;
                 }
             }
+        }
+    }
+
+    // OBE
+    // ROW SWAP
+    public void swapRows(int r1, int r2) {
+        double[] temp = this.matriks[r1];
+        this.matriks[r1] = this.matriks[r2];
+        this.matriks[r2] = temp;
+    }
+
+    // ROW REDUCTION
+    public void rowReduce(int r1, int r2, int colidx) {
+        // maksudnya r1 = r1 - mult * r2
+        double mult = this.matriks[r1][colidx] / this.matriks[r2][colidx];
+        for (int i = 0; i < this.Nkolom; i++) {
+            this.matriks[r1][i] -= mult * this.matriks[r2][i];
         }
     }
 
