@@ -48,6 +48,34 @@ public class GaussMethod {
         // }
         return result;
     }
+    public static Matriks augment(Matriks a, Matriks b){
+        /* membuat matriks augmented dari matriks a berukuran i x j dan b berukuran i x 0 */
+        int i = 0, j = 0;
+        Matriks m = new Matriks(a.Nbaris, a.Nbaris+1);
+        for(i = 0; i < m.Nbaris; i++){
+            for(j = 0;  j < m.Nkolom-1; j++){
+                m.matriks[i][j] = a.matriks[i][j];
+            }
+        }
+        for(i = 0; i < m.Nbaris; i++){
+            m.matriks[i][m.Nkolom-1] = b.matriks[i][0];
+        }
+        return m;
+    }
+    public static String printSol (double[] solution, boolean toTxt){
+        /* ubah solution ke bentuk string untuk file teks jika toTxt = true,
+           output ke layar jika toTxt = false */
+        String solutionString = toTxt? "" : "<html>";
+        for(int i = 0; i < solution.length; i++){
+            solutionString += "x%d = ".formatted(i+1);
+            solutionString += "%.2f".formatted(solution[i]);
+            if (i != solution.length-1){
+                solutionString += (toTxt? "\n" : "<br/>");
+            }
+        }
+        solutionString += toTxt? "" : "</html>";
+        return solutionString;
+    }
     public static boolean isUniqueSol (Matriks m){
         /*
             mengecek apakah SPL dalam bentuk matriks augmented tidak punya penyelesaian

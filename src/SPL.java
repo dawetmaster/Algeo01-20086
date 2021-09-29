@@ -13,6 +13,13 @@ public class SPL {
     private JFrame frame = new JFrame("Kalkulator Matriks");
 
     public SPL() {
+        eliminasiGaussButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GaussEliminationMethod gaussElim = new GaussEliminationMethod();
+                gaussElim.run();
+            }
+        });
         matriksBalikanButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
