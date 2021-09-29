@@ -24,12 +24,12 @@ public class KaidahCramerMethod {
         hitungButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            int N = Integer.parseInt(nInput.getText());
-            Matriks matA = Matriks.parseMatrix(inputA.getText(),N,N);
-            Matriks matB = Matriks.parseMatrix(inputB.getText(),N,1);
-            resultMatrix = CramerMethod.solve(matA,matB);
-            String hasil = "<html>" + MatriksBalikanMethod.CetakHasil(resultMatrix)+"</html>";
-            resultField.setText(hasil);
+                int N = Integer.parseInt(nInput.getText());
+                Matriks matA = Matriks.parseMatrix(inputA.getText(), N, N);
+                Matriks matB = Matriks.parseMatrix(inputB.getText(), N, 1);
+                resultMatrix = CramerMethod.solve(matA, matB);
+                String hasil = "<html>" + MatriksBalikanMethod.CetakHasil(resultMatrix) + "</html>";
+                resultField.setText(hasil);
             }
         });
         openFile.addActionListener(new ActionListener() {
@@ -46,29 +46,27 @@ public class KaidahCramerMethod {
                         String line = null;
                         BufferedReader reader;
                         reader = new BufferedReader(new FileReader(selectedFile));
-                        while((line=reader.readLine())!=null){
-                            isi_file+=line;
-                            isi_file+="\n";
+                        while ((line = reader.readLine()) != null) {
+                            isi_file += line;
+                            isi_file += "\n";
                         }
                         String[] augmented = isi_file.split("\n");
-                        if(augmented.length>0){
+                        if (augmented.length > 0) {
                             String text_matA = "";
                             String text_matB = "";
                             nInput.setText(Integer.toString(augmented.length));
-                            for(int i=0;i<augmented.length;i++) {
+                            for (int i = 0; i < augmented.length; i++) {
                                 String[] augmented_baris = augmented[i].split(" ");
-                                for(int j=0;j<augmented_baris.length-1;j++){
-                                    inputA.append(augmented_baris[j]+" ");
+                                for (int j = 0; j < augmented_baris.length - 1; j++) {
+                                    inputA.append(augmented_baris[j] + " ");
                                 }
                                 inputA.append("\n");
-                                inputB.append(augmented_baris[augmented_baris.length-1]+"\n");
+                                inputB.append(augmented_baris[augmented_baris.length - 1] + "\n");
                             }
                         }
-                    }
-                    catch (FileNotFoundException fnfe){
+                    } catch (FileNotFoundException fnfe) {
                         resultField.setText("File tidak ditemukan");
-                    }
-                    catch (IOException io){
+                    } catch (IOException io) {
                         resultField.setText("File kosong!");
                     }
 
@@ -84,16 +82,14 @@ public class KaidahCramerMethod {
                     File selectedFile = fileChooser.getSelectedFile();
                     System.out.println(selectedFile.getName());
                     //menyimpan data
-                    String  resultString= resultMatrix.SimpanHasil();
+                    String resultString = resultMatrix.SimpanHasil();
                     try {
                         FileWriter fw = new FileWriter(selectedFile);
                         fw.write(resultString);
                         fw.close();
-                    }
-                    catch (FileNotFoundException fnfe){
+                    } catch (FileNotFoundException fnfe) {
                         resultField.setText("File tidak ditemukan");
-                    }
-                    catch (IOException io){
+                    } catch (IOException io) {
                         resultField.setText("File kosong!");
                     }
 
@@ -102,9 +98,9 @@ public class KaidahCramerMethod {
         });
     }
 
-    public void run(){
+    public void run() {
         kaidahCramerFrame.setContentPane(new KaidahCramerMethod().cramerMethodLabel);
-        kaidahCramerFrame.setMinimumSize(new Dimension(800,400));
+        kaidahCramerFrame.setMinimumSize(new Dimension(800, 400));
         kaidahCramerFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         kaidahCramerFrame.setVisible(true);
     }

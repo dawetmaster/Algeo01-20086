@@ -21,10 +21,10 @@ public class PolynomialInterpolation {
     private JLabel warningLabel;
     private JFrame polynomialInterpolationFrame = new JFrame("Interpolasi Polinom");
 
-    public Matriks createAug(Matriks coordMatrix){
-        Matriks m = new Matriks(coordMatrix.Nbaris, coordMatrix.Nbaris+1);
-        for(int i = 0; i < coordMatrix.Nbaris; i++){
-            for(int j = 0; j < coordMatrix.Nbaris; j++){
+    public Matriks createAug(Matriks coordMatrix) {
+        Matriks m = new Matriks(coordMatrix.Nbaris, coordMatrix.Nbaris + 1);
+        for (int i = 0; i < coordMatrix.Nbaris; i++) {
+            for (int j = 0; j < coordMatrix.Nbaris; j++) {
                 m.matriks[i][j] = Math.pow(coordMatrix.matriks[i][0], j);
             }
             m.matriks[i][coordMatrix.Nbaris] = coordMatrix.matriks[i][1];
@@ -32,12 +32,12 @@ public class PolynomialInterpolation {
         return m;
     }
 
-    public void writeMatrix(Matriks m, JLabel y){
+    public void writeMatrix(Matriks m, JLabel y) {
         // menulis matriks dalam bentuk tabel ke dalam satu JLabel
         String augMatrix = "<html>Matriks Augmented:<br/><table>";
-        for(int i = 0; i < m.Nbaris; i++){
+        for (int i = 0; i < m.Nbaris; i++) {
             augMatrix += "<tr>";
-            for(int j = 0; j < m.Nkolom; j++){
+            for (int j = 0; j < m.Nkolom; j++) {
                 augMatrix += "<td>%.4f</td>".formatted(m.matriks[i][j]);
             }
             augMatrix += "</tr>";
@@ -77,7 +77,7 @@ public class PolynomialInterpolation {
                         equation += "%.4fx ".formatted(result[1] * -1);
                     }
                 }
-                for(i = 2; i < result.length; i++){
+                for (i = 2; i < result.length; i++) {
                     if (result[i] > 0) {
                         equation += "+ ";
                         equation += "%.4fx^%d".formatted(result[i], i);
@@ -85,7 +85,7 @@ public class PolynomialInterpolation {
                         equation += "- ";
                         equation += "%.4fx^%d".formatted(result[i] * -1, i);
                     }
-                    if (i <= result.length-1){
+                    if (i <= result.length - 1) {
                         equation += " ";
                     }
                 }
@@ -105,7 +105,7 @@ public class PolynomialInterpolation {
                 double[] result = GaussMethod.gaussElim(m);
 
                 double y = 0;
-                for(int i = 0; i < n; i++){
+                for (int i = 0; i < n; i++) {
                     y += result[i] * Math.pow(x, i);
                 }
 
@@ -126,27 +126,25 @@ public class PolynomialInterpolation {
                         String line = null;
                         BufferedReader reader;
                         reader = new BufferedReader(new FileReader(selectedFile));
-                        while((line=reader.readLine())!=null){
-                            isi_file+=line;
-                            isi_file+="\n";
+                        while ((line = reader.readLine()) != null) {
+                            isi_file += line;
+                            isi_file += "\n";
                         }
                         String[] augmented = isi_file.split("\n");
-                        if(augmented.length>0){
+                        if (augmented.length > 0) {
                             String text_mat = "";
                             nInput.setText(Integer.toString(augmented.length));
-                            for(int i=0;i< augmented.length;i++) {
+                            for (int i = 0; i < augmented.length; i++) {
                                 String[] augmented_baris = augmented[i].split(" ");
-                                for(int j=0;j<augmented_baris.length;j++){
-                                    coordList.append(augmented_baris[j]+" ");
+                                for (int j = 0; j < augmented_baris.length; j++) {
+                                    coordList.append(augmented_baris[j] + " ");
                                 }
                                 coordList.append("\n");
                             }
                         }
-                    }
-                    catch (FileNotFoundException fnf){
+                    } catch (FileNotFoundException fnf) {
                         augMatrixLabel.setText("File tidak ditemukan");
-                    }
-                    catch (IOException io){
+                    } catch (IOException io) {
                         augMatrixLabel.setText("File kosong!");
                     }
 
@@ -154,10 +152,11 @@ public class PolynomialInterpolation {
             }
         });
     }
-    public void run(){
+
+    public void run() {
         polynomialInterpolationFrame.setContentPane(new PolynomialInterpolation().PolynomialInterpolationField);
         polynomialInterpolationFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        polynomialInterpolationFrame.setMinimumSize(new Dimension(800,500));
+        polynomialInterpolationFrame.setMinimumSize(new Dimension(800, 500));
         polynomialInterpolationFrame.setVisible(true);
     }
 }

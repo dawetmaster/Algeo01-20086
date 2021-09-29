@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Dimension;
@@ -43,12 +44,21 @@ public class MainForm {
                 inv.run();
             }
         });
+
+        buttonRegretion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                RegresiForm regr = new RegresiForm();
+                regr.run();
+            }
+        });
     }
-    public void run(){
-            frame.setContentPane(new MainForm().panelSPL);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-           //frame.pack();
-            frame.setMinimumSize(new Dimension(400,400));
-            frame.setVisible(true);
+
+    public void run() {
+        frame.setContentPane(new MainForm().panelSPL);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //frame.pack();
+        frame.setMinimumSize(new Dimension(400, 400));
+        frame.setVisible(true);
     }
 }

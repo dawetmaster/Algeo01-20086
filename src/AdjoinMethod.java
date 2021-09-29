@@ -17,7 +17,7 @@ public class AdjoinMethod {
     private JPanel adjoinPanel;
     private JButton simpanHasilButton;
     private JFrame adjInversFrame = new JFrame("Kalkulator Matriks");
-   // private JScrollPane scrollbar = new JScrollPane(adjInversFrame,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+    // private JScrollPane scrollbar = new JScrollPane(adjInversFrame,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
     private Matriks resultMatrix;//matriks yang berisi hasil operasi
 
     public AdjoinMethod() {
@@ -35,27 +35,25 @@ public class AdjoinMethod {
                         String line = null;
                         BufferedReader reader;
                         reader = new BufferedReader(new FileReader(selectedFile));
-                        while((line=reader.readLine())!=null){
-                            isi_file+=line;
-                            isi_file+="\n";
+                        while ((line = reader.readLine()) != null) {
+                            isi_file += line;
+                            isi_file += "\n";
                         }
                         String[] augmented = isi_file.split("\n");
-                        if(augmented.length>0){
+                        if (augmented.length > 0) {
                             String text_mat = "";
                             nInputField.setText(Integer.toString(augmented.length));
-                            for(int i=0;i<augmented.length;i++) {
+                            for (int i = 0; i < augmented.length; i++) {
                                 String[] augmented_baris = augmented[i].split(" ");
-                                for(int j=0;j<augmented_baris.length;j++){
-                                    matField.append(augmented_baris[j]+" ");
+                                for (int j = 0; j < augmented_baris.length; j++) {
+                                    matField.append(augmented_baris[j] + " ");
                                 }
                                 matField.append("\n");
                             }
                         }
-                    }
-                    catch (FileNotFoundException fnf){
+                    } catch (FileNotFoundException fnf) {
                         resultField.setText("File tidak ditemukan");
-                    }
-                    catch (IOException io){
+                    } catch (IOException io) {
                         resultField.setText("File kosong!");
                     }
 
@@ -66,7 +64,7 @@ public class AdjoinMethod {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int N = Integer.parseInt(nInputField.getText());
-                resultMatrix = Matriks.parseMatrix(matField.getText(),N,N);
+                resultMatrix = Matriks.parseMatrix(matField.getText(), N, N);
                 double determinan = resultMatrix.determinantCofactor();
                 resultMatrix = resultMatrix.cofactor();
                 System.out.println("Yo da yo");
@@ -74,12 +72,11 @@ public class AdjoinMethod {
                 resultMatrix = resultMatrix.transpose();
                 System.out.println(resultMatrix.repr());
                 //System.out.println(determinan);
-                if(Double.compare(determinan,0.0)!=0) {
-                    System.out.println(1.0/determinan);
-                    resultMatrix = resultMatrix.scalarMult(1.0/determinan);
-                    resultField.setText("<html>"+resultMatrix.repr_forIO()+"</html>");
-                }
-                else{
+                if (Double.compare(determinan, 0.0) != 0) {
+                    System.out.println(1.0 / determinan);
+                    resultMatrix = resultMatrix.scalarMult(1.0 / determinan);
+                    resultField.setText("<html>" + resultMatrix.repr_forIO() + "</html>");
+                } else {
                     resultField.setText("Tidak mempunyai invers");
                 }
             }
@@ -93,16 +90,14 @@ public class AdjoinMethod {
                     File selectedFile = fileChooser.getSelectedFile();
                     System.out.println(selectedFile.getName());
                     //menyimpan data
-                    String  resultString= resultMatrix.repr();
+                    String resultString = resultMatrix.repr();
                     try {
                         FileWriter fw = new FileWriter(selectedFile);
                         fw.write(resultString);
                         fw.close();
-                    }
-                    catch (FileNotFoundException fnfe){
+                    } catch (FileNotFoundException fnfe) {
                         resultField.setText("File tidak ditemukan");
-                    }
-                    catch (IOException io){
+                    } catch (IOException io) {
                         resultField.setText("File kosong!");
                     }
 
@@ -113,7 +108,7 @@ public class AdjoinMethod {
 
     public void run() {
         adjInversFrame.setContentPane(new AdjoinMethod().adjoinPanel);
-      //  adjInversFrame.add(scrollbar);
+        //  adjInversFrame.add(scrollbar);
         adjInversFrame.setMinimumSize(new Dimension(800, 400));
         adjInversFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         adjInversFrame.setVisible(true);

@@ -34,27 +34,25 @@ public class DeterminanKofaktor {
                         String line = null;
                         BufferedReader reader;
                         reader = new BufferedReader(new FileReader(selectedFile));
-                        while((line=reader.readLine())!=null){
-                            isi_file+=line;
-                            isi_file+="\n";
+                        while ((line = reader.readLine()) != null) {
+                            isi_file += line;
+                            isi_file += "\n";
                         }
                         String[] augmented = isi_file.split("\n");
-                        if(augmented.length>0){
+                        if (augmented.length > 0) {
                             String text_mat = "";
                             inputN.setText(Integer.toString(augmented.length));
-                            for(int i=0;i<augmented.length;i++) {
+                            for (int i = 0; i < augmented.length; i++) {
                                 String[] augmented_baris = augmented[i].split(" ");
-                                for(int j=0;j<augmented_baris.length;j++){
-                                    inputMatrix.append(augmented_baris[j]+" ");
+                                for (int j = 0; j < augmented_baris.length; j++) {
+                                    inputMatrix.append(augmented_baris[j] + " ");
                                 }
                                 inputMatrix.append("\n");
                             }
                         }
-                    }
-                    catch (FileNotFoundException fnf){
+                    } catch (FileNotFoundException fnf) {
                         resultField.setText("File tidak ditemukan");
-                    }
-                    catch (IOException io){
+                    } catch (IOException io) {
                         resultField.setText("File kosong!");
                     }
 
@@ -65,7 +63,7 @@ public class DeterminanKofaktor {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int N = Integer.parseInt(inputN.getText());
-                Matriks mat = Matriks.parseMatrix(inputMatrix.getText(),N,N);
+                Matriks mat = Matriks.parseMatrix(inputMatrix.getText(), N, N);
                 final_determinan = mat.determinantCofactor();
                 resultField.setText(Double.toString(final_determinan));
             }
@@ -73,31 +71,31 @@ public class DeterminanKofaktor {
         simpanHasilButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    JFileChooser fileChooser = new JFileChooser("./result");
-                    int result = fileChooser.showSaveDialog(DetKofFrame);
-                    if (result == JFileChooser.APPROVE_OPTION) {
-                        File selectedFile = fileChooser.getSelectedFile();
-                        System.out.println(selectedFile.getName());
-                        //menyimpan data
-                        String resultString = Double.toString(final_determinan);
-                        try {
-                            FileWriter fw = new FileWriter(selectedFile);
-                            fw.write(resultString);
-                            fw.close();
-                        } catch (FileNotFoundException fnfe) {
-                            resultField.setText("File tidak ditemukan");
-                        } catch (IOException io) {
-                            resultField.setText("File kosong!");
-                        }
-
+                JFileChooser fileChooser = new JFileChooser("./result");
+                int result = fileChooser.showSaveDialog(DetKofFrame);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    System.out.println(selectedFile.getName());
+                    //menyimpan data
+                    String resultString = Double.toString(final_determinan);
+                    try {
+                        FileWriter fw = new FileWriter(selectedFile);
+                        fw.write(resultString);
+                        fw.close();
+                    } catch (FileNotFoundException fnfe) {
+                        resultField.setText("File tidak ditemukan");
+                    } catch (IOException io) {
+                        resultField.setText("File kosong!");
                     }
+
                 }
+            }
         });
     }
 
-    public void run(){
+    public void run() {
         DetKofFrame.setContentPane(new DeterminanKofaktor().DetKotPanel);
-        DetKofFrame.setMinimumSize(new Dimension(800,400));
+        DetKofFrame.setMinimumSize(new Dimension(800, 400));
         DetKofFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         DetKofFrame.setVisible(true);
     }

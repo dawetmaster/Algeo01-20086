@@ -30,15 +30,15 @@ public class SPL {
         kaidahCramerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                KaidahCramerMethod  cramer = new KaidahCramerMethod();
+                KaidahCramerMethod cramer = new KaidahCramerMethod();
                 cramer.run();
             }
         });
     }
 
-    public void run(){
+    public void run() {
         frame.setContentPane(new SPL().panelMethod);
-        frame.setMinimumSize(new Dimension(400,400));
+        frame.setMinimumSize(new Dimension(400, 400));
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
     }

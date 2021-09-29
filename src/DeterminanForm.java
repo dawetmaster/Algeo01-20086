@@ -27,9 +27,9 @@ public class DeterminanForm {
         });
     }
 
-    public void run(){
+    public void run() {
         determinanFrame.setContentPane(new DeterminanForm().determinanPanel);
-        determinanFrame.setMinimumSize(new Dimension(400,400));
+        determinanFrame.setMinimumSize(new Dimension(400, 400));
         determinanFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         determinanFrame.setVisible(true);
     }

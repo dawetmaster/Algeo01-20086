@@ -34,27 +34,25 @@ public class EROInvers {
                         String line = null;
                         BufferedReader reader;
                         reader = new BufferedReader(new FileReader(selectedFile));
-                        while((line=reader.readLine())!=null){
-                            isi_file+=line;
-                            isi_file+="\n";
+                        while ((line = reader.readLine()) != null) {
+                            isi_file += line;
+                            isi_file += "\n";
                         }
                         String[] augmented = isi_file.split("\n");
-                        if(augmented.length>0){
+                        if (augmented.length > 0) {
                             String text_mat = "";
                             nInputField.setText(Integer.toString(augmented.length));
-                            for(int i=0;i<augmented.length;i++) {
+                            for (int i = 0; i < augmented.length; i++) {
                                 String[] augmented_baris = augmented[i].split(" ");
-                                for(int j=0;j<augmented_baris.length;j++){
-                                    matInputField.append(augmented_baris[j]+" ");
+                                for (int j = 0; j < augmented_baris.length; j++) {
+                                    matInputField.append(augmented_baris[j] + " ");
                                 }
                                 matInputField.append("\n");
                             }
                         }
-                    }
-                    catch (FileNotFoundException fnf){
+                    } catch (FileNotFoundException fnf) {
                         resultField.setText("File tidak ditemukan");
-                    }
-                    catch (IOException io){
+                    } catch (IOException io) {
                         resultField.setText("File kosong!");
                     }
 
@@ -65,12 +63,11 @@ public class EROInvers {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int N = Integer.parseInt(nInputField.getText());
-                Matriks matriks = Matriks.parseMatrix(matInputField.getText(),N,N);
+                Matriks matriks = Matriks.parseMatrix(matInputField.getText(), N, N);
                 resultMatrix = InversMethod.invers(matriks);
-                if(resultMatrix!=null) {
-                    resultField.setText("<html>"+resultMatrix.repr_forIO()+"</html>");
-                }
-                else{
+                if (resultMatrix != null) {
+                    resultField.setText("<html>" + resultMatrix.repr_forIO() + "</html>");
+                } else {
                     resultField.setText("Tidak mempunyai invers");
                 }
             }
@@ -84,16 +81,14 @@ public class EROInvers {
                     File selectedFile = fileChooser.getSelectedFile();
                     System.out.println(selectedFile.getName());
                     //menyimpan data
-                    String  resultString= resultMatrix.repr();
+                    String resultString = resultMatrix.repr();
                     try {
                         FileWriter fw = new FileWriter(selectedFile);
                         fw.write(resultString);
                         fw.close();
-                    }
-                    catch (FileNotFoundException fnfe){
+                    } catch (FileNotFoundException fnfe) {
                         resultField.setText("File tidak ditemukan");
-                    }
-                    catch (IOException io){
+                    } catch (IOException io) {
                         resultField.setText("File kosong!");
                     }
 

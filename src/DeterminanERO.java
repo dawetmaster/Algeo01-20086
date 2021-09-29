@@ -34,27 +34,25 @@ public class DeterminanERO {
                         String line = null;
                         BufferedReader reader;
                         reader = new BufferedReader(new FileReader(selectedFile));
-                        while((line=reader.readLine())!=null){
-                            isi_file+=line;
-                            isi_file+="\n";
+                        while ((line = reader.readLine()) != null) {
+                            isi_file += line;
+                            isi_file += "\n";
                         }
                         String[] augmented = isi_file.split("\n");
-                        if(augmented.length>0){
+                        if (augmented.length > 0) {
                             String text_mat = "";
                             inputN.setText(Integer.toString(augmented.length));
-                            for(int i=0;i<augmented.length;i++) {
+                            for (int i = 0; i < augmented.length; i++) {
                                 String[] augmented_baris = augmented[i].split(" ");
-                                for(int j=0;j<augmented_baris.length;j++){
-                                    inputMatrix.append(augmented_baris[j]+" ");
+                                for (int j = 0; j < augmented_baris.length; j++) {
+                                    inputMatrix.append(augmented_baris[j] + " ");
                                 }
                                 inputMatrix.append("\n");
                             }
                         }
-                    }
-                    catch (FileNotFoundException fnf){
+                    } catch (FileNotFoundException fnf) {
                         resultField.setText("File tidak ditemukan");
-                    }
-                    catch (IOException io){
+                    } catch (IOException io) {
                         resultField.setText("File kosong!");
                     }
 
@@ -65,7 +63,7 @@ public class DeterminanERO {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int N = Integer.parseInt(inputN.getText());
-                Matriks mat = Matriks.parseMatrix(inputMatrix.getText(),N,N);
+                Matriks mat = Matriks.parseMatrix(inputMatrix.getText(), N, N);
                 final_determinan = mat.determinantReduction();
                 resultField.setText(Double.toString(final_determinan));
             }
@@ -79,16 +77,14 @@ public class DeterminanERO {
                     File selectedFile = fileChooser.getSelectedFile();
                     System.out.println(selectedFile.getName());
                     //menyimpan data
-                    String  resultString= Double.toString(final_determinan);
+                    String resultString = Double.toString(final_determinan);
                     try {
                         FileWriter fw = new FileWriter(selectedFile);
                         fw.write(resultString);
                         fw.close();
-                    }
-                    catch (FileNotFoundException fnfe){
+                    } catch (FileNotFoundException fnfe) {
                         resultField.setText("File tidak ditemukan");
-                    }
-                    catch (IOException io){
+                    } catch (IOException io) {
                         resultField.setText("File kosong!");
                     }
 
@@ -97,9 +93,9 @@ public class DeterminanERO {
         });
     }
 
-    public void run(){
+    public void run() {
         eroDeterminanFrame.setContentPane(new DeterminanERO().eroDeterminan);
-        eroDeterminanFrame.setMinimumSize(new Dimension(800,400));
+        eroDeterminanFrame.setMinimumSize(new Dimension(800, 400));
         eroDeterminanFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         eroDeterminanFrame.setVisible(true);
     }

@@ -27,9 +27,9 @@ public class InversForm {
         });
     }
 
-    public void run(){
+    public void run() {
         invFrame.setContentPane(new InversForm().inversPanel);
-        invFrame.setMinimumSize(new Dimension(400,400));
+        invFrame.setMinimumSize(new Dimension(400, 400));
         invFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         invFrame.setVisible(true);
     }

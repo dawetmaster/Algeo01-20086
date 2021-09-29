@@ -1,5 +1,5 @@
 import javax.swing.*;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -27,10 +27,10 @@ public class MatriksBalikanMethod {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int N = Integer.parseInt(nInput.getText());//ukuran matriks
-                Matriks matA = Matriks.parseMatrix(inputA.getText(),N,N);
-                Matriks matB = Matriks.parseMatrix(inputB.getText(),N,1);
-                resultMatrix = InversMethod.solve(matA,matB);
-                String hasil = "<html>"+CetakHasil(resultMatrix)+"</html>";
+                Matriks matA = Matriks.parseMatrix(inputA.getText(), N, N);
+                Matriks matB = Matriks.parseMatrix(inputB.getText(), N, 1);
+                resultMatrix = InversMethod.solve(matA, matB);
+                String hasil = "<html>" + CetakHasil(resultMatrix) + "</html>";
                 resultField.setText(hasil);
             }
         });
@@ -48,29 +48,27 @@ public class MatriksBalikanMethod {
                         String line = null;
                         BufferedReader reader;
                         reader = new BufferedReader(new FileReader(selectedFile));
-                        while((line=reader.readLine())!=null){
-                            isi_file+=line;
-                            isi_file+="\n";
+                        while ((line = reader.readLine()) != null) {
+                            isi_file += line;
+                            isi_file += "\n";
                         }
                         String[] augmented = isi_file.split("\n");
-                        if(augmented.length>0){
+                        if (augmented.length > 0) {
                             String text_matA = "";
                             String text_matB = "";
                             nInput.setText(Integer.toString(augmented.length));
-                            for(int i=0;i<augmented.length;i++) {
+                            for (int i = 0; i < augmented.length; i++) {
                                 String[] augmented_baris = augmented[i].split(" ");
-                                for(int j=0;j<augmented_baris.length-1;j++){
-                                    inputA.append(augmented_baris[j]+" ");
+                                for (int j = 0; j < augmented_baris.length - 1; j++) {
+                                    inputA.append(augmented_baris[j] + " ");
                                 }
                                 inputA.append("\n");
-                                inputB.append(augmented_baris[augmented_baris.length-1]+"\n");
+                                inputB.append(augmented_baris[augmented_baris.length - 1] + "\n");
                             }
                         }
-                    }
-                    catch (FileNotFoundException fnfe){
+                    } catch (FileNotFoundException fnfe) {
                         resultField.setText("File tidak ditemukan");
-                    }
-                    catch (IOException io){
+                    } catch (IOException io) {
                         resultField.setText("File kosong!");
                     }
 
@@ -86,16 +84,14 @@ public class MatriksBalikanMethod {
                     File selectedFile = fileChooser.getSelectedFile();
                     System.out.println(selectedFile.getName());
                     //menyimpan data
-                    String  resultString= resultMatrix.SimpanHasil();
+                    String resultString = resultMatrix.SimpanHasil();
                     try {
                         FileWriter fw = new FileWriter(selectedFile);
                         fw.write(resultString);
                         fw.close();
-                    }
-                    catch (FileNotFoundException fnfe){
+                    } catch (FileNotFoundException fnfe) {
                         resultField.setText("File tidak ditemukan");
-                    }
-                    catch (IOException io){
+                    } catch (IOException io) {
                         resultField.setText("File kosong!");
                     }
 
@@ -106,12 +102,11 @@ public class MatriksBalikanMethod {
 
     public static String CetakHasil(Matriks result) {
         String hasil = "";
-        if(result==null){
+        if (result == null) {
             hasil = "Tidak ada solusi atau solusi tak berhingga karena determinan matriks A adalah 0";
-        }
-        else {
+        } else {
             for (int i = 0; i < result.Nbaris; i++) {
-               // System.out.println("Hasil:"+result.matriks[i][0]);
+                // System.out.println("Hasil:"+result.matriks[i][0]);
                 hasil = hasil + "x" + (i + 1) + ":";
                 hasil += result.matriks[i][0];
                 hasil += "<br/>";
@@ -122,9 +117,9 @@ public class MatriksBalikanMethod {
 
     private boolean isNaNExist(Matriks result) {
         //menghasilkan true jika ada elemen matriks yang berupa NaN
-        for(int i=0;i<result.Nbaris;i++){
-            for(int j=0;j<result.Nkolom;j++){
-                if(Double.isNaN(result.matriks[i][j])){
+        for (int i = 0; i < result.Nbaris; i++) {
+            for (int j = 0; j < result.Nkolom; j++) {
+                if (Double.isNaN(result.matriks[i][j])) {
                     return true;
                 }
             }
@@ -134,20 +129,20 @@ public class MatriksBalikanMethod {
 
     public static String MatrikstoString(Matriks result) {
         String hasil = "";
-        for(int i=0;i<result.Nbaris;i++){
-            for(int j=0;j<result.Nkolom;j++){
+        for (int i = 0; i < result.Nbaris; i++) {
+            for (int j = 0; j < result.Nkolom; j++) {
                 hasil += result.matriks[i][j];
-                hasil+= " ";
+                hasil += " ";
             }
-            hasil +="<br/>";
+            hasil += "<br/>";
         }
         return hasil;
     }
 
 
-    public void run(){
+    public void run() {
         inversMethodFrame.setContentPane(new MatriksBalikanMethod().inversMatriksMethodLabel);
-        inversMethodFrame.setMinimumSize(new Dimension(800,400));
+        inversMethodFrame.setMinimumSize(new Dimension(800, 400));
         inversMethodFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         inversMethodFrame.setVisible(true);
     }
