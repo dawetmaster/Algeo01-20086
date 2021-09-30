@@ -146,4 +146,5 @@ public class MatriksBalikanMethod {
         inversMethodFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         inversMethodFrame.setVisible(true);
     }
+
 }

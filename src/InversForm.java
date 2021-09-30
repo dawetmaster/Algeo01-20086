@@ -33,4 +33,5 @@ public class InversForm {
         invFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         invFrame.setVisible(true);
     }
+
 }

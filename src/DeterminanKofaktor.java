@@ -65,8 +65,14 @@ public class DeterminanKofaktor {
                 int N = Integer.parseInt(inputN.getText());
                 Matriks mat = Matriks.parseMatrix(inputMatrix.getText(), N, N);
                 final_determinan = mat.determinantCofactor();
-                resultField.setText(Double.toString(final_determinan));
+                if(Double.compare(final_determinan,0)==0){
+                    System.out.println("Naon ieu?");
+                }
+                else {
+                    resultField.setText(Double.toString(final_determinan));
+                }
             }
+
         });
         simpanHasilButton.addActionListener(new ActionListener() {
             @Override
@@ -99,4 +105,5 @@ public class DeterminanKofaktor {
         DetKofFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         DetKofFrame.setVisible(true);
     }
+
 }

@@ -246,54 +246,53 @@ public class Matriks {
     }
 
     public double determinantReduction() {
-        /* I.S. jumlah baris dan jumlah kolom harus sama */
-        /* F.S. diperoleh determinan */
-        /* kloning matriks dulu */
-        // TODO: ROMBAK SEGERA
-        Matriks m = this.cloneMatriks();
+        Matriks mat = this.cloneMatriks();
         /* mulai prosedur */
-        if (m.isSquare()) {
-            double multiplier;
-            int swaps = 0;
-            // Start dari kolom pertama
-            for (int col = 0; col < m.Nkolom; col++) {
-                // cek apakah m.matriks[col][col] == 0
-                if (m.matriks[col][col] == 0) {
-                    // cek baris selanjutnya, lalu tukarkan
-                    int row_swap_target = -1; /* anggap swap target belum ketemu */
-                    for (int i = col + 1; i < m.Nbaris; i++) {
-                        if (m.matriks[i][col] != 0) {
-                            row_swap_target = i;
+        if (mat.isSquare()) {
+            // inisialisasi
+            double result;
+            int tempresult = 1, row = 0;
+            boolean positive = true;
+            // eksekusi
+            for (int col = 0; col < mat.Nkolom; col++) {
+                while (row < mat.Nbaris) {
+                    if (Double.compare(mat.matriks[row][col], 0.0) == 0
+                            || Double.compare(mat.matriks[row][col], -0.0) == 0
+                    ) {
+                        int pivot = row + 1;
+                        while (pivot < mat.Nbaris
+                                && (Double.compare(mat.matriks[pivot][col], 0.0) == 0
+                                || Double.compare(mat.matriks[pivot][col], -0.0) == 0)
+                        ) {
+                            pivot++;
+                        } // pivot == mat.Nbaris || matriks[pivot][col] != 0
+                        if (pivot < mat.Nbaris) {
+                            mat.swapRows(row, pivot);
+                            positive = !positive;
+                        } else {
+                            tempresult = 0;
                             break;
                         }
                     }
-                    if (row_swap_target != -1) {
-                        ++swaps;
-                        double[] temp = m.matriks[col];
-                        m.matriks[col] = m.matriks[row_swap_target];
-                        m.matriks[row_swap_target] = temp;
-                    } else {
-                        // satu kolom isinya nol semua, jadi determinannya nol
-                        return 0;
+                    for (int i = row + 1; i < mat.Nbaris; i++) {
+                        mat.rowReduce(row, i, col);
                     }
-                } else {
-                    // Loop baris
-                    for (int row = col + 1; row < m.Nbaris; row++) {
-                        multiplier = m.matriks[row][col] / m.matriks[col][col];
-                        // Loop pengurangan dari kolom pertama sampai kolom terakhir
-                        for (int i = 0; i < m.Nkolom; i++) {
-                            m.matriks[row][i] = m.matriks[row][i] - multiplier * m.matriks[col][i];
-                        }
-                    }
+                    row++;
+                    mat.normalize();
                 }
             }
-            m.normalize();
-            // hitung hasil
-            double result = 1;
-            for (int i = 0; i < m.Nbaris; i++) {
-                result *= m.matriks[i][i];
+            if (tempresult == 0) {
+                result = (double) tempresult;
+            } else {
+                result = 1;
+                for (int i = 0; i < mat.Nbaris; i++) {
+                    result *= mat.matriks[i][i];
+                }
+                result *= positive ? 1 : -1;
+                if (Double.compare(result, 0.0) == 0 || Double.compare(result, -0.0) == 0) {
+                    result = 0;
+                }
             }
-            result *= (swaps % 2 == 0 ? 1 : -1);
             return result;
         } else {
             return Double.NaN;
@@ -358,24 +357,23 @@ public class Matriks {
     }
 
     public double determinantCofactor() {
-        /* I.S. jumlah baris dan jumlah kolom harus sama */
-        /* F.S. diperoleh determinan */
-        /* Pakai default value, kolom pertama (index = 0) */
-        if (this.Nbaris == this.Nkolom) {
-            // algoritma ekspansi kofaktor dengan cara rekursif
-            // basis
-            if(this.Nbaris==1){
+        if (this.isSquare()) {
+            // BASIS
+            if (this.Nbaris == 1) {
                 return this.matriks[0][0];
             }
-            else if (this.Nbaris == 2) {
-                return (this.matriks[0][0] * this.matriks[1][1] - this.matriks[1][0] * this.matriks[0][1]);
-            } else {
-                // rekurens
-                double determinant = 0;
+            // REKURENS
+            else {
+                double result = 0;
                 for (int i = 0; i < this.Nbaris; i++) {
-                    determinant += (i % 2 == 0 ? 1 : -1) * this.matriks[i][0] * this.minor(i, 0).determinantCofactor();
+                    if (this.matriks[i][0] != 0) {
+                        result += (this.matriks[i][0] * this.minor(i, 0).determinantCofactor()) * (i % 2 == 0 ? 1 : -1);
+                    }
                 }
-                return determinant;
+                if (Double.compare(result, 0.0) == 0 || Double.compare(result, -0.0) == 0) {
+                    result = 0;
+                }
+                return result;
             }
         } else {
             return Double.NaN;

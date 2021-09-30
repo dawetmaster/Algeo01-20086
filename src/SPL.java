@@ -42,4 +42,5 @@ public class SPL {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
     }
+
 }

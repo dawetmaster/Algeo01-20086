@@ -60,7 +60,7 @@ public class PolynomialInterpolation {
                 Matriks m = createAug(coordMatrix);
 
                 // menuliskan matriks augmented ke layar
-                writeMatrix(m, augMatrixLabel);
+              //  writeMatrix(m, augMatrixLabel);
 
                 // eliminasi gauss dari matriks augmented
                 double[] result = GaussMethod.gaussElim(m);
@@ -101,7 +101,7 @@ public class PolynomialInterpolation {
                 int n = Integer.parseInt(nInput.getText()); // TODO: somehow keluarin ini biar ga kerja 2 kali, buat variabel result di global?
                 Matriks coordMatrix = Matriks.parseMatrix(coordList.getText(), n, 2);
                 Matriks m = createAug(coordMatrix);
-                writeMatrix(m, augMatrixLabel);
+              //  writeMatrix(m, augMatrixLabel);
                 double[] result = GaussMethod.gaussElim(m);
 
                 double y = 0;
@@ -159,4 +159,5 @@ public class PolynomialInterpolation {
         polynomialInterpolationFrame.setMinimumSize(new Dimension(800, 500));
         polynomialInterpolationFrame.setVisible(true);
     }
+
 }

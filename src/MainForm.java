@@ -61,4 +61,5 @@ public class MainForm {
         frame.setMinimumSize(new Dimension(400, 400));
         frame.setVisible(true);
     }
+
 }
