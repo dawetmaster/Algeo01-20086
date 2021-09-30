@@ -394,11 +394,11 @@ public class Matriks {
                 double determinant = 0;
                 if (row_mode) {
                     for (int i = 0; i < this.Nkolom; i++) {
-                        determinant += (i % 2 == 0 ? 1 : -1) * this.matriks[mat_index][i] * this.minor(mat_index, i).determinantCofactor();
+                        determinant += (i % 2 == 0 ? 1 : -1) * this.matriks[mat_index][i] * this.minor(mat_index, i);
                     }
                 } else {
                     for (int i = 0; i < this.Nbaris; i++) {
-                        determinant += (i % 2 == 0 ? 1 : -1) * this.matriks[i][mat_index] * this.minor(i, mat_index).determinantCofactor();
+                        determinant += (i % 2 == 0 ? 1 : -1) * this.matriks[i][mat_index] * this.minor(i, mat_index);
                     }
                 }
                 return determinant;
