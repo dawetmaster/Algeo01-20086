@@ -96,7 +96,7 @@ public class InversMethod {
                 }
             }
         }
-        System.out.println("\n"+MatriksBalikanMethod.MatrikstoString(invers));
+       // System.out.println("\n"+MatriksBalikanMethod.MatrikstoString(invers));
             //membuat matriks segitiga bawah
             for(i= invers.Nkolom-1;i>0;i--){
                 for(j= i-1;j>=0;j--){
@@ -113,7 +113,7 @@ public class InversMethod {
                     }
                 }
             }
-        System.out.println("\n"+MatriksBalikanMethod.MatrikstoString(invers));
+      //  System.out.println("\n"+MatriksBalikanMethod.MatrikstoString(invers));
             //menormalkan elemen diagonal matriks identitas
             for(int k=0;k<invers.Nbaris;k++) {
                 double factor = 1/invers.matriks[k][k];
