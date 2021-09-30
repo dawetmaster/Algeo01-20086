@@ -244,6 +244,7 @@ public class Matriks {
     }
 
     public double determinantReduction() {
+        // TODO: FIXKAN SEGERA
         Matriks mat = this.cloneMatriks();
         /* mulai prosedur */
         if (mat.isSquare()) {
