@@ -36,7 +36,7 @@ public class Matriks {
         for (int i = 0; i < this.Nbaris; i++) {
             for (int j = 0; j < this.Nkolom; j++) {
                 if (Double.compare(this.matriks[i][j], -0.0) == 0 && Double.compare(this.matriks[i][j], 0.0) == 0) {
-                    this.matriks[i][j] = 0;
+                    this.matriks[i][j] = 0.0d;
                 }
             }
         }
@@ -97,9 +97,7 @@ public class Matriks {
         for(int i=0; i<NBaris; i++){
             String[] line_text = test_line[i].split(" ");
             for(int j=0; j<NKolom; j++){
-                System.out.println(line_text[j]);
                 mat.matriks[i][j] = Double.parseDouble(line_text[j]);
-                System.out.println(mat.matriks[i][j]);
             }
         }
         return mat;
@@ -275,7 +273,7 @@ public class Matriks {
                         }
                     }
                     for (int i = row + 1; i < mat.Nbaris; i++) {
-                        mat.rowReduce(row, i, col);
+                        mat.rowReduce(i, row, col);
                     }
                     row++;
                     mat.normalize();
@@ -300,16 +298,15 @@ public class Matriks {
     }
 
     public Matriks minor(int row, int col) {
-        if (this.Nbaris == this.Nkolom) {
-            int dimension = this.Nbaris - 1;
-            Matriks minor = new Matriks(dimension, dimension);
-            for (int i = 0; i < dimension; i++) {
-                for (int j = 0; j < dimension; j++) {
-                    minor.matriks[i][j] = this.matriks[i >= row ? i + 1 : i][j >= col ? j + 1 : j];
+        if (this.isSquare()) {
+            int size = this.Nbaris - 1;
+            Matriks matminor = new Matriks(size, size);
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j++) {
+                    matminor.matriks[i][j] = this.matriks[i<row ? i : i+1][j<col ? j : j+1];
                 }
             }
-            minor.normalize();
-            return minor;
+            return matminor;
         } else {
             return null;
         }
@@ -320,7 +317,9 @@ public class Matriks {
             Matriks cofactor = new Matriks(this.Nbaris, this.Nkolom);
             for (int i = 0; i < this.Nbaris; i++) {
                 for (int j = 0; j < this.Nkolom; j++) {
-                    cofactor.matriks[i][j] = this.minor(i, j).determinantReduction() * ((i+j) % 2 == 0 ? 1 : -1);
+                    Matriks minortemp = this.minor(i, j);
+                    double minordet = minortemp.determinantReduction();
+                    cofactor.matriks[i][j] = minordet * ((i+j) % 2 == 0 ? 1 : -1);
                 }
             }
             cofactor.normalize();
@@ -374,34 +373,6 @@ public class Matriks {
                     result = 0;
                 }
                 return result;
-            }
-        } else {
-            return Double.NaN;
-        }
-    }
-
-    public double determinantCofactor(int mat_index, boolean row_mode) {
-        /* I.S. jumlah baris dan jumlah kolom harus sama */
-        /* F.S. diperoleh determinan */
-        /* Prekondisi: ada input mat_index dan row_mode */
-        if (this.Nbaris == this.Nkolom) {
-            // algoritma ekspansi kofaktor dengan cara rekursif
-            // basis
-            if (this.Nbaris == 2) {
-                return (this.matriks[0][0] * this.matriks[1][1] - this.matriks[1][0] * this.matriks[0][1]);
-            } else {
-                // rekurens
-                double determinant = 0;
-                if (row_mode) {
-                    for (int i = 0; i < this.Nkolom; i++) {
-                        determinant += (i % 2 == 0 ? 1 : -1) * this.matriks[mat_index][i] * this.minor(mat_index, i).determinantCofactor();
-                    }
-                } else {
-                    for (int i = 0; i < this.Nbaris; i++) {
-                        determinant += (i % 2 == 0 ? 1 : -1) * this.matriks[i][mat_index] * this.minor(i, mat_index).determinantCofactor();
-                    }
-                }
-                return determinant;
             }
         } else {
             return Double.NaN;
