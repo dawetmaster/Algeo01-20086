@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.util.Locale;
 
 public class KaidahCramerMethod {
     private JLabel labelN;
@@ -80,6 +81,10 @@ public class KaidahCramerMethod {
                 int result = fileChooser.showSaveDialog(kaidahCramerFrame);
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
+                    String fileName = selectedFile.getName(); // menambah ekstensi .txt
+                    if (!fileName.toLowerCase().endsWith(".txt")){
+                        selectedFile = new File(selectedFile + ".txt");
+                    }
                     System.out.println(selectedFile.getName());
                     //menyimpan data
                     String resultString = resultMatrix.SimpanHasil();
