@@ -62,6 +62,25 @@ public class GaussMethod {
         }
         return m;
     }
+    public static String toParamEq(Matriks m){
+        /* membuat string bentuk parametrik. m matriks eselon baris. */
+        int i, j;
+        String solution = "";
+
+        String t = "";
+        // substitusi mundur
+        for(i = 0; i < m.Nbaris; i++){
+
+        }
+        for(i = 0; i < m.Nbaris; i++){
+            t += "x%d = ".formatted(i+1);
+            for(j = 0; j < m.Nkolom; j++){
+
+            }
+        }
+        solution = "Solusi banyak.";
+        return solution;
+    }
     public static String printSol (double[] solution, boolean toTxt){
         /* ubah solution ke bentuk string untuk file teks jika toTxt = true,
            output ke layar jika toTxt = false */
@@ -83,7 +102,7 @@ public class GaussMethod {
             matriks tanpa solusi.
             Prereq: matriks sudah berbentuk matriks eselon baris
         */
-        return !isNoSol(m) && !isManySol(m);
+        return !(isNoSol(m) || isManySol(m));
     }
     public static boolean isNoSol(Matriks m) {
         /*
@@ -92,9 +111,9 @@ public class GaussMethod {
             nilai selain 0 pada kolom  [0..Nkolom-2] dan nilai 0 untuk kolom ke-[Nkolom-1].
             Prereq: matriks sudah berbentuk matriks eselon baris
         */
-        boolean allZero = true; // cek [0..NKolom-2] bernilai 0 semua
+        boolean allZero = true; // cek [0..NKolom-2] di baris terakhir bernilai 0 semua
         int j = 0;
-        while(allZero && (j < /*m.Nbaris-1*/m.Nkolom-1)){
+        while(allZero && (j < m.Nkolom-1)){
             if (m.matriks[m.Nbaris-1][j] != 0){
                 allZero = false;
             }
@@ -109,14 +128,14 @@ public class GaussMethod {
             pada baris terakhir adalah nol.
             Prereq: matriks sudah berbentuk matriks eselon baris
         */
-        boolean allZero = true; // cek [0..NKolom-2] bernilai 0 semua
+        boolean allZero = true; // cek [0..NKolom-2] di baris terakhir bernilai 0 semua
         int j = 0;
-        while(allZero && (j < /*m.Nbaris-1*/m.Nkolom-1)){
+        while(allZero && (j < m.Nkolom-1)){
             if (m.matriks[m.Nbaris-1][j] != 0){
                 allZero = false;
             }
             j++;
         }
-        return allZero && (m.matriks[m.Nbaris-1][m.Nkolom-1] == 0) || (m.Nbaris + 1 < m.Nkolom);
+        return (allZero && (m.matriks[m.Nbaris-1][m.Nkolom-1] == 0)) || (m.Nbaris + 1 < m.Nkolom);
     }
 }

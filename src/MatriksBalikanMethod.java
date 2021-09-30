@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.nio.file.Path;
 import java.io.*;
+import java.util.Locale;
 
 public class MatriksBalikanMethod {
     private JPanel inversMatriksMethodLabel;
@@ -82,6 +83,10 @@ public class MatriksBalikanMethod {
                 int result = fileChooser.showSaveDialog(inversMethodFrame);
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
+                    String fileName = selectedFile.getName(); // menambah ekstensi .txt
+                    if (!fileName.toLowerCase().endsWith(".txt")){
+                        selectedFile = new File(selectedFile + ".txt");
+                    }
                     System.out.println(selectedFile.getName());
                     //menyimpan data
                     String resultString = resultMatrix.SimpanHasil();

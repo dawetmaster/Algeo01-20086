@@ -93,8 +93,8 @@ public class GaussEliminationMethod {
                 int result = fileChooser.showSaveDialog(GaussFrame);
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
-                    String fileName = selectedFile.getName();
-                    if (!fileName.toLowerCase(Locale.ROOT).endsWith(".txt")){
+                    String fileName = selectedFile.getName(); // menambah ekstensi .txt
+                    if (!fileName.toLowerCase().endsWith(".txt")){
                         selectedFile = new File(selectedFile + ".txt");
                     }
                     System.out.println(selectedFile.getName());
