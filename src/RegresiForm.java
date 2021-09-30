@@ -1,15 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
->>>>>>> Stashed changes
-=======
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
->>>>>>> Stashed changes
 
 public class RegresiForm {
     private JFrame regresiFrame = new JFrame("Regresi Linear Berganda");
@@ -19,13 +13,7 @@ public class RegresiForm {
     private JButton readfileButton;
     private JTextArea inputArea;
     private JTextArea splTextArea;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     private JTextArea resultTextArea;
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     private JButton saveButton;
     private JLabel titleLabel;
     private JLabel guideLabel;
@@ -34,12 +22,6 @@ public class RegresiForm {
     private JLabel inputDataLabel;
     private JLabel resultsplLabel;
     private JLabel resultLabel;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-
-=======
-=======
->>>>>>> Stashed changes
     private JButton hitungRegresiButton;
     private JLabel formatLabel;
     private JLabel testLabelInput;
@@ -130,10 +112,6 @@ public class RegresiForm {
         }
         return sigma;
     }
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     public void run() {
         regresiFrame.setContentPane(new RegresiForm().regresiPanel);
         regresiFrame.setMinimumSize(new Dimension(800, 400));
