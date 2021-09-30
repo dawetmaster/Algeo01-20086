@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.util.Locale;
 
 public class GaussEliminationMethod {
     private JButton hitungButton;
@@ -27,12 +28,19 @@ public class GaussEliminationMethod {
                 Matriks a = Matriks.parseMatrix(inputA.getText(), N, N);
                 Matriks b = Matriks.parseMatrix(inputB.getText(), N, 1);
 
-                // eliminasi Gauss
+                // buat matriks augmented
                 Matriks m = GaussMethod.augment(a, b);
-                solution = GaussMethod.gaussElim(m);
 
+                String solutionString;
                 // cetak solusi ke layar
-                String solutionString = GaussMethod.printSol(solution, false);
+                if (GaussMethod.isManySol(m)){
+                    solutionString = GaussMethod.toParamEq(m);
+                } else if (GaussMethod.isUniqueSol(m)) {
+                    solution = GaussMethod.gaussElim(m);
+                    solutionString = GaussMethod.printSol(solution, false);
+                } else {
+                    solutionString = "SPL tidak memiliki solusi.";
+                }
 
                 resultField.setText(solutionString);
             }
@@ -85,6 +93,10 @@ public class GaussEliminationMethod {
                 int result = fileChooser.showSaveDialog(GaussFrame);
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
+                    String fileName = selectedFile.getName();
+                    if (!fileName.toLowerCase(Locale.ROOT).endsWith(".txt")){
+                        selectedFile = new File(selectedFile + ".txt");
+                    }
                     System.out.println(selectedFile.getName());
                     //menyimpan data
                     String resultString = GaussMethod.printSol(solution, true);
