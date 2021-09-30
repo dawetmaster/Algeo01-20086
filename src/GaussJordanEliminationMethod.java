@@ -33,7 +33,7 @@ public class GaussJordanEliminationMethod {
             } else if (GaussMethod.isNoSol(m)){
                 solutionString = "SPL tidak memiliki solusi.";
             } else if (GaussMethod.isUniqueSol(m)) {
-                solution = GaussMethod.gaussElim(m);
+                solution = GaussMethod.gaussJordanElim(m);
                 solutionString = GaussMethod.printSol(solution, false);
             }
             // cetak solusi ke layar

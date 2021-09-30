@@ -2,30 +2,17 @@ public class GaussMethod {
     public static double[] gaussElim(Matriks m){
         /*
            mengembalikan hasil eliminasi Gauss dalam bentuk matriks berukuran Nbaris x 1
+           prereq: isUniqueSol(m) = true
          */
-        // caution: masih dibuat dengan asumsi matriks berukuran n,n+1. TODO: buat secara umum
 
         double[] result = new double[m.Nbaris];
 
-        EchelonRedux.selfReduce(m); // buat m menjadi matriks eselon
-        // if (isUniqueSol(m)){ // uncomment kalau sudah resolved
+        EchelonRedux.selfReduce(m); // buat m menjadi matriks eselon baris
 
-            // PENYULINGAN MUNDUR
+            // PENYULIHAN MUNDUR
             int i, j, pivot;
-            // cari nilai awal
-            /*
-                boolean check = false; j = 0;
-                while(!check && j < m.Nkolom-1){
-                    if (m.matriks[m.Nbaris-1][j] == 0){
-                        j++;
-                    } else {
-                        check = true;
-                    }
-                }
-                result.matriks[m.Nbaris-1][0] = m.matriks[m.Nbaris-1][m.Nkolom-1]/m.matriks[m.Nbaris-1][j];
-            */
 
-            // asumsi 1 utama pasti di m.matriks[m.Nbaris-1][m.Nkolom-2]. TODO: hilangkan asumsi, kalo perlu?
+            // asumsi 1 utama pasti di m.matriks[m.Nbaris-1][m.Nkolom-2].
             result[m.Nbaris-1] = m.matriks[m.Nbaris-1][m.Nkolom-1];
 
             double temp;
@@ -44,8 +31,37 @@ public class GaussMethod {
                 }
                 result[i] = temp;
             }
+        return result;
+    }
+    public static double[] gaussJordanElim(Matriks m){
+        /*
+           mengembalikan hasil eliminasi Gauss-Jordan dalam bentuk matriks berukuran Nbaris x 1
+           prereq: isUniqueSol(m) = true
+         */
+        double[] result = new double[m.Nbaris];
+        EchelonRedux.selfReduce(m, true);
+        // PENYULIHAN MUNDUR
+        int i, j, pivot;
 
-        // }
+        // asumsi 1 utama pasti di m.matriks[m.Nbaris-1][m.Nkolom-2].
+        result[m.Nbaris-1] = m.matriks[m.Nbaris-1][m.Nkolom-1];
+
+        double temp;
+        for(i = m.Nbaris-2; i >= 0; i--){
+            temp = m.matriks[i][m.Nkolom-1]; j = 0;
+            // cari satu utama, simpan indeks kolom di pivot
+            while (m.matriks[i][j] == 0){
+                j++;
+            }
+            pivot = j;
+            // kurang2in temp sama m[][] * result[][] sampe kolom ke-pivot
+            j = m.Nkolom-2;
+            while (j > pivot){
+                temp -= m.matriks[i][j] * result[j];
+                j--;
+            }
+            result[i] = temp;
+        }
         return result;
     }
     public static Matriks augment(Matriks a, Matriks b){
@@ -64,21 +80,44 @@ public class GaussMethod {
     }
     public static String toParamEq(Matriks m){
         /* membuat string bentuk parametrik. m matriks eselon baris. */
-        int i, j;
-        String solution = "";
+        int i, j, realBarisCount;
+        String solution = "<html>";
+        Matriks temp;
+
+        // cari mulai dari indeks berapa baris yang tidak semua elemennya nol
+        i = m.Nbaris-1; realBarisCount = 0;
+        boolean allZero = true;
+        while((i >= 0) && allZero){
+            j = m.Nkolom-1;
+            while((j >= 0) && allZero){
+                if (m.matriks[i][j] != 0) {
+                    allZero = false;
+                } else {
+                    j--;
+                }
+            }
+            if (!allZero) {
+                i--;
+                realBarisCount++;
+            }
+        }
+
+        // variabel bebas dimulai dari
+        // (realBarisCount+1) sampai (nKolom-1)
 
         String t = "";
         // substitusi mundur
-        for(i = 0; i < m.Nbaris; i++){
-
-        }
-        for(i = 0; i < m.Nbaris; i++){
-            t += "x%d = ".formatted(i+1);
+        /*for(i = m.Nbaris - realBarisCount - 1; i >= 0; i--){
             for(j = 0; j < m.Nkolom; j++){
 
             }
+        }*/
+        for(i = 0; i < m.Nbaris; i++){
+            t += "x%d = ".formatted(i+1);
+
         }
-        solution = "Solusi banyak.";
+        solution += t + "<br>";
+        solution += "</html>";
         return solution;
     }
     public static String printSol (double[] solution, boolean toTxt){
@@ -94,15 +133,6 @@ public class GaussMethod {
         }
         solutionString += toTxt? "" : "</html>";
         return solutionString;
-    }
-    public static boolean isUniqueSol (Matriks m){
-        /*
-            mengecek apakah SPL dalam bentuk matriks augmented punya solusi unik.
-            SPL matriks punya solusi unik jika tidak memenuhi kriteria matriks banyak solusi dan
-            matriks tanpa solusi.
-            Prereq: matriks sudah berbentuk matriks eselon baris
-        */
-        return !(isNoSol(m) || isManySol(m));
     }
     public static boolean isNoSol(Matriks m) {
         /*
@@ -136,6 +166,15 @@ public class GaussMethod {
             }
             j++;
         }
-        return (allZero && (m.matriks[m.Nbaris-1][m.Nkolom-1] == 0)) || (m.Nbaris + 1 < m.Nkolom);
+        return (m.Nbaris + 1 < m.Nkolom) || (allZero && (m.matriks[m.Nbaris-1][m.Nkolom-1] == 0));
+    }
+    public static boolean isUniqueSol (Matriks m){
+        /*
+            mengecek apakah SPL dalam bentuk matriks augmented punya solusi unik.
+            SPL matriks punya solusi unik jika tidak memenuhi kriteria matriks banyak solusi dan
+            matriks tanpa solusi.
+            Prereq: matriks sudah berbentuk matriks eselon baris
+        */
+        return (m.Nbaris + 1 == m.Nkolom) || !(isNoSol(m) || isManySol(m));
     }
 }
