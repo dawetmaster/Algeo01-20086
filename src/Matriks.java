@@ -97,9 +97,9 @@ public class Matriks {
         for(int i=0; i<NBaris; i++){
             String[] line_text = test_line[i].split(" ");
             for(int j=0; j<NKolom; j++){
-                System.out.println(line_text[j]);
+            //    System.out.println(line_text[j]);
                 mat.matriks[i][j] = Double.parseDouble(line_text[j]);
-                System.out.println(mat.matriks[i][j]);
+              //  System.out.println(mat.matriks[i][j]);
             }
         }
         return mat;
@@ -197,9 +197,14 @@ public class Matriks {
         for (int i = 0; i < mat.Nbaris; i++) {
             for (int j = 0; j < mat.Nkolom; j++) {
                 double sum_ = 0;
-                for (int k = 0; k < m1.Nkolom; k++)
+                for (int k = 0; k < m1.Nkolom; k++) {
+                    //System.out.println(m1.matriks[i][k]);
+                   // System.out.println(m2.matriks[k][j]+"\n");
                     sum_ += (m1.matriks[i][k] * m2.matriks[k][j]);
+                 //   System.out.println(sum_);
+                }
                 mat.matriks[i][j] = sum_;
+               // System.out.println();
             }
         }
         return mat;
@@ -406,5 +411,13 @@ public class Matriks {
         } else {
             return Double.NaN;
         }
-    }
+    }/*
+    public void reset(){
+        //mereset isi matriks menjadi 0 semua
+        for(int i=0;i<this.Nbaris;i++){
+            for(int j=0;j<this.Nkolom;j++){
+                this.matriks[i][j] = 0;
+            }
+        }
+    }*/
 }

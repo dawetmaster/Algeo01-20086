@@ -1,6 +1,7 @@
 public class Main {
     //METHOD
     public static void main(String[] args){
+        /*
         Matriks m = new Matriks(3,3);
        // m.readMatriks();
         for(int i=0;i<m.Nbaris;i++){
@@ -29,13 +30,14 @@ public class Main {
         if(m.isIdentity()){
             System.out.println("Mantappu");
         }
-        System.out.println("Hallo!");
+       // System.out.println("Hallo!");
         for(int j=4;j<m.Nkolom-1;j++){
             m.matriks[m.Nbaris-1][j] = 1;
         }
         if(!GaussMethod.isUniqueSol(m)){
             System.out.println("Nyaho....");
         }
+        */
         MainForm mat = new MainForm();
         mat.run();
     }
