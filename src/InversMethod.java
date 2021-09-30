@@ -22,14 +22,61 @@ public class InversMethod {
         }
         return null;
     }
+    public static int ZeroUntilMainOne(double[] row){
+        int count =0;
+        int i=0;
+        boolean isZero = true;
+        while(i<row.length && isZero){
+            if(Double.compare(row[i],0)==0) {
+                count++;
+                i++;
+            }
+            else{
+                isZero = false;
+            }
+        }
+        return count;
+    }
     /* TODO:bugfixing and testing */
     public static Matriks invers(Matriks m){
         //menggunakan metode gauss jordan
         int i,j;
         Matriks invers = m.cloneMatriks();//matriks awal
         Matriks identity = makeIdentity(m.Nkolom);//matriks identitas yang akan diubah meenjadi invers
+        //mengatur ulang  posisi baris di matriks,yang jumlah 0 sebelum ketemu 1 utama paling dikit berada di atas
+        //pake selection sort
+        for(i=0;i<m.Nbaris-1;i++) {
+            int min_count = ZeroUntilMainOne(invers.matriks[i]);
+            int minIdx = i;
+            for (j = i + 1; j < m.Nkolom; j++) {
+                if (ZeroUntilMainOne(invers.matriks[j]) < min_count) {
+                    min_count = ZeroUntilMainOne(invers.matriks[j]);
+                    minIdx = j;
+                }
+            }
+            //swap
+            if (i != minIdx) {
+                double[] temp_invers = invers.matriks[i];
+                double[] temp_identity = identity.matriks[i];
+                invers.matriks[i] = invers.matriks[minIdx];
+                identity.matriks[i] = identity.matriks[minIdx];
+                invers.matriks[minIdx] = temp_invers;
+                identity.matriks[minIdx] = temp_identity;
+            }
+            /*
+            for (int l = 0; l < invers.Nbaris; l++) {
+                for (int k = 0; k < invers.Nkolom; k++) {
+                    System.out.print(invers.matriks[l][k] + " ");
+                }
+                System.out.println("");
+            }
+            System.out.println(min_count);
+            System.out.println(minIdx);
+            System.out.println();
+*/
+        }
         //cek baris pertama yang bernilai 0,lalu swap
-        int target = invers.Nbaris-1;//baris terakhir buat target swap
+        //int target = invers.Nbaris-1;//baris terakhir buat target swap
      //   while(!invers.isIdentity()){//selama si m bukan matriks identitas
         //membuat matriks segitiga atas
         for(i=0;i<invers.Nkolom-1;i++){
@@ -41,15 +88,15 @@ public class InversMethod {
                 for(int k=0;k<invers.Nkolom;k++){//mengapplynya ke tiap baris
                     invers.matriks[j][k] -= (koef*invers.matriks[i][k]);
                     identity.matriks[j][k] -= (koef*identity.matriks[i][k]);
-                    System.out.println(MatriksBalikanMethod.MatrikstoString(invers));
-                    System.out.println();
+                    //System.out.println(MatriksBalikanMethod.MatrikstoString(invers));
+                   // System.out.println();
                 }
                 if(isAllZero(invers.matriks[j])){
                     return null;
                 }
             }
         }
-        System.out.println(MatriksBalikanMethod.MatrikstoString(invers));
+        System.out.println("\n"+MatriksBalikanMethod.MatrikstoString(invers));
             //membuat matriks segitiga bawah
             for(i= invers.Nkolom-1;i>0;i--){
                 for(j= i-1;j>=0;j--){
@@ -66,7 +113,7 @@ public class InversMethod {
                     }
                 }
             }
-        System.out.println(MatriksBalikanMethod.MatrikstoString(invers));
+        System.out.println("\n"+MatriksBalikanMethod.MatrikstoString(invers));
             //menormalkan elemen diagonal matriks identitas
             for(int k=0;k<invers.Nbaris;k++) {
                 double factor = 1/invers.matriks[k][k];
@@ -101,9 +148,9 @@ public class InversMethod {
             }
         }
         if(invers.isIdentity()){
-            System.out.println("Ahoy kawan");
-            System.out.println(MatriksBalikanMethod.MatrikstoString(invers));
-            System.out.println(MatriksBalikanMethod.MatrikstoString(identity));
+            //System.out.println("Ahoy kawan");
+         //   System.out.println(MatriksBalikanMethod.MatrikstoString(invers));
+           // System.out.println(MatriksBalikanMethod.MatrikstoString(identity));
         }
         //kalau gak ada baris yg 0 semua berarti ada inversnya
             return identity;
