@@ -72,6 +72,7 @@ public class AdjoinMethod {
                 //System.out.println(determinan);
                 if (Double.compare(determinan, 0.0) != 0) {
                     resultMatrix = resultMatrix.scalarMult(1.0 / determinan);
+                    resultMatrix.normalize();
                     resultField.setText("<html>" + resultMatrix.repr_forIO() + "</html>");
                 } else {
                     resultField.setText("Tidak mempunyai invers");

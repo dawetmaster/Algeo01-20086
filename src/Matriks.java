@@ -36,7 +36,7 @@ public class Matriks {
         for (int i = 0; i < this.Nbaris; i++) {
             for (int j = 0; j < this.Nkolom; j++) {
                 if (Double.compare(this.matriks[i][j], -0.0) == 0 && Double.compare(this.matriks[i][j], 0.0) == 0) {
-                    this.matriks[i][j] = 0.0d;
+                    this.matriks[i][j] = +0.0;
                 }
             }
         }
@@ -248,68 +248,62 @@ public class Matriks {
         Matriks mat = this.cloneMatriks();
         /* mulai prosedur */
         if (mat.isSquare()) {
-            // inisialisasi
-            double result;
-            int tempresult = 1, row = 0;
-            boolean positive = true;
-            // eksekusi
-            for (int col = 0; col < mat.Nkolom; col++) {
-                while (row < mat.Nbaris) {
-                    if (Double.compare(mat.matriks[row][col], 0.0) == 0
-                            || Double.compare(mat.matriks[row][col], -0.0) == 0
-                    ) {
+            if (mat.Nbaris == 1) {
+                return mat.matriks[0][0];
+            } else {
+                double result = 1;
+                boolean positive = true;
+                int size = mat.Nbaris;
+                for (int col = 0; col < size; col++) {
+                    int row = col;
+                    if (mat.matriks[row][col] == 0) {
                         int pivot = row + 1;
-                        while (pivot < mat.Nbaris
-                                && (Double.compare(mat.matriks[pivot][col], 0.0) == 0
-                                || Double.compare(mat.matriks[pivot][col], -0.0) == 0)
-                        ) {
-                            pivot++;
-                        } // pivot == mat.Nbaris || matriks[pivot][col] != 0
-                        if (pivot < mat.Nbaris) {
+                        while (pivot < size && mat.matriks[pivot][col] == 0) {
+                            ++pivot;
+                        } // pivot = size || mat.matriks[pivot][col] != 0
+                        if (pivot < size) {
                             mat.swapRows(row, pivot);
                             positive = !positive;
                         } else {
-                            tempresult = 0;
-                            break;
+                            continue;
                         }
                     }
-                    for (int i = row + 1; i < mat.Nbaris; i++) {
+                    for (int i = row + 1; i < size; i++) {
                         mat.rowReduce(i, row, col);
                     }
-                    row++;
-                    mat.normalize();
                 }
-            }
-            if (tempresult == 0) {
-                result = (double) tempresult;
-            } else {
-                result = 1;
-                for (int i = 0; i < mat.Nbaris; i++) {
+                mat.normalize();
+                for (int i = 0; i < size; i++) {
                     result *= mat.matriks[i][i];
                 }
                 result *= positive ? 1 : -1;
-                if (Double.compare(result, 0.0) == 0 || Double.compare(result, -0.0) == 0) {
-                    result = 0;
-                }
+                return result;
             }
-            return result;
         } else {
             return Double.NaN;
         }
     }
 
-    public Matriks minor(int row, int col) {
+    public Matriks submatrix(int row, int col) {
         if (this.isSquare()) {
             int size = this.Nbaris - 1;
-            Matriks matminor = new Matriks(size, size);
+            Matriks submatrix = new Matriks(size, size);
             for (int i = 0; i < size; i++) {
                 for (int j = 0; j < size; j++) {
-                    matminor.matriks[i][j] = this.matriks[i<row ? i : i+1][j<col ? j : j+1];
+                    submatrix.matriks[i][j] = this.matriks[i<row ? i : i+1][j<col ? j : j+1];
                 }
             }
-            return matminor;
+            return submatrix;
         } else {
             return null;
+        }
+    }
+
+    public double minor(int row, int col) {
+        if (this.isSquare()) {
+            return this.submatrix(row, col).determinantReduction();
+        } else {
+            return Double.NaN;
         }
     }
 
@@ -318,9 +312,7 @@ public class Matriks {
             Matriks cofactor = new Matriks(this.Nbaris, this.Nkolom);
             for (int i = 0; i < this.Nbaris; i++) {
                 for (int j = 0; j < this.Nkolom; j++) {
-                    Matriks minortemp = this.minor(i, j);
-                    double minordet = minortemp.determinantReduction();
-                    cofactor.matriks[i][j] = minordet * ((i+j) % 2 == 0 ? 1 : -1);
+                    cofactor.matriks[i][j] = this.minor(i, j) * ((i+j) % 2 == 0 ? 1 : -1);
                 }
             }
             cofactor.normalize();
@@ -367,7 +359,7 @@ public class Matriks {
                 double result = 0;
                 for (int i = 0; i < this.Nbaris; i++) {
                     if (this.matriks[i][0] != 0) {
-                        result += (this.matriks[i][0] * this.minor(i, 0).determinantCofactor()) * (i % 2 == 0 ? 1 : -1);
+                        result += (this.matriks[i][0] * this.submatrix(i, 0).determinantCofactor()) * (i % 2 == 0 ? 1 : -1);
                     }
                 }
                 if (Double.compare(result, 0.0) == 0 || Double.compare(result, -0.0) == 0) {
