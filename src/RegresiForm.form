@@ -1,22 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="RegresiForm">
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
   <grid id="27dc6" binding="regresiPanel" layout-manager="GridLayoutManager" row-count="15" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="20" width="578" height="444"/>
-=======
-=======
->>>>>>> Stashed changes
   <grid id="27dc6" binding="regresiPanel" layout-manager="GridLayoutManager" row-count="14" column-count="7" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="20" width="723" height="464"/>
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     </constraints>
     <properties/>
     <border type="none"/>
@@ -28,28 +19,16 @@
       </hspacer>
       <hspacer id="5fe34">
         <constraints>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
           <grid row="1" column="5" row-span="1" col-span="1" vsize-policy="1" hsize-policy="4" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-=======
           <grid row="1" column="6" row-span="1" col-span="1" vsize-policy="1" hsize-policy="4" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
->>>>>>> Stashed changes
-=======
           <grid row="1" column="6" row-span="1" col-span="1" vsize-policy="1" hsize-policy="4" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
->>>>>>> Stashed changes
         </constraints>
       </hspacer>
       <component id="e301" class="javax.swing.JLabel" binding="titleLabel">
         <constraints>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
           <grid row="1" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-=======
           <grid row="1" column="1" row-span="1" col-span="5" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
->>>>>>> Stashed changes
-=======
           <grid row="1" column="1" row-span="1" col-span="5" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
->>>>>>> Stashed changes
         </constraints>
         <properties>
           <text value="Regresi Linear Berganda dengan Persamaan Estimasi Normal"/>
@@ -60,8 +39,6 @@
           <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
       <component id="4f06" class="javax.swing.JLabel" binding="guideLabel">
         <constraints>
           <grid row="3" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -73,16 +50,12 @@
       <component id="e99f7" class="javax.swing.JLabel" binding="varLabel">
         <constraints>
           <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-=======
       <component id="e99f7" class="javax.swing.JLabel" binding="varLabel">
         <constraints>
           <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
->>>>>>> Stashed changes
-=======
       <component id="e99f7" class="javax.swing.JLabel" binding="varLabel">
         <constraints>
           <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
->>>>>>> Stashed changes
         </constraints>
         <properties>
           <text value="Banyak peubah:"/>
@@ -90,8 +63,6 @@
       </component>
       <component id="896ef" class="javax.swing.JTextField" binding="varField">
         <constraints>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
           <grid row="4" column="2" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
@@ -117,9 +88,6 @@
       <component id="6dfa4" class="javax.swing.JLabel" binding="inputDataLabel">
         <constraints>
           <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-=======
-=======
->>>>>>> Stashed changes
           <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
@@ -131,10 +99,6 @@
       <component id="6dfa4" class="javax.swing.JLabel" binding="inputDataLabel">
         <constraints>
           <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
         </constraints>
         <properties>
           <text value="Masukkan data, atau baca file"/>
@@ -142,15 +106,9 @@
       </component>
       <component id="90f9e" class="javax.swing.JButton" binding="readfileButton">
         <constraints>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
           <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-=======
           <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
->>>>>>> Stashed changes
-=======
           <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
->>>>>>> Stashed changes
         </constraints>
         <properties>
           <text value="Baca File..."/>
@@ -158,28 +116,16 @@
       </component>
       <hspacer id="1341e">
         <constraints>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
           <grid row="6" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-=======
           <grid row="5" column="4" row-span="1" col-span="2" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
->>>>>>> Stashed changes
-=======
           <grid row="5" column="4" row-span="1" col-span="2" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
->>>>>>> Stashed changes
         </constraints>
       </hspacer>
       <component id="97c40" class="javax.swing.JTextArea" binding="inputArea">
         <constraints>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
           <grid row="8" column="1" row-span="1" col-span="4" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-=======
           <grid row="7" column="1" row-span="1" col-span="3" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
->>>>>>> Stashed changes
-=======
           <grid row="7" column="1" row-span="1" col-span="3" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
->>>>>>> Stashed changes
             <preferred-size width="150" height="50"/>
           </grid>
         </constraints>
@@ -189,41 +135,23 @@
       </component>
       <vspacer id="6e21d">
         <constraints>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
           <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-=======
           <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
->>>>>>> Stashed changes
-=======
           <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
->>>>>>> Stashed changes
         </constraints>
       </vspacer>
       <vspacer id="ffc9b">
         <constraints>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
           <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-=======
           <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
->>>>>>> Stashed changes
-=======
           <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
->>>>>>> Stashed changes
         </constraints>
       </vspacer>
       <component id="2ec11" class="javax.swing.JLabel" binding="resultsplLabel">
         <constraints>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
           <grid row="10" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-=======
           <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
->>>>>>> Stashed changes
-=======
           <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
->>>>>>> Stashed changes
         </constraints>
         <properties>
           <text value="SPL yang didapat:"/>
@@ -231,8 +159,6 @@
       </component>
       <component id="c239e" class="javax.swing.JTextArea" binding="splTextArea">
         <constraints>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
           <grid row="11" column="1" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="50"/>
           </grid>
@@ -242,12 +168,8 @@
       <component id="4b50f" class="javax.swing.JTextArea" binding="resultTextArea">
         <constraints>
           <grid row="11" column="4" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-=======
           <grid row="10" column="1" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
->>>>>>> Stashed changes
-=======
           <grid row="10" column="1" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
->>>>>>> Stashed changes
             <preferred-size width="150" height="50"/>
           </grid>
         </constraints>
@@ -255,15 +177,9 @@
       </component>
       <component id="73559" class="javax.swing.JLabel" binding="resultLabel">
         <constraints>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
           <grid row="10" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-=======
           <grid row="9" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
->>>>>>> Stashed changes
-=======
           <grid row="9" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
->>>>>>> Stashed changes
         </constraints>
         <properties>
           <text value="Solusi:"/>
@@ -271,28 +187,16 @@
       </component>
       <vspacer id="ec861">
         <constraints>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
           <grid row="12" column="4" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-=======
           <grid row="11" column="4" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
->>>>>>> Stashed changes
-=======
           <grid row="11" column="4" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
->>>>>>> Stashed changes
         </constraints>
       </vspacer>
       <component id="7f9c8" class="javax.swing.JButton" binding="saveButton">
         <constraints>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
           <grid row="13" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-=======
           <grid row="12" column="4" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
->>>>>>> Stashed changes
-=======
           <grid row="12" column="4" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
->>>>>>> Stashed changes
         </constraints>
         <properties>
           <text value="Simpan..."/>
@@ -300,15 +204,9 @@
       </component>
       <vspacer id="b0c4f">
         <constraints>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
           <grid row="14" column="4" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-=======
           <grid row="13" column="4" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
->>>>>>> Stashed changes
-=======
           <grid row="13" column="4" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
->>>>>>> Stashed changes
         </constraints>
       </vspacer>
       <vspacer id="19f8a">
@@ -316,11 +214,6 @@
           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> Stashed changes
       <component id="aa295" class="javax.swing.JButton" binding="hitungRegresiButton" default-binding="true">
         <constraints>
           <grid row="8" column="4" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
