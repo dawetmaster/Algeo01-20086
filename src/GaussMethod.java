@@ -117,6 +117,6 @@ public class GaussMethod {
             }
             j++;
         }
-        return allZero && (m.matriks[m.Nbaris-1][m.Nkolom-1] == 0);
+        return allZero && (m.matriks[m.Nbaris-1][m.Nkolom-1] == 0) || (m.Nbaris + 1 < m.Nkolom);
     }
 }
