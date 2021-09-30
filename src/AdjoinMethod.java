@@ -67,14 +67,12 @@ public class AdjoinMethod {
                 resultMatrix = Matriks.parseMatrix(matField.getText(), N, N);
                 double determinan = resultMatrix.determinantCofactor();
                 resultMatrix = resultMatrix.cofactor();
-                System.out.println("Yo da yo");
-                System.out.print(resultMatrix.repr());
                 resultMatrix = resultMatrix.transpose();
-                System.out.print(resultMatrix.repr());
+                resultMatrix.normalize();
                 //System.out.println(determinan);
                 if (Double.compare(determinan, 0.0) != 0) {
-                    System.out.println(1.0 / determinan);
                     resultMatrix = resultMatrix.scalarMult(1.0 / determinan);
+                    resultMatrix.normalize();
                     resultField.setText("<html>" + resultMatrix.repr_forIO() + "</html>");
                 } else {
                     resultField.setText("Tidak mempunyai invers");
