@@ -34,6 +34,13 @@ public class SPL {
                 cramer.run();
             }
         });
+        eliminasiGaussJordanButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GaussJordanEliminationMethod gaussJordan = new GaussJordanEliminationMethod();
+                gaussJordan.run();
+            }
+        });
     }
 
     public void run() {
