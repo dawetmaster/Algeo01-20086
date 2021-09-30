@@ -103,4 +103,5 @@ public class EROInvers {
         eroInversFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         eroInversFrame.setVisible(true);
     }
+
 }

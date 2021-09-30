@@ -33,4 +33,5 @@ public class DeterminanForm {
         determinanFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         determinanFrame.setVisible(true);
     }
+
 }

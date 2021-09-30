@@ -159,4 +159,5 @@ public class PolynomialInterpolation {
         polynomialInterpolationFrame.setMinimumSize(new Dimension(800, 500));
         polynomialInterpolationFrame.setVisible(true);
     }
+
 }

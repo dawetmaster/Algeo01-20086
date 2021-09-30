@@ -99,4 +99,5 @@ public class DeterminanERO {
         eroDeterminanFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         eroDeterminanFrame.setVisible(true);
     }
+
 }

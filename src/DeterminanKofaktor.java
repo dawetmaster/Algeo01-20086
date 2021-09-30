@@ -99,4 +99,5 @@ public class DeterminanKofaktor {
         DetKofFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         DetKofFrame.setVisible(true);
     }
+
 }

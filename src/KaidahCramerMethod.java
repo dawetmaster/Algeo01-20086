@@ -104,4 +104,5 @@ public class KaidahCramerMethod {
         kaidahCramerFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         kaidahCramerFrame.setVisible(true);
     }
+
 }

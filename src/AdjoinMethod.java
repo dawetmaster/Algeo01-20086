@@ -68,9 +68,9 @@ public class AdjoinMethod {
                 double determinan = resultMatrix.determinantCofactor();
                 resultMatrix = resultMatrix.cofactor();
                 System.out.println("Yo da yo");
-                System.out.println(resultMatrix.repr());
+                System.out.print(resultMatrix.repr());
                 resultMatrix = resultMatrix.transpose();
-                System.out.println(resultMatrix.repr());
+                System.out.print(resultMatrix.repr());
                 //System.out.println(determinan);
                 if (Double.compare(determinan, 0.0) != 0) {
                     System.out.println(1.0 / determinan);
@@ -113,5 +113,6 @@ public class AdjoinMethod {
         adjInversFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         adjInversFrame.setVisible(true);
     }
+
 }
 

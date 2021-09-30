@@ -25,4 +25,5 @@ public class RegresiForm {
         regresiFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         regresiFrame.setVisible(true);
     }
+
 }

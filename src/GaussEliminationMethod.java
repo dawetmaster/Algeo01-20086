@@ -24,8 +24,8 @@ public class GaussEliminationMethod {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int N = Integer.parseInt(matrixSize.getText());
-                Matriks a = Matriks.parseMatrix(inputA.getText(),N,N);
-                Matriks b = Matriks.parseMatrix(inputB.getText(),N,1);
+                Matriks a = Matriks.parseMatrix(inputA.getText(), N, N);
+                Matriks b = Matriks.parseMatrix(inputB.getText(), N, 1);
 
                 // eliminasi Gauss
                 Matriks m = GaussMethod.augment(a, b);
@@ -51,29 +51,27 @@ public class GaussEliminationMethod {
                         String line = null;
                         BufferedReader reader;
                         reader = new BufferedReader(new FileReader(selectedFile));
-                        while((line=reader.readLine())!=null){
-                            isi_file+=line;
-                            isi_file+="\n";
+                        while ((line = reader.readLine()) != null) {
+                            isi_file += line;
+                            isi_file += "\n";
                         }
                         String[] augmented = isi_file.split("\n");
-                        if(augmented.length>0){
+                        if (augmented.length > 0) {
                             String text_matA = "";
                             String text_matB = "";
                             matrixSize.setText(Integer.toString(augmented.length));
-                            for(int i=0;i<augmented.length;i++) {
+                            for (int i = 0; i < augmented.length; i++) {
                                 String[] augmented_baris = augmented[i].split(" ");
-                                for(int j=0;j<augmented_baris.length-1;j++){
-                                    inputA.append(augmented_baris[j]+" ");
+                                for (int j = 0; j < augmented_baris.length - 1; j++) {
+                                    inputA.append(augmented_baris[j] + " ");
                                 }
                                 inputA.append("\n");
-                                inputB.append(augmented_baris[augmented_baris.length-1]+"\n");
+                                inputB.append(augmented_baris[augmented_baris.length - 1] + "\n");
                             }
                         }
-                    }
-                    catch (FileNotFoundException fnfe){
+                    } catch (FileNotFoundException fnfe) {
                         resultField.setText("File tidak ditemukan");
-                    }
-                    catch (IOException io){
+                    } catch (IOException io) {
                         resultField.setText("File kosong!");
                     }
 
@@ -89,16 +87,14 @@ public class GaussEliminationMethod {
                     File selectedFile = fileChooser.getSelectedFile();
                     System.out.println(selectedFile.getName());
                     //menyimpan data
-                    String resultString= GaussMethod.printSol(solution, true);
+                    String resultString = GaussMethod.printSol(solution, true);
                     try {
                         FileWriter fw = new FileWriter(selectedFile);
                         fw.write(resultString);
                         fw.close();
-                    }
-                    catch (FileNotFoundException fnfe){
+                    } catch (FileNotFoundException fnfe) {
                         resultField.setText("File tidak ditemukan");
-                    }
-                    catch (IOException io){
+                    } catch (IOException io) {
                         resultField.setText("File kosong!");
                     }
 
@@ -107,10 +103,11 @@ public class GaussEliminationMethod {
         });
     }
 
-    public void run(){
+    public void run() {
         GaussFrame.setContentPane(new GaussEliminationMethod().gaussElimPanel);
-        GaussFrame.setMinimumSize(new Dimension(800,400));
+        GaussFrame.setMinimumSize(new Dimension(800, 400));
         GaussFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         GaussFrame.setVisible(true);
     }
+
 }
