@@ -9,28 +9,28 @@ public class GaussMethod {
 
         EchelonRedux.selfReduce(m); // buat m menjadi matriks eselon baris
 
-            // PENYULIHAN MUNDUR
-            int i, j, pivot;
+        // PENYULIHAN MUNDUR
+        int i, j, pivot;
 
-            // asumsi 1 utama pasti di m.matriks[m.Nbaris-1][m.Nkolom-2].
-            result[m.Nbaris-1] = m.matriks[m.Nbaris-1][m.Nkolom-1];
+        // asumsi 1 utama pasti di m.matriks[m.Nbaris-1][m.Nkolom-2].
+        result[m.Nbaris-1] = m.matriks[m.Nbaris-1][m.Nkolom-1];
 
-            double temp;
-            for(i = m.Nbaris-2; i >= 0; i--){
-                temp = m.matriks[i][m.Nkolom-1]; j = 0;
-                // cari satu utama, simpan indeks kolom di pivot
-                while (m.matriks[i][j] == 0){
-                    j++;
-                }
-                pivot = j;
-                // kurang2in temp sama m[][] * result[][] sampe kolom ke-pivot
-                j = m.Nkolom-2;
-                while (j > pivot){
-                    temp -= m.matriks[i][j] * result[j];
-                    j--;
-                }
-                result[i] = temp;
+        double temp;
+        for(i = m.Nbaris-2; i >= 0; i--){
+            temp = m.matriks[i][m.Nkolom-1]; j = 0;
+            // cari satu utama, simpan indeks kolom di pivot
+            while (m.matriks[i][j] == 0){
+                j++;
             }
+            pivot = j;
+            // kurang2in temp sama m[][] * result[][] sampe kolom ke-pivot
+            j = m.Nkolom-2;
+            while (j > pivot){
+                temp -= m.matriks[i][j] * result[j];
+                j--;
+            }
+            result[i] = temp;
+        }
         return result;
     }
     public static double[] gaussJordanElim(Matriks m){
@@ -80,86 +80,87 @@ public class GaussMethod {
     }
     public static String toParamEq(Matriks m){
         /* membuat string bentuk parametrik.
-          m adalah matriks eselon baris yang memiliki solusi parametrik (isManySol(m) = true)
-        */
+           m adalah matriks eselon baris yang memiliki solusi parametrik (isManySol(m) = true) */
         int i, j, k, realBarisCount;
-        String solution = "<html>";
-        String[] paramEq = new String[m.Nbaris];
-        char paramVar = 'r';
+        Matriks tempMatrix = m.cloneMatriks();
+        char[] varList = new char[m.Nkolom-1];
 
-        // cari mulai dari indeks berapa baris yang tidak semua elemennya nol
-        boolean allZero;
-        for(j = m.Nkolom-2; j >= 0; j--){
+        boolean allZero; realBarisCount = 0;
+        for(i = 0; i < m.Nbaris; i++){ // hitung baris tanpa 1 utama
             allZero = true;
-            for(i = m.Nbaris-1; i >= 0; i--){
+            for(j = 0; j < m.Nkolom; j++){
                 if (m.matriks[i][j] != 0){
                     allZero = false;
                     break;
                 }
             }
-            if (allZero || (m.matriks[i][j] != 1)){
-                paramEq[j] = (((paramVar - 65) % 26) + 65) + "";
-                paramVar++;
-            }
-        }
-        realBarisCount = 0; i = 0; j = 0;
-        boolean isZero;
-        while (i < m.Nbaris) {
-            isZero = true;
-            while (isZero && j < m.Nkolom) {
-                if (m.matriks[i][j] != 0) {
-                    realBarisCount++;
-                    isZero = false;
-                }
-                j++;
-            }
-            i++;
+            if (!allZero) realBarisCount++;
         }
 
-        // hitungan
+        // inisialisasi daftar variabel bebas
         for(i = 0; i < realBarisCount; i++){
-            j = 0;
-            while(m.matriks[i][j] != 1){
+            varList[i] = 'x';
+        }
+        char tempVar = 'r';
+        for(i = realBarisCount; i < varList.length; i++){
+            // buat daftar variabel bebas, asumsi semua alfabet bisa masuk
+            // dari 'r', 's', ..., 'p', kecuali 'x'
+            varList[i] = tempVar;
+            tempVar++;
+            if (tempVar == 'x') {
+                tempVar++;
+            } else if (tempVar == 'z') tempVar = 'a';
+        }
+
+        /*int[] oneUtamaIdx = new int[realBarisCount];
+        for(i = realBarisCount-1; i >= 0; i--){
+            // operasi membentuk persamaan x = ..., dengan ganti tanda elemen setelah 1 utama
+            j = 0; // cari satu utama di baris i
+            while(tempMatrix.matriks[i][j] == 0){
                 j++;
             }
-            paramEq[j] = "";
-            if(j != m.Nkolom-2) {
-                for(k = j + 1; k < m.Nkolom; k++){
-                    // isi persamaan
-                    if((paramEq[j] != null) && (paramEq[j].equals(""))){
-                        if(k != m.Nkolom - 1){ // koefisien
-                            if (m.matriks[i][k] < 0){
-                                paramEq[j] += "+%.4f".formatted(m.matriks[i][k]) + paramEq[k];
-                            } else if (m.matriks[i][k] > 0){
-                                paramEq[j] += "-%.4f".formatted(m.matriks[i][k]) + paramEq[k];
-                            }
-                        } else { // konstanta
-                            if (m.matriks[i][k] != 0){
-                                paramEq[j] += "%.4f".formatted(m.matriks[i][k]);
-                            }
-                        }
-                    } else {
-                        if (k != m.Nkolom - 1){
-                            if (m.matriks[i][k] < 0){
-                                paramEq[j] += "+%.4f".formatted(m.matriks[i][k] * (-1)) + paramEq[k];
-                            } else if (m.matriks[i][k] > 0) {
-                                paramEq[j] += "-%.4f".formatted(m.matriks[i][k]) + paramEq[k];
-                            }
-                        } else {
-                            if (m.matriks[i][k] > 0){
-                                paramEq[j] += "+%.4f".formatted(m.matriks[i][k]);
-                            } else if (m.matriks[i][k] < 0){
-                                paramEq[j] += " %.4f".formatted(m.matriks[i][k]);
-                            }
-                        }
-                    }
-                }
-            } else {
-                paramEq[j] = "%.4f".formatted(m.matriks[i][m.Nkolom-1]);
+            oneUtamaIdx[i] = j;
+            // setelah dapet 1 utama, dilawanin simbolnya, supaya membentuk x(i+1) = ...
+            for(k = j+1; k < tempMatrix.Nkolom; k++){
+                tempMatrix.matriks[i][k] *= -1;
             }
         }
 
-        solution += "</html>";
+        for(i = realBarisCount-2; i >= 0; i--){ // operasi masuk2in yang di bawah ke persamaan
+            for(k = oneUtamaIdx[i]+2; k < tempMatrix.Nkolom; k++){
+                tempMatrix.matriks[i][k] = tempMatrix.matriks[i][k]
+                        + (tempMatrix.matriks[i+1][k] * tempMatrix.matriks[i][oneUtamaIdx[i]+1]);
+            }
+            tempMatrix.matriks[i][oneUtamaIdx[i]+1] = 0; // depannya nol-in
+        }*/
+
+        /*for(i = 0; i < realBarisCount; i++){
+            solution += "%c%d = ".formatted(varList[i], i+1);
+            j = 0; // cari satu utama di baris i
+            while(tempMatrix.matriks[i][j] == 0){
+                j++;
+            } // 1 utama di j
+            for(k = j+1; k < tempMatrix.Nkolom; j++){
+                solution += "%.4f%c".formatted(tempMatrix.matriks[i][k], varList[k]);
+            }
+            solution += "<br/>";
+        }
+        for(i = realBarisCount; i < m.Nbaris; i++){
+            solution += "%c".formatted(varList[i]);
+            if (i < m.Nbaris - 1) solution += ",";
+        }
+        solution += "ϵ R";*/
+
+        String solution = "";
+        // test
+        for(i = 0; i < varList.length; i++){
+            solution += "%c".formatted(varList[i]);
+            if (varList[i] == 'x') solution += "%d".formatted(i+1);
+            if (i < varList.length) solution += ", ";
+        }
+        // endtest
+        solution += "ϵ R";
+
         return solution;
     }
     public static String printSol (double[] solution, boolean toTxt){
@@ -217,6 +218,6 @@ public class GaussMethod {
             matriks tanpa solusi.
             Prereq: matriks sudah berbentuk matriks eselon baris
         */
-        return (m.Nbaris + 1 == m.Nkolom) || !(isNoSol(m) || isManySol(m));
+        return (m.Nbaris + 1 == m.Nkolom) && !(isNoSol(m) || isManySol(m));
     }
 }

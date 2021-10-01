@@ -29,13 +29,14 @@ public class GaussJordanEliminationMethod {
             EchelonRedux.selfReduce(m, true);
 
             String solutionString = "";
-            if (GaussMethod.isManySol(m)){
-                solutionString = GaussMethod.toParamEq(m);
-            } else if (GaussMethod.isNoSol(m)){
+            if (GaussMethod.isNoSol(m)){
                 solutionString = "SPL tidak memiliki solusi.";
             } else if (GaussMethod.isUniqueSol(m)) {
                 solution = GaussMethod.gaussJordanElim(m);
                 solutionString = GaussMethod.printSol(solution, false);
+            } else if (GaussMethod.isManySol(m)){
+                solutionString = "SPL memiliki persamaan parametrik. ";
+                solutionString += GaussMethod.toParamEq(m);
             }
             // cetak solusi ke layar
 
