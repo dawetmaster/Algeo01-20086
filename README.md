@@ -23,3 +23,6 @@ Anggota Kelompok:
 
 ## Spesifikasi Tugas
 [Tugas Besar 1 IF 2123 Aljabar Linier dan Geometri - Semester 1 2021/2022](https://informatika.stei.itb.ac.id/~rinaldi.munir/AljabarGeometri/2021-2022/Tubes1-Algeo-2021.pdf)
+
+## CARA PENGGUNAAN
+Jalankan file Algeo01-20086.jar menggunakan Java Runtime Environtment
