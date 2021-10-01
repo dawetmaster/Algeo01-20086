@@ -25,31 +25,6 @@ public class PolynomialInterpolation {
     private double x;//nilai x yang ingin dicari nilai y nya
     private double y;//nilai y dengan masukan x menggunakan persamaan hasil interpolasi
 
-    public Matriks createAug(Matriks coordMatrix) {
-        Matriks m = new Matriks(coordMatrix.Nbaris, coordMatrix.Nbaris + 1);
-        for (int i = 0; i < coordMatrix.Nbaris; i++) {
-            for (int j = 0; j < coordMatrix.Nbaris; j++) {
-                m.matriks[i][j] = Math.pow(coordMatrix.matriks[i][0], j);
-            }
-            m.matriks[i][coordMatrix.Nbaris] = coordMatrix.matriks[i][1];
-        }
-        return m;
-    }
-
-    public void writeMatrix(Matriks m, JLabel y) {
-        // menulis matriks dalam bentuk tabel ke dalam satu JLabel
-        String augMatrix = "<html>Matriks Augmented:<br/><table>";
-        for (int i = 0; i < m.Nbaris; i++) {
-            augMatrix += "<tr>";
-            for (int j = 0; j < m.Nkolom; j++) {
-                augMatrix += "<td>%.4f</td>".formatted(m.matriks[i][j]);
-            }
-            augMatrix += "</tr>";
-        }
-        augMatrix += "</table></html>";
-        augMatrixLabel.setText(augMatrix);
-    }
-
     public PolynomialInterpolation() {
         createEqButton.addActionListener(new ActionListener() {
             @Override
@@ -61,10 +36,7 @@ public class PolynomialInterpolation {
                 Matriks coordMatrix = Matriks.parseMatrix(coordList.getText(), n, 2);
 
                 // inisialisasi matriks augmented untuk persiapan eliminasi Gauss
-                Matriks m = createAug(coordMatrix);
-
-                // menuliskan matriks augmented ke layar
-              //  writeMatrix(m, augMatrixLabel);
+                Matriks m = PolynomialInterpretationLib.createAugmented(coordMatrix);
 
                 // eliminasi gauss dari matriks augmented
                 double[] result = GaussMethod.gaussElim(m);
@@ -107,8 +79,8 @@ public class PolynomialInterpolation {
 
                 int n = Integer.parseInt(nInput.getText());
                 Matriks coordMatrix = Matriks.parseMatrix(coordList.getText(), n, 2);
-                Matriks m = createAug(coordMatrix);
-              //  writeMatrix(m, augMatrixLabel);
+                Matriks m = PolynomialInterpretationLib.createAugmented(coordMatrix);
+
                 double[] result = GaussMethod.gaussElim(m);
 
                 y = 0;
