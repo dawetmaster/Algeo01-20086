@@ -12,13 +12,12 @@ public class PolynomialInterpolation {
     private JButton createEqButton;
     private JButton calcYButton;
     private JTextField calcYField;
-    private JLabel equationLabel;
+    private JTextArea equationLabel;
     private JPanel PolynomialInterpolationField;
     private JLabel calcY;
     private JLabel augMatrixLabel;
     private JLabel calcYLabel;
     private JButton bukaFileButton;
-    private JLabel warningLabel;
     private JFrame polynomialInterpolationFrame = new JFrame("Interpolasi Polinom");
 
     public Matriks createAug(Matriks coordMatrix) {
@@ -66,9 +65,9 @@ public class PolynomialInterpolation {
                 double[] result = GaussMethod.gaussElim(m);
 
                 // cetak hasil, membuat persamaan dalam bentuk string
-                String equation = "<html>Persamaan:<br/>p(x) = ";
-                if (result[0] != 0) equation += "%.4f ".formatted(result[0]);
-                if (result[1] != 0) {
+                String equation = "Persamaan:\np(x) = ";
+                if ("%.4f ".formatted(result[0]) != "0.0000") equation += "%.4f ".formatted(result[0]);
+                if ("%.4f ".formatted(result[2]) != "0.0000") {
                     if (result[1] > 0) {
                         equation += "+ ";
                         equation += "%.4fx ".formatted(result[1]);
@@ -78,18 +77,20 @@ public class PolynomialInterpolation {
                     }
                 }
                 for (i = 2; i < result.length; i++) {
-                    if (result[i] > 0) {
-                        equation += "+ ";
-                        equation += "%.4fx^%d".formatted(result[i], i);
-                    } else {
-                        equation += "- ";
-                        equation += "%.4fx^%d".formatted(result[i] * -1, i);
+                    if ("%.4f ".formatted(result[i]) != "0.0000"){
+                        if (result[i] > 0) {
+                            equation += "+ ";
+                            equation += "%.4fx^%d".formatted(result[i], i);
+                        } else {
+                            equation += "- ";
+                            equation += "%.4fx^%d".formatted(result[i] * -1, i);
+                        }
                     }
                     if (i <= result.length - 1) {
                         equation += " ";
                     }
                 }
-                equation += "</html>";
+                equation += "";
                 equationLabel.setText(equation);
             }
         });
@@ -108,7 +109,6 @@ public class PolynomialInterpolation {
                 for (int i = 0; i < n; i++) {
                     y += result[i] * Math.pow(x, i);
                 }
-
                 calcY.setText("p(%.4f) = %.4f".formatted(x, y));
             }
         });
@@ -151,12 +151,13 @@ public class PolynomialInterpolation {
                 }
             }
         });
+
     }
 
     public void run() {
         polynomialInterpolationFrame.setContentPane(new PolynomialInterpolation().PolynomialInterpolationField);
         polynomialInterpolationFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        polynomialInterpolationFrame.setMinimumSize(new Dimension(800, 500));
+        polynomialInterpolationFrame.pack();
         polynomialInterpolationFrame.setVisible(true);
     }
 
