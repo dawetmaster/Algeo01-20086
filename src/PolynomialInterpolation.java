@@ -143,6 +143,7 @@ public class PolynomialInterpolation {
                         if (augmented.length > 0) {
                             String text_mat = "";
                             nInput.setText(Integer.toString(augmented.length));
+                            coordList.setText("");
                             for (int i = 0; i < augmented.length; i++) {
                                 String[] augmented_baris = augmented[i].split(" ");
                                 for (int j = 0; j < augmented_baris.length; j++) {
