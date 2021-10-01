@@ -23,6 +23,9 @@ public class DeterminanERO {
         bukaFileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                inputN.setText("");
+                inputMatrix.setText("");
+                resultField.setText("");
                 JFileChooser fileChooser = new JFileChooser("./test");
                 int result = fileChooser.showOpenDialog(eroDeterminanFrame);
                 if (result == JFileChooser.APPROVE_OPTION) {

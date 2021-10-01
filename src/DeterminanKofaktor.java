@@ -23,6 +23,9 @@ public class DeterminanKofaktor {
         bukaFileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                inputN.setText("");
+                inputMatrix.setText("");
+                resultField.setText("");
                 JFileChooser fileChooser = new JFileChooser("./test");
                 int result = fileChooser.showOpenDialog(DetKofFrame);
                 if (result == JFileChooser.APPROVE_OPTION) {
