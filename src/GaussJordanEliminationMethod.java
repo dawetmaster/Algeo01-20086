@@ -26,6 +26,7 @@ public class GaussJordanEliminationMethod {
 
             // buat matriks augmented
             m = GaussMethod.augment(a, b);
+            EchelonRedux.selfReduce(m, true);
 
             String solutionString = "";
             if (GaussMethod.isManySol(m)){

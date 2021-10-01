@@ -29,6 +29,7 @@ public class GaussEliminationMethod {
 
             // buat matriks augmented
             m = GaussMethod.augment(a, b);
+            EchelonRedux.selfReduce(m);
 
             String solutionString = "";
             if (GaussMethod.isManySol(m)){
