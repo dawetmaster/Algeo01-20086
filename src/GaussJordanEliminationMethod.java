@@ -90,7 +90,12 @@ public class GaussJordanEliminationMethod {
                 }
                 System.out.println(selectedFile.getName());
                 //menyimpan data
-                String resultString = GaussMethod.printSol(solution, true);
+                String resultString;
+                if (solution == null){
+                    resultString = resultField.getText();
+                } else {
+                    resultString = GaussMethod.printSol(solution, true);
+                }
                 try {
                     FileWriter fw = new FileWriter(selectedFile);
                     fw.write(resultString);

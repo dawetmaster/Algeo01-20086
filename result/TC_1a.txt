@@ -1,4 +1,1 @@
-x1 = 1.00
-x2 = 3.00
-x3 = 2.00
-x4 = 1.00
+SPL tidak memiliki solusi.
