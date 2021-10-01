@@ -88,12 +88,12 @@ public class RegresiForm {
                 //mencetak hasil
                 equation = "y=";
                 //isi konstanta dulu
-                equation += (b.matriks[0][0]+"+");
+                equation += (b.matriks[0][0]);
                 for(int i=1;i<jumlahVariabel;i++){
-                    equation += (b.matriks[i][0]+"x"+i+"+");
+                    equation += ((b.matriks[i][0]<0?"":"+")+b.matriks[i][0]+"x"+i);
                 }
                 //mencetak variabel terakhir
-                equation += (b.matriks[jumlahVariabel][0]+"x"+jumlahVariabel);
+                equation += ((b.matriks[jumlahVariabel][0]<0?"":"+")+b.matriks[jumlahVariabel][0]+"x"+jumlahVariabel);
                 //mencetak ke layar
                 splTextArea.setText(equation);
                 //menghitung solusi
@@ -115,6 +115,13 @@ public class RegresiForm {
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
                     System.out.println(selectedFile.getName());
+                    //mereset tulisan di GUI
+                    varField.setText("");
+                    countDataField.setText("");
+                    inputArea.setText("");
+                    testCaseInput.setText("");
+                    splTextArea.setText("");
+                    resultField.setText("");
                     //parse input
                     String isi_file = "";
                     try {
