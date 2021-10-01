@@ -63,7 +63,7 @@ public class RegresiForm {
                 Matriks temp_mat = hasilBaca.transpose();
                 for(int i=1;i< x_regresi.Nbaris;i++){
                     for(int j=1;j< x_regresi.Nkolom;j++){
-                        x_regresi.matriks[i][j] = sigma2Var(temp_mat.matriks[i-1],temp_mat.matriks[j-1]);
+                        x_regresi.matriks[i][j] = RegresiLib.sigma2Var(temp_mat.matriks[i-1],temp_mat.matriks[j-1]);
                     }
                 }
                 //mengisi matriks y
@@ -77,7 +77,7 @@ public class RegresiForm {
                 y_regresi.matriks[0][0] = sum_y;
                 //isi baris selanjutnya
                 for(int i=1;i<y_regresi.Nbaris;i++){
-                    y_regresi.matriks[i][0] = sigma2Var(temp_mat.matriks[i-1],temp_mat.matriks[jumlahVariabel]);
+                    y_regresi.matriks[i][0] = RegresiLib.sigma2Var(temp_mat.matriks[i-1],temp_mat.matriks[jumlahVariabel]);
                 }
                 //mencari b
                 Matriks b = Matriks.kali(InversMethod.invers(x_regresi),y_regresi);
