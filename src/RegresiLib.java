@@ -1,4 +1,4 @@
-public class Regresi {
+public class RegresiLib {
     public static Matriks dataToSPL(Matriks data) {
         // Masukkan data ke matriks
         // y letaknya paling kanan, data udah disediakan dulu

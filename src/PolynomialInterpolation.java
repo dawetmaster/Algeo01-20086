@@ -47,13 +47,11 @@ public class PolynomialInterpolation {
                 equation = "p(x) = ";
                 if (result[0] >= epsilon) equation += "%.4f ".formatted(result[0]);
                 if (result[1] >= epsilon) {
-                    if (result[1] >= 0) {
-                        equation += "+ ";
-                        equation += "%.4fx ".formatted(result[1]);
-                    } else {
-                        equation += "";
-                        equation += "%.4fx ".formatted(result[1] * -1);
-                    }
+                    equation += "+ ";
+                    equation += "%.4fx ".formatted(result[1]);
+                } else if (result[1] <= -epsilon) {
+                    equation += "";
+                    equation += "- %.4fx ".formatted(result[1] * -1);
                 }
                 for (i = 2; i < result.length; i++) {
                     if (result[i] >= epsilon){
