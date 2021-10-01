@@ -14,7 +14,7 @@ public class GaussJordanEliminationMethod {
     private JPanel gaussJordanElimPanel;
     private JButton openFile;
     private JButton simpanHasilButton;
-    private JFrame GaussJordanFrame = new JFrame("Eliminasi Gauss");
+    private JFrame GaussJordanFrame = new JFrame("Eliminasi Gauss-Jordan");
     private Matriks m;
     private double[] solution;
 

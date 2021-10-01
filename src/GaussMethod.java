@@ -103,7 +103,7 @@ public class GaussMethod {
             }
         }
         realBarisCount = 0; i = 0; j = 0;
-        boolean isZero = true;
+        boolean isZero;
         while (i < m.Nbaris) {
             isZero = true;
             while (isZero && j < m.Nkolom) {
