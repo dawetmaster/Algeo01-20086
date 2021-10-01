@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.lang.*;
 
 public class PolynomialInterpolation {
     Matriks m;
@@ -25,31 +26,6 @@ public class PolynomialInterpolation {
     private double x;//nilai x yang ingin dicari nilai y nya
     private double y;//nilai y dengan masukan x menggunakan persamaan hasil interpolasi
 
-    public Matriks createAug(Matriks coordMatrix) {
-        Matriks m = new Matriks(coordMatrix.Nbaris, coordMatrix.Nbaris + 1);
-        for (int i = 0; i < coordMatrix.Nbaris; i++) {
-            for (int j = 0; j < coordMatrix.Nbaris; j++) {
-                m.matriks[i][j] = Math.pow(coordMatrix.matriks[i][0], j);
-            }
-            m.matriks[i][coordMatrix.Nbaris] = coordMatrix.matriks[i][1];
-        }
-        return m;
-    }
-
-    public void writeMatrix(Matriks m, JLabel y) {
-        // menulis matriks dalam bentuk tabel ke dalam satu JLabel
-        String augMatrix = "<html>Matriks Augmented:<br/><table>";
-        for (int i = 0; i < m.Nbaris; i++) {
-            augMatrix += "<tr>";
-            for (int j = 0; j < m.Nkolom; j++) {
-                augMatrix += "<td>%.4f</td>".formatted(m.matriks[i][j]);
-            }
-            augMatrix += "</tr>";
-        }
-        augMatrix += "</table></html>";
-        augMatrixLabel.setText(augMatrix);
-    }
-
     public PolynomialInterpolation() {
         createEqButton.addActionListener(new ActionListener() {
             @Override
@@ -61,10 +37,7 @@ public class PolynomialInterpolation {
                 Matriks coordMatrix = Matriks.parseMatrix(coordList.getText(), n, 2);
 
                 // inisialisasi matriks augmented untuk persiapan eliminasi Gauss
-                Matriks m = createAug(coordMatrix);
-
-                // menuliskan matriks augmented ke layar
-              //  writeMatrix(m, augMatrixLabel);
+                Matriks m = PolynomialInterpretationLib.createAugmented(coordMatrix);
 
                 // eliminasi gauss dari matriks augmented
                 double[] result = GaussMethod.gaussElim(m);
@@ -75,13 +48,11 @@ public class PolynomialInterpolation {
                 equation = "p(x) = ";
                 if (result[0] >= epsilon) equation += "%.4f ".formatted(result[0]);
                 if (result[1] >= epsilon) {
-                    if (result[1] >= 0) {
-                        equation += "+ ";
-                        equation += "%.4fx ".formatted(result[1]);
-                    } else {
-                        equation += "";
-                        equation += "%.4fx ".formatted(result[1] * -1);
-                    }
+                    equation += "+ ";
+                    equation += "%.4fx ".formatted(result[1]);
+                } else if (result[1] <= -epsilon) {
+                    equation += "";
+                    equation += "- %.4fx ".formatted(result[1] * -1);
                 }
                 for (i = 2; i < result.length; i++) {
                     if (result[i] >= epsilon){
@@ -107,8 +78,8 @@ public class PolynomialInterpolation {
 
                 int n = Integer.parseInt(nInput.getText());
                 Matriks coordMatrix = Matriks.parseMatrix(coordList.getText(), n, 2);
-                Matriks m = createAug(coordMatrix);
-              //  writeMatrix(m, augMatrixLabel);
+                Matriks m = PolynomialInterpretationLib.createAugmented(coordMatrix);
+
                 double[] result = GaussMethod.gaussElim(m);
 
                 y = 0;

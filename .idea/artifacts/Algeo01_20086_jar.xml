@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Algeo01-20086:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Algeo01_20086_jar</output-path>
+    <root id="archive" name="Algeo01-20086.jar">
+      <element id="module-output" name="Algeo01-20086" />
+    </root>
+  </artifact>
+</component>
