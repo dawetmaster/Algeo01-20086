@@ -67,7 +67,7 @@ public class GaussMethod {
     public static Matriks augment(Matriks a, Matriks b){
         /* membuat matriks augmented dari matriks a berukuran i x j dan b berukuran i x 0 */
         int i, j;
-        Matriks m = new Matriks(a.Nbaris, a.Nbaris+1);
+        Matriks m = new Matriks(a.Nbaris, a.Nkolom+1);
         for(i = 0; i < m.Nbaris; i++){
             for(j = 0;  j < m.Nkolom-1; j++){
                 m.matriks[i][j] = a.matriks[i][j];

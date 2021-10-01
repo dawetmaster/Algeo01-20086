@@ -7,7 +7,8 @@ import java.util.Locale;
 
 public class GaussEliminationMethod {
     private JButton hitungButton;
-    private JTextField matrixSize;
+    private JTextField RowSize;
+    private JTextField ColumnSize;
     private JLabel matrixInputLabel;
     private JTextArea inputA;
     private JLabel labelB;
@@ -17,15 +18,17 @@ public class GaussEliminationMethod {
     private JPanel gaussElimPanel;
     private JButton openFile;
     private JButton simpanHasilButton;
+    private JTextField textField1;
     private JFrame GaussFrame = new JFrame("Eliminasi Gauss");
     private Matriks m;
     private double[] solution;
 
     public GaussEliminationMethod() {
         hitungButton.addActionListener(e -> {
-            int N = Integer.parseInt(matrixSize.getText());
-            Matriks a = Matriks.parseMatrix(inputA.getText(), N, N);
-            Matriks b = Matriks.parseMatrix(inputB.getText(), N, 1);
+            int M = Integer.parseInt(RowSize.getText());
+            int N = Integer.parseInt(ColumnSize.getText());
+            Matriks a = Matriks.parseMatrix(inputA.getText(), M, N);
+            Matriks b = Matriks.parseMatrix(inputB.getText(), M, 1);
 
             // buat matriks augmented
             m = GaussMethod.augment(a, b);
@@ -46,7 +49,8 @@ public class GaussEliminationMethod {
         });
         /* */
         openFile.addActionListener(e -> {
-            matrixSize.setText("");
+            RowSize.setText("");
+            ColumnSize.setText("");
             inputA.setText("");
             inputB.setText("");
             resultField.setText("");
@@ -66,11 +70,12 @@ public class GaussEliminationMethod {
                         isi_file += "\n";
                     }
                     String[] augmented = isi_file.split("\n");
+                    RowSize.setText(Integer.toString(augmented.length));
                     if (augmented.length > 0) {
-                        matrixSize.setText(Integer.toString(augmented.length));
                         inputA.setText(""); inputB.setText(""); resultField.setText(""); // set semua kosong
                         for (int i = 0; i < augmented.length; i++) {
                             String[] augmented_baris = augmented[i].split(" ");
+                            ColumnSize.setText(Integer.toString(augmented_baris.length-1));
                             for (int j = 0; j < augmented_baris.length - 1; j++) {
                                 inputA.append(augmented_baris[j] + " ");
                             }
