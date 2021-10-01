@@ -24,6 +24,9 @@ public class AdjoinMethod {
         bukaFileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                nInputField.setText("");
+                matField.setText("");
+                resultField.setText("");
                 JFileChooser fileChooser = new JFileChooser("./test");
                 int result = fileChooser.showOpenDialog(adjInversFrame);
                 if (result == JFileChooser.APPROVE_OPTION) {

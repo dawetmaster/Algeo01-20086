@@ -36,6 +36,10 @@ public class KaidahCramerMethod {
         openFile.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                nInput.setText("");
+                inputA.setText("");
+                inputB.setText("");
+                resultField.setText("");
                 JFileChooser fileChooser = new JFileChooser("./test");
                 int result = fileChooser.showOpenDialog(kaidahCramerFrame);
                 if (result == JFileChooser.APPROVE_OPTION) {

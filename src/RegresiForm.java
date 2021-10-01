@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 
 public class RegresiForm {
     private JFrame regresiFrame = new JFrame("Regresi Linear Berganda");
@@ -13,7 +14,6 @@ public class RegresiForm {
     private JButton readfileButton;
     private JTextArea inputArea;
     private JTextArea splTextArea;
-    private JTextArea resultTextArea;
     private JButton saveButton;
     private JLabel titleLabel;
     private JLabel guideLabel;
@@ -22,11 +22,15 @@ public class RegresiForm {
     private JLabel inputDataLabel;
     private JLabel resultsplLabel;
     private JLabel resultLabel;
+    private JTextArea textArea1;
     private JButton hitungRegresiButton;
     private JLabel formatLabel;
     private JLabel testLabelInput;
     private JTextArea testCaseInput;
     private JLabel resultField;
+    private String equation;//persamaan akhir
+    private Matriks test_case;//test_case untuk dicari nilainya
+    private double result_score;//hasil nilai suatu titik menggunakan regresi
 
     public RegresiForm() {
         hitungRegresiButton.addActionListener(new ActionListener() {
@@ -82,25 +86,107 @@ public class RegresiForm {
                 //splTextArea.setText("<html>"+InversMethod.invers(x_regresi).repr_forIO()+"</html>");
                 //splTextArea.setText("<html>"+b.repr_forIO()+"</html>");
                 //mencetak hasil
-                String equation = "y=";
+                equation = "y=";
                 //isi konstanta dulu
-                equation += (b.matriks[0][0]+"+");
+                equation += (b.matriks[0][0]);
                 for(int i=1;i<jumlahVariabel;i++){
-                    equation += (b.matriks[i][0]+"x"+i+"+");
+                    equation += ((b.matriks[i][0]<0?"":"+")+b.matriks[i][0]+"x"+i);
                 }
                 //mencetak variabel terakhir
-                equation += (b.matriks[jumlahVariabel][0]+"x"+jumlahVariabel);
+                equation += ((b.matriks[jumlahVariabel][0]<0?"":"+")+b.matriks[jumlahVariabel][0]+"x"+jumlahVariabel);
                 //mencetak ke layar
                 splTextArea.setText(equation);
                 //menghitung solusi
-                Matriks test_case = Matriks.parseMatrix(testCaseInput.getText(),jumlahVariabel,1);
+                test_case = Matriks.parseMatrix(testCaseInput.getText(),1,jumlahVariabel);
                 //diisi konstanta fungsi hasil regresi
-                double result = b.matriks[0][0];
+                result_score = b.matriks[0][0];
                 for(int i=1;i< test_case.Nbaris+1;i++){
-                    result += (test_case.matriks[i-1][0]*b.matriks[i][0]);
+                    result_score += (test_case.matriks[0][i-1]*b.matriks[i][0]);
                 }
                 //menampilkan hasil
-                resultField.setText(Double.toString(result));
+                resultField.setText(Double.toString(result_score));
+            }
+        });
+        readfileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser("./test");
+                int result = fileChooser.showOpenDialog(regresiFrame);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    System.out.println(selectedFile.getName());
+                    //mereset tulisan di GUI
+                    varField.setText("");
+                    countDataField.setText("");
+                    inputArea.setText("");
+                    testCaseInput.setText("");
+                    splTextArea.setText("");
+                    resultField.setText("");
+                    //parse input
+                    String isi_file = "";
+                    try {
+                        String line = null;
+                        BufferedReader reader;
+                        reader = new BufferedReader(new FileReader(selectedFile));
+                        while ((line = reader.readLine()) != null) {
+                            isi_file += line;
+                            isi_file += "\n";
+                        }
+                        String[] augmented = isi_file.split("\n");
+                        if (augmented.length > 0) {
+                            String text_mat = "";
+                            countDataField.setText(Integer.toString(augmented.length));
+                            for (int i = 0; i < augmented.length; i++) {
+                                String[] augmented_baris = augmented[i].split(" ");
+                                varField.setText(Integer.toString(augmented_baris.length-1));;
+                                for (int j = 0; j < augmented_baris.length; j++) {
+                                    inputArea.append(augmented_baris[j] + " ");
+                                }
+                                inputArea.append("\n");
+                            }
+                        }
+                    } catch (FileNotFoundException fnf) {
+                        splTextArea.setText("File tidak ditemukan");
+                    } catch (IOException io) {
+                        splTextArea.setText("File kosong!");
+                    }
+
+                }
+            }
+        });
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser("./result");
+                int result = fileChooser.showSaveDialog(regresiFrame);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    String fileName = selectedFile.getName(); // menambah ekstensi .txt
+                    if (!fileName.toLowerCase().endsWith(".txt")){
+                        selectedFile = new File(selectedFile + ".txt");
+                    }
+                    System.out.println(selectedFile.getName());
+                    //menyimpan data
+                    //menyimpan persamaan di baris 1
+                    String resultString = equation;
+                    //menyimpan hasil nilai di baris 2
+                    resultString += "\ny(";
+                    for(int i=0;i<test_case.Nkolom-1;i++){
+                        resultString+= (test_case.matriks[0][i]+",");
+                    }
+                    resultString+= (test_case.matriks[0][test_case.Nkolom-1]+")=");
+                    resultString+= result_score;
+                    try {
+                        FileWriter fw = new FileWriter(selectedFile);
+                        fw.write(resultString);
+                        fw.close();
+                    } catch (FileNotFoundException fnfe) {
+                        resultField.setText("File tidak ditemukan");
+                    } catch (IOException io) {
+                        resultField.setText("File kosong!");
+                    }
+
+                }
             }
         });
     }

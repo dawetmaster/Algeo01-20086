@@ -211,7 +211,6 @@ public class Matriks {
         return mat;
     }
 
-    /*
     public Matriks matMult(Matriks ext) {
         if (this.Nkolom == ext.Nbaris) {
             Matriks result = new Matriks(this.Nbaris, ext.Nkolom);
@@ -228,7 +227,6 @@ public class Matriks {
             throw new ArithmeticException("Ukuran matriks tidak sesuai");
         }
     }
-    */
 
     // KALI SKALAR, DENGAN OVERLOADING
     /* Versi Double */
@@ -381,8 +379,34 @@ public class Matriks {
             return Double.NaN;
         }
     }
-
-    /*
+/*
+    public double determinantCofactor(int mat_index, boolean row_mode) {
+      */  /* I.S. jumlah baris dan jumlah kolom harus sama */
+        /* F.S. diperoleh determinan */
+        /* Prekondisi: ada input mat_index dan row_mode *//*
+        if (this.Nbaris == this.Nkolom) {
+            // algoritma ekspansi kofaktor dengan cara rekursif
+            // basis
+            if (this.Nbaris == 2) {
+                return (this.matriks[0][0] * this.matriks[1][1] - this.matriks[1][0] * this.matriks[0][1]);
+            } else {
+                // rekurens
+                double determinant = 0;
+                if (row_mode) {
+                    for (int i = 0; i < this.Nkolom; i++) {
+                        determinant += (i % 2 == 0 ? 1 : -1) * this.matriks[mat_index][i] * this.minor(mat_index, i).determinantCofactor();
+                    }
+                } else {
+                    for (int i = 0; i < this.Nbaris; i++) {
+                        determinant += (i % 2 == 0 ? 1 : -1) * this.matriks[i][mat_index] * this.minor(i, mat_index).determinantCofactor();
+                    }
+                }
+                return determinant;
+            }
+        } else {
+            return Double.NaN;
+        }
+    }*//*
     public void reset(){
         //mereset isi matriks menjadi 0 semua
         for(int i=0;i<this.Nbaris;i++){

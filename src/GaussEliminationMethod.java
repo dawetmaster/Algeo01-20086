@@ -46,6 +46,10 @@ public class GaussEliminationMethod {
         });
         /* */
         openFile.addActionListener(e -> {
+            matrixSize.setText("");
+            inputA.setText("");
+            inputB.setText("");
+            resultField.setText("");
             JFileChooser fileChooser = new JFileChooser("./test");
             int result = fileChooser.showOpenDialog(GaussFrame);
             if (result == JFileChooser.APPROVE_OPTION) {
