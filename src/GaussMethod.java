@@ -79,44 +79,86 @@ public class GaussMethod {
         return m;
     }
     public static String toParamEq(Matriks m){
-        /* membuat string bentuk parametrik. m matriks eselon baris. */
-        int i, j, realBarisCount;
+        /* membuat string bentuk parametrik.
+          m adalah matriks eselon baris yang memiliki solusi parametrik (isManySol(m) = true)
+        */
+        int i, j, k, realBarisCount;
         String solution = "<html>";
-        Matriks temp;
+        String[] paramEq = new String[m.Nbaris];
+        char paramVar = 'r';
 
         // cari mulai dari indeks berapa baris yang tidak semua elemennya nol
-        i = m.Nbaris-1; realBarisCount = 0;
-        boolean allZero = true;
-        while((i >= 0) && allZero){
-            j = m.Nkolom-1;
-            while((j >= 0) && allZero){
-                if (m.matriks[i][j] != 0) {
+        boolean allZero;
+        for(j = m.Nkolom-2; j >= 0; j--){
+            allZero = true;
+            for(i = m.Nbaris-1; i >= 0; i--){
+                if (m.matriks[i][j] != 0){
                     allZero = false;
-                } else {
-                    j--;
+                    break;
                 }
             }
-            if (!allZero) {
-                i--;
-                realBarisCount++;
+            if (allZero || (m.matriks[i][j] != 1)){
+                paramEq[j] = (((paramVar - 65) % 26) + 65) + "";
+                paramVar++;
+            }
+        }
+        realBarisCount = 0; i = 0; j = 0;
+        boolean isZero = true;
+        while (i < m.Nbaris) {
+            isZero = true;
+            while (isZero && j < m.Nkolom) {
+                if (m.matriks[i][j] != 0) {
+                    realBarisCount++;
+                    isZero = false;
+                }
+                j++;
+            }
+            i++;
+        }
+
+        // hitungan
+        for(i = 0; i < realBarisCount; i++){
+            j = 0;
+            while(m.matriks[i][j] != 1){
+                j++;
+            }
+            paramEq[j] = "";
+            if(j != m.Nkolom-2) {
+                for(k = j + 1; k < m.Nkolom; k++){
+                    // isi persamaan
+                    if((paramEq[j] != null) && (paramEq[j].equals(""))){
+                        if(k != m.Nkolom - 1){ // koefisien
+                            if (m.matriks[i][k] < 0){
+                                paramEq[j] += "+%.4f".formatted(m.matriks[i][k]) + paramEq[k];
+                            } else if (m.matriks[i][k] > 0){
+                                paramEq[j] += "-%.4f".formatted(m.matriks[i][k]) + paramEq[k];
+                            }
+                        } else { // konstanta
+                            if (m.matriks[i][k] != 0){
+                                paramEq[j] += "%.4f".formatted(m.matriks[i][k]);
+                            }
+                        }
+                    } else {
+                        if (k != m.Nkolom - 1){
+                            if (m.matriks[i][k] < 0){
+                                paramEq[j] += "+%.4f".formatted(m.matriks[i][k] * (-1)) + paramEq[k];
+                            } else if (m.matriks[i][k] > 0) {
+                                paramEq[j] += "-%.4f".formatted(m.matriks[i][k]) + paramEq[k];
+                            }
+                        } else {
+                            if (m.matriks[i][k] > 0){
+                                paramEq[j] += "+%.4f".formatted(m.matriks[i][k]);
+                            } else if (m.matriks[i][k] < 0){
+                                paramEq[j] += " %.4f".formatted(m.matriks[i][k]);
+                            }
+                        }
+                    }
+                }
+            } else {
+                paramEq[j] = "%.4f".formatted(m.matriks[i][m.Nkolom-1]);
             }
         }
 
-        // variabel bebas dimulai dari
-        // (realBarisCount+1) sampai (nKolom-1)
-
-        String t = "";
-        // substitusi mundur
-        /*for(i = m.Nbaris - realBarisCount - 1; i >= 0; i--){
-            for(j = 0; j < m.Nkolom; j++){
-
-            }
-        }*/
-        for(i = 0; i < m.Nbaris; i++){
-            t += "x%d = ".formatted(i+1);
-
-        }
-        solution += t + "<br>";
         solution += "</html>";
         return solution;
     }
