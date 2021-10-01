@@ -71,9 +71,10 @@ public class PolynomialInterpolation {
 
                 // cetak hasil, membuat persamaan dalam bentuk string
                 String persamaan_label =  "Persamaan:\n";
+                double epsilon = 0.0001d;
                 equation = "p(x) = ";
-                if (result[0] != 0) equation += "%.4f ".formatted(result[0]);
-                if (result[1] != 0) {
+                if (result[0] >= epsilon) equation += "%.4f ".formatted(result[0]);
+                if (result[1] >= epsilon) {
                     if (result[1] >= 0) {
                         equation += "+ ";
                         equation += "%.4fx ".formatted(result[1]);
@@ -83,15 +84,17 @@ public class PolynomialInterpolation {
                     }
                 }
                 for (i = 2; i < result.length; i++) {
-                    if (result[i] > 0) {
-                        equation += "+ ";
-                        equation += "%.4fx^%d".formatted(result[i], i);
-                    } else {
-                        equation += " ";
-                        equation += "%.4fx^%d".formatted(result[i] * -1, i);
-                    }
-                    if (i <= result.length - 1) {
-                        equation += " ";
+                    if (result[i] >= epsilon){
+                        if (result[i] > 0) {
+                            equation += "+ ";
+                            equation += "%.4fx^%d".formatted(result[i], i);
+                        } else {
+                            equation += " ";
+                            equation += "%.4fx^%d".formatted(result[i] * -1, i);
+                        }
+                        if (i <= result.length - 1) {
+                            equation += " ";
+                        }
                     }
                 }
                 equationLabel.setText(persamaan_label+equation);
