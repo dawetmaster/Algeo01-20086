@@ -58,6 +58,7 @@ public class MatriksBalikanMethod {
                             String text_matA = "";
                             String text_matB = "";
                             nInput.setText(Integer.toString(augmented.length));
+                            inputA.setText(""); inputB.setText(""); resultField.setText("");
                             for (int i = 0; i < augmented.length; i++) {
                                 String[] augmented_baris = augmented[i].split(" ");
                                 for (int j = 0; j < augmented_baris.length - 1; j++) {

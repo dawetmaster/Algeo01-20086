@@ -42,6 +42,7 @@ public class EROInvers {
                         if (augmented.length > 0) {
                             String text_mat = "";
                             nInputField.setText(Integer.toString(augmented.length));
+                            matInputField.setText(""); resultField.setText("");
                             for (int i = 0; i < augmented.length; i++) {
                                 String[] augmented_baris = augmented[i].split(" ");
                                 for (int j = 0; j < augmented_baris.length; j++) {
