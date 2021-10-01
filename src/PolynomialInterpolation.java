@@ -70,7 +70,7 @@ public class PolynomialInterpolation {
                 double[] result = GaussMethod.gaussElim(m);
 
                 // cetak hasil, membuat persamaan dalam bentuk string
-                String persamaan_label =  "Persamaan:\n";
+                String persamaan_label =  "";
                 double epsilon = 0.0001d;
                 equation = "p(x) = ";
                 if (result[0] >= epsilon) equation += "%.4f ".formatted(result[0]);
@@ -105,7 +105,7 @@ public class PolynomialInterpolation {
             public void actionPerformed(ActionEvent e) {
                 x = Double.parseDouble(calcYField.getText());
 
-                int n = Integer.parseInt(nInput.getText()); // TODO: somehow keluarin ini biar ga kerja 2 kali, buat variabel result di global?
+                int n = Integer.parseInt(nInput.getText());
                 Matriks coordMatrix = Matriks.parseMatrix(coordList.getText(), n, 2);
                 Matriks m = createAug(coordMatrix);
               //  writeMatrix(m, augMatrixLabel);
